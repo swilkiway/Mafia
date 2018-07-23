@@ -1,6 +1,6 @@
 <resources>
     <!--General Strings-->
-    <string name="app_name">MafiaPlayer</string>
+    <string name="app_name">Narrator</string>
     <string name="choose_roles">Please select how many of each role you\'d like. \nPress the name of a role to see what it does.</string>
     <string name="default_number">0</string>
     <string name="submit">Ready to Go!</string>
