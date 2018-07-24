@@ -165,4 +165,3 @@ public class Game {
         votes = 0;
     }
 }
-//Please don't kill me

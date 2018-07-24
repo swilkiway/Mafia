@@ -7,6 +7,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
 
+import cussingfish.narrator.Handlers.GuessHandler;
+import cussingfish.narrator.Handlers.KillHandler;
+import cussingfish.narrator.Handlers.RegisterHandler;
+import cussingfish.narrator.Handlers.SaveHandler;
+import cussingfish.narrator.Handlers.SetupHandler;
+import cussingfish.narrator.Handlers.VoteHandler;
+
 public class WebServer {
     public static void main(String args[]) throws IOException {
         int port = Integer.parseInt(args[0]);

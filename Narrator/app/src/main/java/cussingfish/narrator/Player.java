@@ -1,7 +1,5 @@
 package cussingfish.narrator;
 
-import android.support.annotation.NonNull;
-
 public class Player {
     private String role = "";
     private String name = "";
