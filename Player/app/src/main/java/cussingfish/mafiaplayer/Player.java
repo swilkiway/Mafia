@@ -8,5 +8,4 @@ public class Player {
         //rip rip rip
         isDead = true;
     }
-
 }
