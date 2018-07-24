@@ -9,7 +9,7 @@ public class DoubleAgent extends Player {
     public void killPlayer(String victim) {
         alreadyKilled = true;
     }
-    
+
     public void savePlayer(String saved) {
         alreadySaved = true;
     }
