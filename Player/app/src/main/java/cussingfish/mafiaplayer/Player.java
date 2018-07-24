@@ -5,7 +5,8 @@ public class Player {
     public String userName;
     public Boolean isDead;
     public void castDayVote() {
-        //lalaaaaaaa
+        //rip rip rip
+        isDead = true;
     }
 
 }
