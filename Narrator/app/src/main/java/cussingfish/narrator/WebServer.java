@@ -12,15 +12,12 @@ public class WebServer {
         int port = Integer.parseInt(args[0]);
         System.out.println("Started server on " + args[0]);
         HttpServer server = HttpServer.create(new InetSocketAddress(port), port);
-//        server.createContext("/",new RootHandler());
-//        server.createContext("/register", new RegisterHandler());
-//        server.createContext("/mafiaKill", new QuestionHandler());
-//        server.createContext("/detectiveLearn", new NextHandler());
-//        server.createContext("/doubleAgentKill", new AnswerHandler());
-//        server.createContext("/doubleAgentSave", new )
-//        server.createContext("/bodyguardSave", new GuessHandler());
-//        server.createContext("/bomberKill", new AnswersHandler());
-//        server.createContext("/vote", new VoteHandler());
+        server.createContext("/setup", new SetupHandler());
+        server.createContext("/register", new RegisterHandler());
+        server.createContext("/kill", new KillHandler());
+        server.createContext("/guess", new GuessHandler());
+        server.createContext("/save", new SaveHandler());
+        server.createContext("/vote", new VoteHandler());
 
         server.setExecutor(null);
         server.start();

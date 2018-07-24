@@ -1,21 +1,3 @@
 <resources>
-    <!--General Strings-->
-    <string name="app_name">Narrator</string>
-    <string name="choose_roles">Please select how many of each role you\'d like. \nPress the name of a role to see what it does.</string>
-    <string name="default_number">0</string>
-    <string name="submit">Ready to Go!</string>
 
-    <!--Role Descriptions-->
-    <string name="mafia">Mafia</string>
-    <string name="mafia_desc">The mafia choose a person to kill every night.</string>
-    <string name="detectives">Detectives</string>
-    <string name="detective_desc">The detectives choose a person to learn about (have their alignment, mafia or civilian, revealed) every night.</string>
-    <string name="double_agents">Double Agents</string>
-    <string name="double_agent_desc">The double agents can kill one person and save one person per game.</string>
-    <string name="bodyguards">Bodyguards</string>
-    <string name="bodyguard_desc">The bodyguards choose a person to protect from the mafia every night.</string>
-    <string name="bombers">Bombers</string>
-    <string name="bomber_desc">When killed, the bombers immediately choose another person to kill.</string>
-    <string name="civilians">Civilians</string>
-    <string name="civilian_desc">Civilians don\'t do anything at night.</string>
 </resources>
