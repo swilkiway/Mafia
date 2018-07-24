@@ -1,24 +1,30 @@
 package cussingfish.narrator;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Game {
+    private boolean rolesReady;
     private ArrayList<String> roles;
     private ArrayList<Player> alive;
     private ArrayList<Player> dead;
-    private int votes;
+    private Player nightResults[];
+    private ArrayList<Vote> votes;
     private String mafiaKilled = null;
     private String doubleAgentKilled = null;
     private String bodyguardSaved = null;
     private String doubleAgentSaved = null;
+    private boolean detectiveGuess = false;
 
     private static Game game = null;
 
     private Game() {
+        rolesReady = false;
         roles = new ArrayList<>();
         alive = new ArrayList<>();
         dead = new ArrayList<>();
-        votes = 0;
+        nightResults = new Player[2];
+        votes = new ArrayList<>();
     }
 
     public static Game getGame() {
@@ -28,60 +34,105 @@ public class Game {
         return game;
     }
 
+    public void addPlayer(String name) {
+        Player p = new Player(name);
+        alive.add(p);
+    }
+
     public void setupRoles(int[] rolesList) {
         for (int i = 0; i < rolesList[0]; i++) {
             roles.add("mafia");
         }
+        for (int i = 0; i < rolesList[1]; i++) {
+            roles.add("detective");
+        }
+        for (int i = 0; i < rolesList[2]; i++) {
+            roles.add("double agent");
+        }
+        for (int i = 0; i < rolesList[3]; i++) {
+            roles.add("bodyguard");
+        }
+        for (int i = 0; i < rolesList[4]; i++) {
+            roles.add("bomber");
+        }
+        for (int i = 0; i < rolesList[5]; i++) {
+            roles.add("civilian");
+        }
+        for (int i = 0; i < 100; i++) {
+            Random rand = new Random();
+            int index = rand.nextInt(roles.size());
+            String tmp = roles.get(index);
+            roles.set(index, roles.get(0));
+            roles.set(0, tmp);
+        }
+        for (int i = 0; i < roles.size(); i++) {
+            alive.get(i).setRole(roles.get(i));
+        }
+        rolesReady = true;
     }
 
-    public String addPlayer(String name) {
-        return "";
+    public String getRole(String player) {
+        if (!rolesReady) { return null; }
+        for (Player p : alive) {
+            if (p.getName().equals(player)) {
+                return p.getRole();
+            }
+        }
+        return null;
     }
 
-    public String[] killPlayer(String victim) {
+    private boolean everyoneDone() {
+        return (mafiaKilled != null && doubleAgentKilled != null && bodyguardSaved != null &&
+                doubleAgentSaved != null && detectiveGuess);
+    }
+
+    public void killPlayer(String victim) {
         if (mafiaKilled == null) {
             mafiaKilled = victim;
         } else if (doubleAgentKilled == null) {
             doubleAgentKilled = victim;
-            if (bodyguardSaved != null && doubleAgentSaved != null) {
-                return resolveNight();
+            if (everyoneDone()) {
+                resolveNight();
             }
         }
-        return null;
     }
 
-    public String[] savePlayer(String saved) {
+    public void savePlayer(String saved) {
         if (bodyguardSaved == null) {
             bodyguardSaved = saved;
         } else if (doubleAgentSaved == null) {
             doubleAgentSaved = saved;
-            if (mafiaKilled != null && doubleAgentKilled != null) {
-                return resolveNight();
+            if (everyoneDone()) {
+                resolveNight();
             }
         }
-        return null;
     }
 
-    private String[] resolveNight() {
-        String[] results = new String[2];
-        if (mafiaKilled.equals(bodyguardSaved) || mafiaKilled.equals(doubleAgentSaved)) {
-            results[0] = mafiaKilled + " was saved last night by a mysterious do-gooder";
-        } else {
-            results[0] = mafiaKilled + " was knocked off by the mafia in the middle of the night";
+    private void resolveNight() {
+        nightResults[0] = findPlayer(mafiaKilled);
+        if (!mafiaKilled.equals(bodyguardSaved) && !mafiaKilled.equals(doubleAgentSaved)) {
+            nightResults[0].kill();
             removePlayer(mafiaKilled);
         }
         if (!doubleAgentKilled.equals("pass")) {
-            if (doubleAgentKilled.equals(bodyguardSaved)) {
-                results[1] = doubleAgentKilled + "was saved last night by a mysterious do-gooder";
-            } else {
-                results[1] = doubleAgentKilled + " was knocked off by the mafia in the middle of the night";
+            nightResults[1] = findPlayer(doubleAgentKilled);
+            if (!doubleAgentKilled.equals(bodyguardSaved)) {
+                nightResults[1].kill();
                 removePlayer(doubleAgentKilled);
             }
         } else {
-            results[1] = null;
+            nightResults[1] = null;
         }
         resetForNextNight();
-        return results;
+    }
+
+    private Player findPlayer(String name) {
+        for (Player p : alive) {
+            if (p.getName().equals(name)) {
+                return p;
+            }
+        }
+        return null;
     }
 
     private void removePlayer(String victim) {
@@ -98,9 +149,18 @@ public class Game {
         doubleAgentKilled = null;
         bodyguardSaved = null;
         doubleAgentSaved = null;
+        detectiveGuess = false;
+    }
+
+    public Player[] getNightResults() {
+        return nightResults;
     }
 
     public String guessPlayer(String guess) {
+        detectiveGuess = true;
+        if (everyoneDone()) {
+            resolveNight();
+        }
         for (Player p : alive) {
             if (p.getName().equals(guess)) {
                  if (p.getRole().equals("mafia")) {
@@ -122,20 +182,20 @@ public class Game {
         return null;
     }
 
-    public String votePlayer(String vote) {
+    public void votePlayer(String vote[]) {
+        Vote v;
         for (Player p : alive) {
-            if (p.getName().equals(vote)) {
-                p.addVote();
-                votes++;
+            if (p.getName().equals(vote[1])) {
+                v = new Vote(vote[0], p);
+                votes.add(v);
             }
         }
-        if (votes == alive.size()) {
-            return resolveVoting();
+        if (votes.size() == alive.size()) {
+            resolveVoting();
         }
-        return null;
     }
 
-    private String resolveVoting() {
+    private void resolveVoting() {
         boolean isTied = false;
         Player lynched = null;
         for (Player p : alive) {
@@ -148,20 +208,20 @@ public class Game {
                 isTied = true;
             }
         }
-        if (isTied) {
-            return "No one could agree on who to lynch, so everyone survived the day";
-        } else {
+        if (!isTied) {
             dead.add(lynched);
             alive.remove(lynched);
             clearVotes();
-            return "The majority voted to lynch " + lynched.getName() + ", who was a " + lynched.getRole();
         }
+    }
+
+    public ArrayList<Vote> getVotingResult() {
+        return votes;
     }
 
     private void clearVotes() {
         for (Player p : alive) {
             p.resetVotes();
         }
-        votes = 0;
     }
 }

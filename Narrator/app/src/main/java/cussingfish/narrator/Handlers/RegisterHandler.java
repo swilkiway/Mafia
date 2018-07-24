@@ -6,7 +6,6 @@ import com.sun.net.httpserver.HttpHandler;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 
 import cussingfish.narrator.Game;
 import cussingfish.narrator.WebServer;
@@ -16,11 +15,6 @@ public class RegisterHandler implements HttpHandler {
         InputStream is = h.getRequestBody();
         Gson gson = new Gson();
         String name = gson.fromJson(WebServer.readString(is), String.class);
-        String role = Game.getGame().addPlayer(name);
-        String response = gson.toJson(role);
-        h.sendResponseHeaders(200, 0);
-        OutputStream os = h.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
+        Game.getGame().addPlayer(name);
     }
 }

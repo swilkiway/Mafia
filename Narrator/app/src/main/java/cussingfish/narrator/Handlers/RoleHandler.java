@@ -11,13 +11,14 @@ import java.io.OutputStream;
 import cussingfish.narrator.Game;
 import cussingfish.narrator.WebServer;
 
-public class GuessHandler implements HttpHandler {
+public class RoleHandler implements HttpHandler {
     public void handle(HttpExchange h) throws IOException {
         InputStream is = h.getRequestBody();
         Gson gson = new Gson();
         String player = gson.fromJson(WebServer.readString(is), String.class);
-        String alignment = Game.getGame().guessPlayer(player);
-        String response = gson.toJson(alignment);
+        String role = Game.getGame().getRole(player);
+        if (role == null) { return; }
+        String response = gson.toJson(role);
         h.sendResponseHeaders(200, 0);
         OutputStream os = h.getResponseBody();
         os.write(response.getBytes());

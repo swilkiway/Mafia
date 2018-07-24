@@ -5,19 +5,16 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 
 import cussingfish.narrator.Game;
-import cussingfish.narrator.WebServer;
+import cussingfish.narrator.Player;
 
-public class GuessHandler implements HttpHandler {
+public class DayHandler implements HttpHandler {
     public void handle(HttpExchange h) throws IOException {
-        InputStream is = h.getRequestBody();
         Gson gson = new Gson();
-        String player = gson.fromJson(WebServer.readString(is), String.class);
-        String alignment = Game.getGame().guessPlayer(player);
-        String response = gson.toJson(alignment);
+        Player result = Game.getGame().getVotingResult();
+        String response = gson.toJson(result);
         h.sendResponseHeaders(200, 0);
         OutputStream os = h.getResponseBody();
         os.write(response.getBytes());

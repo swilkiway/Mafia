@@ -7,9 +7,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
 
+import cussingfish.narrator.Handlers.DayHandler;
 import cussingfish.narrator.Handlers.GuessHandler;
 import cussingfish.narrator.Handlers.KillHandler;
+import cussingfish.narrator.Handlers.NightHandler;
 import cussingfish.narrator.Handlers.RegisterHandler;
+import cussingfish.narrator.Handlers.RoleHandler;
 import cussingfish.narrator.Handlers.SaveHandler;
 import cussingfish.narrator.Handlers.SetupHandler;
 import cussingfish.narrator.Handlers.VoteHandler;
@@ -21,10 +24,13 @@ public class WebServer {
         HttpServer server = HttpServer.create(new InetSocketAddress(port), port);
         server.createContext("/setup", new SetupHandler());
         server.createContext("/register", new RegisterHandler());
+        server.createContext("/getrole", new RoleHandler());
         server.createContext("/kill", new KillHandler());
         server.createContext("/guess", new GuessHandler());
         server.createContext("/save", new SaveHandler());
         server.createContext("/vote", new VoteHandler());
+        server.createContext("/dayready", new DayHandler());
+        server.createContext("/nightready", new NightHandler());
 
         server.setExecutor(null);
         server.start();
