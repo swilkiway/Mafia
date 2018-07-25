@@ -1,5 +1,7 @@
 package cussingfish.mafiaplayer;
 
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -42,6 +44,28 @@ public class LoginActivity extends AppCompatActivity {
                 waitingText.setVisibility(View.VISIBLE);
             }
         });
-    }
 
+    }
+//    public class GuessTask extends AsyncTask<Guess, Guess, Guess> {
+//        @Override
+//        protected Guess doInBackground(Guess... gObj) {
+//            ServerProxy.submitGuess(gObj[0]);
+//            try {
+//                boolean done = false;
+//                while (!done) {
+//                    Thread.sleep(1000);
+//                    done = ServerProxy.testIfReady(GUESS_CODE).isReady();
+//                }
+//                return null;
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//            return null;
+//        }
+//        @Override
+//        protected void onPostExecute(Guess g) {
+//            Intent intent = new Intent(GuessActivity.this, DisplayActivity.class);
+//            startActivity(intent);
+//        }
+//    }
 }

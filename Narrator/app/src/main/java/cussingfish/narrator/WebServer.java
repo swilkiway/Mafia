@@ -9,6 +9,7 @@ import java.net.InetSocketAddress;
 
 import cussingfish.narrator.Handlers.AgentHandler;
 import cussingfish.narrator.Handlers.BodyguardSaveHandler;
+import cussingfish.narrator.Handlers.BomberKillHandler;
 import cussingfish.narrator.Handlers.DAKillHandler;
 import cussingfish.narrator.Handlers.DASaveHandler;
 import cussingfish.narrator.Handlers.DayHandler;
@@ -31,14 +32,15 @@ public class WebServer {
         server.createContext("/getrole", new RoleHandler());
         server.createContext("/mafiakill", new MafiaKillHandler());
         server.createContext("/dakill", new DAKillHandler());
+        server.createContext("/bomberkill", new BomberKillHandler());
         server.createContext("/guess", new GuessHandler());
         server.createContext("/bodyguardsave", new BodyguardSaveHandler());
         server.createContext("/dasave", new DASaveHandler());
         server.createContext("/vote", new VoteHandler());
-        server.createContext("/dayready", new DayHandler());
-        server.createContext("/nightready", new NightHandler());
+        server.createContext("/dayresult", new DayHandler());
+        server.createContext("/nightresult", new NightHandler());
         server.createContext("/doubleagent", new AgentHandler());
-        server.createContext("/status", new StatusHandler());
+        server.createContext("/checkstatus", new StatusHandler());
 
         server.setExecutor(null);
         server.start();

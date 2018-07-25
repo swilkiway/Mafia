@@ -8,12 +8,12 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import cussingfish.narrator.Game;
-import cussingfish.narrator.Player;
+import cussingfish.narrator.Vote;
 
 public class DayHandler implements HttpHandler {
     public void handle(HttpExchange h) throws IOException {
         Gson gson = new Gson();
-        Player result = Game.getGame().getVotingResult();
+        Vote[] result = Game.getGame().getVotingResult();
         String response = gson.toJson(result);
         h.sendResponseHeaders(200, 0);
         OutputStream os = h.getResponseBody();
