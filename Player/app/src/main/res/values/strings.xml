@@ -1,21 +1,39 @@
 <resources>
     <!--General Strings-->
     <string name="app_name">MafiaPlayer</string>
-    <string name="choose_roles">Please select how many of each role you\'d like. \nPress the name of a role to see what it does.</string>
+    <string name="choose_roles">Please select how many of each role you\'d like. \nPress the name of a role to see what it does.
+        \nRoles marked with * should only have one of them per game.</string>
     <string name="default_number">0</string>
     <string name="submit">Ready to Go!</string>
 
     <!--Role Descriptions-->
-    <string name="mafia">Mafia</string>
-    <string name="mafia_desc">The mafia choose a person to kill every night.</string>
+    <string name="mafiosi">Mafiosi</string>
+    <string name="mafia_desc">The mafiosi choose a person to kill every night. The victim will be selected
+        randomly from those the mafiosi choose.</string>
     <string name="detectives">Detectives</string>
-    <string name="detective_desc">The detectives choose a person to learn about (have their alignment, mafia or civilian, revealed) every night.</string>
-    <string name="double_agents">Double Agents</string>
-    <string name="double_agent_desc">The double agents can kill one person and save one person per game.</string>
+    <string name="detective_desc">The detectives choose a person to learn about (have their alignment,
+        mafia or civilian, revealed) every night. If there is more than one, they work separately, not
+        knowing who the other detectives are.</string>
+    <string name="double_agents">Double Agent*</string>
+    <string name="double_agent_desc">The double agent can kill one person and save one person per game.</string>
     <string name="bodyguards">Bodyguards</string>
-    <string name="bodyguard_desc">The bodyguards choose a person to protect from the mafia every night.</string>
-    <string name="bombers">Bombers</string>
-    <string name="bomber_desc">When killed, the bombers immediately choose another person to kill.</string>
+    <string name="bodyguard_desc">The bodyguards choose a person to protect from the mafia every night.
+        The saved person will be selected randomly from those the bodyguards choose.</string>
+    <string name="bombers">Bomber*</string>
+    <string name="bomber_desc">The bomber selects a target at the beginning of the round. If the bomber
+        dies during the round, the target will die too.</string>
     <string name="civilians">Civilians</string>
     <string name="civilian_desc">Civilians don\'t do anything at night.</string>
+    <string name="matchmaker">Matchmaker*</string>
+    <string name="matchmaker_desc">At the beginning of the game, the matchmaker chooses two people to
+        be in love. If one of them dies, the other will also.</string>
+    <string name="official">Official*</string>
+    <string name="official_desc">The official chooses a person at night. That person\'s vote will count
+        double the next day.</string>
+    <string name="suspects">Suspects</string>
+    <string name="suspects_desc">The suspects are normal civilians; however, when investigated by a
+        detective, they appear to be mafia.</string>
+    <string name="journalist">Journalist*</string>
+    <string name="journalist_desc">The journalist is a normal civilian; however, if killed, roles will
+        no longer be announced when other players are killed.</string>
 </resources>

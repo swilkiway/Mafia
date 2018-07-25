@@ -1,6 +1,5 @@
 package cussingfish.mafiaplayer;
 
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,10 +22,10 @@ public class DayVoteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_day_vote);
-        optionsList = (RecyclerView) findViewById(R.id.optionsList);
+//        optionsList = (RecyclerView) findViewById(R.id.optionsList);
         optionsManager = new LinearLayoutManager(this);
         optionsList.setLayoutManager(optionsManager);
-        optionsAdapter = new OptionsAdapter(options);
+//        optionsAdapter = new OptionsAdapter(options);
         optionsList.setAdapter(optionsAdapter);
     }
 
@@ -38,7 +37,8 @@ public class DayVoteActivity extends AppCompatActivity {
         @Override
         public OptionsHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater inflater = LayoutInflater.from(DayVoteActivity.this);
-            return new OptionsHolder(inflater.inflate(R.layout.option_item, parent, false));
+//            return new OptionsHolder(inflater.inflate(R.layout.option_item, parent, false));
+            return null;
         }
         @Override
         public void onBindViewHolder(OptionsHolder holder, int position) {
@@ -57,16 +57,16 @@ public class DayVoteActivity extends AppCompatActivity {
         private Button eButton;
         public OptionsHolder(View view) {
             super(view);
-            eTextView = (TextView) view.findViewById(R.id.option_text);
-            eButton = (Button) view.findViewById(R.id.option_button);
+//            eTextView = (TextView) view.findViewById(R.id.option_text);
+//            eButton = (Button) view.findViewById(R.id.option_button);
             eButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     eButton.setEnabled(false);
-                    mGuess.setMessage(mAnswer.getMessage());
-                    mGuess.setUserName(User.get().getUserName());
-                    GuessTask r = new GuessTask();
-                    r.execute(mGuess);
+//                    mGuess.setMessage(mAnswer.getMessage());
+//                    mGuess.setUserName(User.get().getUserName());
+//                    GuessTask r = new GuessTask();
+//                    r.execute(mGuess);
                 }
             });
         }

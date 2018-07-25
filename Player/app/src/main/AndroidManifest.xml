@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".DayVoteActivity" />
+        <activity android:name=".NightActivity"></activity>
     </application>
 
 </manifest>
