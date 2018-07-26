@@ -1,14 +1,16 @@
 package cussingfish.mafiaplayer.Roles;
 
 public class Detective extends Player {
-    public static Detective get() {
-        if (Detective == null) {
-            Detective = new Detective();
-        }
-        return Detective;
+    public static void set(String name) {
+        detective = new Detective(name);
     }
-    private static Detective Detective = null;
-    private Detective() { }
+    public static Detective get() {
+        return detective;
+    }
+    private static Detective detective = null;
+    private Detective(String name) {
+        userName = name;
+    }
 
     public void investigate(String suspect) {
 

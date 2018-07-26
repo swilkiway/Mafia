@@ -1,14 +1,16 @@
 package cussingfish.mafiaplayer.Roles;
 
 public class Official extends Player {
-    public static Official get() {
-        if (Official == null) {
-            Official = new Official();
-        }
-        return Official;
+    public static void set(String name) {
+        official = new Official(name);
     }
-    private static Official Official = null;
-    private Official() { }
+    public static Official get() {
+        return official;
+    }
+    private static Official official = null;
+    private Official(String name) {
+        userName = name;
+    }
     public void enfranchise() {
     }
 }

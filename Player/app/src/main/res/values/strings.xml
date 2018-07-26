@@ -1,14 +1,19 @@
 <resources>
-    <!--General Strings-->
+    <!--Login Strings-->
     <string name="app_name">MafiaPlayer</string>
     <string name="choose_roles">Please select how many of each role you\'d like. \nPress the name of a role to see what it does.
         \nRoles marked with * should only have one of them per game.</string>
     <string name="default_number">0</string>
     <string name="submit">Ready to Go!</string>
+    <string name="enter_username">Enter a username</string>
+    <string name="enter_host">Enter the host IP address</string>
+    <string name="setup_game">Set up the game</string>
+    <string name="wait_setup">Wait for setup</string>
+    <string name="please_wait">Please wait for setup to complete.</string>
 
     <!--Role Descriptions-->
     <string name="mafiosi">Mafiosi</string>
-    <string name="mafia_desc">The mafiosi choose a person to kill every night. The victim will be selected
+    <string name="mafiosi_desc">The mafiosi choose a person to kill every night. The victim will be selected
         randomly from those the mafiosi choose.</string>
     <string name="detectives">Detectives</string>
     <string name="detective_desc">The detectives choose a person to learn about (have their alignment,
@@ -36,4 +41,7 @@
     <string name="journalist">Journalist*</string>
     <string name="journalist_desc">The journalist is a normal civilian; however, if killed, roles will
         no longer be announced when other players are killed.</string>
+
+    <!--Game Strings-->
+    <string name="choose_lynch">Please select the player you\'d like to lynch.</string>
 </resources>

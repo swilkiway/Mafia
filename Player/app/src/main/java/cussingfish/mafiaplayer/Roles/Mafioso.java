@@ -1,15 +1,21 @@
 package cussingfish.mafiaplayer.Roles;
 
 public class Mafioso extends Player {
-    public static Mafioso get() {
-        if (Mafioso == null) {
-            Mafioso = new Mafioso();
-        }
-        return Mafioso;
+    public static void set(String username, String teammates[]) {
+        mafioso = new Mafioso(username, teammates);
     }
-    private static Mafioso Mafioso = null;
-    private Mafioso() { }
-
+    public static Mafioso get() {
+        return mafioso;
+    }
+    private static Mafioso mafioso = null;
+    private Mafioso(String u, String t[]) {
+        userName = u;
+        teammates = t;
+    }
+    private String teammates[];
+    public String[] getTeammates() {
+        return teammates;
+    }
     public void snuffEm(String victim) {
 
     }

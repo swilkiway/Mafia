@@ -1,14 +1,16 @@
 package cussingfish.mafiaplayer.Roles;
 
 public class DoubleAgent extends Player {
-    public static DoubleAgent get() {
-        if (DoubleAgent == null) {
-            DoubleAgent = new DoubleAgent();
-        }
-        return DoubleAgent;
+    public static void set(String name) {
+        doubleAgent = new DoubleAgent(name);
     }
-    private static DoubleAgent DoubleAgent = null;
-    private DoubleAgent() { }
+    public static DoubleAgent get() {
+        return doubleAgent;
+    }
+    private static DoubleAgent doubleAgent = null;
+    private DoubleAgent(String name) {
+        userName = name;
+    }
     private boolean alreadyKilled = false;
     private boolean alreadySaved = false;
     public boolean hasAlreadyKilled() { return alreadyKilled; }

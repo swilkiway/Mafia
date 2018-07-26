@@ -6,9 +6,30 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/enterUsername"
+        android:hint="@string/enter_username"
+        android:inputType="text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/enterHost"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/enterHost"
+        android:hint="@string/enter_host"
+        android:inputType="text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/buttons"/>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/buttons"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -16,19 +37,21 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Set up the game"
-            android:id="@+id/setup"/>
+            android:text="@string/setup_game"
+            android:id="@+id/setup"
+            android:enabled="false"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Wait for setup"
-            android:id="@+id/wait"/>
+            android:text="@string/wait_setup"
+            android:id="@+id/wait"
+            android:enabled="false"/>
     </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Please wait for setup to complete"
+        android:text="@string/please_wait"
         android:id="@+id/waitingText"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"

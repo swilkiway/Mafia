@@ -12,6 +12,7 @@ import cussingfish.narrator.WebServer;
 
 public class SetupHandler implements HttpHandler {
     public void handle(HttpExchange h) throws IOException {
+        System.out.println("in handler");
         InputStream is = h.getRequestBody();
         Gson gson = new Gson();
         int roles[] = gson.fromJson(WebServer.readString(is), int[].class);
