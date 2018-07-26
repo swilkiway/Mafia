@@ -1,14 +1,16 @@
 package cussingfish.mafiaplayer.Roles;
 
 public class Matchmaker extends Player {
-    public static Matchmaker get() {
-        if (Matchmaker == null) {
-            Matchmaker = new Matchmaker();
-        }
-        return Matchmaker;
+    public static void set(String name) {
+        matchmaker = new Matchmaker(name);
     }
-    private static Matchmaker Matchmaker = null;
-    private Matchmaker() { }
+    public static Matchmaker get() {
+        return matchmaker;
+    }
+    private static Matchmaker matchmaker = null;
+    private Matchmaker(String name) {
+        userName = name;
+    }
     public void matchmake() {
 
     }

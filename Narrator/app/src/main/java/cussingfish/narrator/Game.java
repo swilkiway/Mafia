@@ -59,6 +59,7 @@ public class Game {
     }
 
     public void setupRoles(int[] rolesList) {
+        System.out.println("In setupGame");
         mafiaSize = rolesList[ROLES.MAFIOSO.ordinal()];
         for (int i = 0; i < rolesList[ROLES.MAFIOSO.ordinal()]; i++) {
             roles.add("mafioso");

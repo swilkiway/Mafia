@@ -12,13 +12,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <EditText
-            android:id="@+id/mafia"
+            android:id="@+id/mafiosi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="number"
             android:text="@string/default_number" />
         <TextView
-            android:id="@+id/mafiaText"
+            android:id="@+id/mafiosiText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/mafiosi" />
@@ -44,7 +44,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <EditText
-            android:id="@+id/doubleAgents"
+            android:id="@+id/doubleAgent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="number"
@@ -76,7 +76,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <EditText
-            android:id="@+id/bombers"
+            android:id="@+id/bomber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="number"
