@@ -14,9 +14,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class DayFragment extends Fragment {
-    private RecyclerView optionsList;
-    private RecyclerView.Adapter optionsAdapter;
-    private RecyclerView.LayoutManager optionsManager;
+    private ArrayList<String> players;
+    private RecyclerView playerList;
+    private RecyclerView.Adapter playerAdapter;
+    private RecyclerView.LayoutManager playerManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,40 +32,40 @@ public class DayFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-    //        optionsList = (RecyclerView) findViewById(R.id.optionsList);
-        optionsManager = new LinearLayoutManager(getContext());
-        optionsList.setLayoutManager(optionsManager);
-//        optionsAdapter = new OptionsAdapter(options);
-        optionsList.setAdapter(optionsAdapter);
+        playerList = view.findViewById(R.id.playerList);
+        playerManager = new LinearLayoutManager(getContext());
+        playerList.setLayoutManager(playerManager);
+        playerAdapter = new PlayerAdapter(players);
+        playerList.setAdapter(playerAdapter);
     }
 
-    public class OptionsAdapter extends RecyclerView.Adapter<DayFragment.OptionsHolder> {
-        private ArrayList<String> options;
-        public OptionsAdapter(ArrayList<String> r) {
-            options = r;
+    public class PlayerAdapter extends RecyclerView.Adapter<DayFragment.PlayerHolder> {
+        private ArrayList<String> players;
+        public PlayerAdapter(ArrayList<String> r) {
+            players = r;
         }
         @Override
-        public DayFragment.OptionsHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public DayFragment.PlayerHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater inflater = LayoutInflater.from(getActivity());
-//            return new OptionsHolder(inflater.inflate(R.layout.option_item, parent, false));
+//            return new playerHolder(inflater.inflate(R.layout.option_item, parent, false));
             return null;
         }
         @Override
-        public void onBindViewHolder(DayFragment.OptionsHolder holder, int position) {
-            String option = options.get(position);
+        public void onBindViewHolder(DayFragment.PlayerHolder holder, int position) {
+            String option = players.get(position);
             holder.bind(option);
         }
 
         @Override
         public int getItemCount() {
-            return options.size();
+            return players.size();
         }
     }
-    public class OptionsHolder extends RecyclerView.ViewHolder {
+    public class PlayerHolder extends RecyclerView.ViewHolder {
         private String option;
         private TextView eTextView;
         private Button eButton;
-        public OptionsHolder(View view) {
+        public PlayerHolder(View view) {
             super(view);
 //            eTextView = (TextView) view.findViewById(R.id.option_text);
 //            eButton = (Button) view.findViewById(R.id.option_button);
