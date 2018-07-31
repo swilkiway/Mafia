@@ -19,13 +19,16 @@ public class Game {
     private ArrayList<Player> alive;
     private ArrayList<Player> dead;
     private ArrayList<String> mafia;
-    private Player nightResults[];
+    private NightResults nightResults;
     private ArrayList<Vote> votes;
     private String mafiaKilled = null;
     private String doubleAgentKilled = null;
     private String bomberKilled = null;
     private String bodyguardSaved = null;
     private String doubleAgentSaved = null;
+    private String defended = null;
+    private String enfranchised = null;
+    private String silenced = null;
 
     private static Game game = null;
 
@@ -38,7 +41,7 @@ public class Game {
         alive = new ArrayList<>();
         dead = new ArrayList<>();
         mafia = new ArrayList<>();
-        nightResults = new Player[2];
+        nightResults = new NightResults();
         votes = new ArrayList<>();
     }
 
@@ -169,6 +172,27 @@ public class Game {
         }
     }
 
+    public void lawyerDefendPlayer(String defendant) {
+        defended = defendant;
+//        if (everyoneDone()) {
+//            resolveNight();
+//        }
+    }
+
+    public void thugSilencePlayer(String quiet) {
+        silenced = quiet;
+//        if (everyoneDone()) {
+//            resolveNight();
+//        }
+    }
+
+    public void officialEnfranchisePlayer(String voter) {
+        enfranchised = voter;
+//        if (everyoneDone()) {
+//            resolveNight();
+//        }
+    }
+
     public void daSavePlayer(String saved) {
         doubleAgentSaved = saved;
         if (everyoneDone()) {
@@ -177,20 +201,27 @@ public class Game {
     }
 
     private void resolveNight() {
-        nightResults[0] = findPlayer(mafiaKilled);
         if (!mafiaKilled.equals(bodyguardSaved) && !mafiaKilled.equals(doubleAgentSaved)) {
-            nightResults[0].kill();
-            removePlayer(findPlayer(mafiaKilled));
+            Player p = findPlayer(mafiaKilled);
+            nightResults.setMafiaKilled(p);
+            p.kill();
+            removePlayer(p);
+        } else {
+            nightResults.setBodyguardSaved(mafiaKilled);
         }
         if (!doubleAgentKilled.equals("pass")) {
-            nightResults[1] = findPlayer(doubleAgentKilled);
             if (!doubleAgentKilled.equals(bodyguardSaved)) {
-                nightResults[1].kill();
-                removePlayer(findPlayer(doubleAgentKilled));
+                Player p = findPlayer(doubleAgentKilled);
+                nightResults.setDaKilled(p);
+                p.kill();
+                removePlayer(p);
+            } else {
+                nightResults.setDaSaved(doubleAgentKilled);
             }
-        } else {
-            nightResults[1] = null;
         }
+        nightResults.setDefended(defended);
+        nightResults.setEnfranchised(enfranchised);
+        nightResults.setSilenced(silenced);
         resetForNextNight();
     }
 
@@ -239,7 +270,7 @@ public class Game {
         doubleAgentSaved = null;
     }
 
-    public Player[] getNightResults() {
+    public NightResults getNightResults() {
         return nightResults;
     }
 
