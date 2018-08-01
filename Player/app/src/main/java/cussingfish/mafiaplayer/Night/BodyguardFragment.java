@@ -21,7 +21,7 @@ public class BodyguardFragment extends Fragment {
     private RecyclerView.LayoutManager playerManager;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_mafioso, container, false);
+        return inflater.inflate(R.layout.fragment_bodyguard, container, false);
     }
 
     @Override
