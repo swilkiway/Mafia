@@ -6,6 +6,7 @@ import com.sun.net.httpserver.HttpHandler;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 import cussingfish.narrator.Game;
 import cussingfish.narrator.WebServer;
@@ -16,5 +17,10 @@ public class BodyguardSaveHandler implements HttpHandler {
         Gson gson = new Gson();
         String player = gson.fromJson(WebServer.readString(is), String.class);
         Game.getGame().bodyguardSavePlayer(player);
+        String response = gson.toJson("response");
+        h.sendResponseHeaders(200, 0);
+        OutputStream os = h.getResponseBody();
+        os.write(response.getBytes());
+        os.close();
     }
 }

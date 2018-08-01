@@ -14,6 +14,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import cussingfish.mafiaplayer.Roles.Bodyguard;
+import cussingfish.mafiaplayer.Roles.Bomber;
+import cussingfish.mafiaplayer.Roles.Detective;
+import cussingfish.mafiaplayer.Roles.DoubleAgent;
+import cussingfish.mafiaplayer.Roles.Mafioso;
+import cussingfish.mafiaplayer.Roles.Player;
+
 public class SetupFragment extends Fragment {
     enum ROLES { MAFIOSO, DETECTIVE, DOUBLE_AGENT, BODYGUARD, BOMBER, CIVILIAN }
     private EditText mafiosi;
@@ -255,13 +262,46 @@ public class SetupFragment extends Fragment {
     public class SetupTask extends AsyncTask<int[], String, String[]> {
         @Override
         protected String[] doInBackground(int[]... r) {
+            String l = "test";
             ServerProxy.get().setup(r[0]);
+            try {
+                String role[] = null;
+                while (role == null) {
+                    Thread.sleep(1000);
+                    role = ServerProxy.get().getRole(username);
+                }
+                return role;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             return null;
         }
 
         @Override
         protected void onPostExecute(String s[]) {
+            createCharacter(username, s);
             getActivity().onBackPressed();
+        }
+        private void createCharacter(String name, String role[]) {
+            switch (role[0]) {
+                case "mafioso":
+                    Mafioso.set(name, getTeammates(role)); break;
+                case "detective":
+                    Detective.set(name); break;
+                case "double agent":
+                    DoubleAgent.set(name); break;
+                case "bodyguard":
+                    Bodyguard.set(name); break;
+                case "bomber":
+                    Bomber.set(name); break;
+                default:
+                    Player.set(name); break;
+            }
+        }
+        private String[] getTeammates(String role[]) {
+            String team[] = new String[role.length - 1];
+            System.arraycopy(role, 1, team, 0, role.length - 1);
+            return team;
         }
     }
 }
