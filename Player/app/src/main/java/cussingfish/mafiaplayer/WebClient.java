@@ -17,14 +17,12 @@ public class WebClient {
             if (auth != null) {
                 connection.setRequestProperty("Authorization", auth);
             }
-            if (json != null) {
                 OutputStream os = connection.getOutputStream();
                 OutputStreamWriter osw = new OutputStreamWriter(os, "UTF-8");
                 osw.write(json);
                 osw.flush();
                 osw.close();
                 os.close();
-            }
             int d = connection.getResponseCode();
             if (d == HttpURLConnection.HTTP_OK) {
                 InputStream responseBody = connection.getInputStream();
