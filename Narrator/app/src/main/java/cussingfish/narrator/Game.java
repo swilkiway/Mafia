@@ -179,7 +179,7 @@ public class Game {
 //        }
     }
 
-    public void thugSilencePlayer(String quiet) {
+    public void blackmailerSilencePlayer(String quiet) {
         silenced = quiet;
 //        if (everyoneDone()) {
 //            resolveNight();

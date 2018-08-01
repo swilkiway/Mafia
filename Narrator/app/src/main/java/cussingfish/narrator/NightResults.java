@@ -1,5 +1,7 @@
 package cussingfish.narrator;
 
+import java.util.ArrayList;
+
 public class NightResults {
     private Player mafiaKilled;
     private Player daKilled;
@@ -8,6 +10,7 @@ public class NightResults {
     private String defended;
     private String enfranchised;
     private String silenced;
+    private Player[] alive;
     public void setMafiaKilled(Player p) {
         mafiaKilled = p;
     }
@@ -29,4 +32,5 @@ public class NightResults {
     public void setSilenced(String p) {
         silenced = p;
     }
+    public void setAlive(ArrayList<Player> a) { alive = a.toArray(new Player[a.size()]); }
 }
