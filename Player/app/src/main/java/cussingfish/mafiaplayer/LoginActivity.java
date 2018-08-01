@@ -23,6 +23,7 @@ import cussingfish.mafiaplayer.Roles.Player;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private boolean setupPlayer = false;
     private Button setup;
     private Button wait;
     private EditText enterUsername;
@@ -92,6 +93,7 @@ public class LoginActivity extends AppCompatActivity {
                 wait.setVisibility(View.GONE);
                 enterUsername.setVisibility(View.GONE);
                 enterHost.setVisibility(View.GONE);
+                setupPlayer = true;
                 RegisterTask r = new RegisterTask();
                 r.execute(username);
                 Bundle bundle = new Bundle();
@@ -132,26 +134,30 @@ public class LoginActivity extends AppCompatActivity {
     public class RegisterTask extends AsyncTask<String, String, String[]> {
         @Override
         protected String[] doInBackground(String... s) {
-            String username = s[0];
+            String name = username;
             ServerProxy.get().setHostIP(hostIP);
             ServerProxy.get().register(username);
-            try {
-                String role[] = null;
-                while (role == null) {
-                    Thread.sleep(1000);
-                    role = ServerProxy.get().getRole(username);
+            if (!setupPlayer) {
+                try {
+                    String role[] = null;
+                    while (role == null) {
+                        Thread.sleep(1000);
+                        role = ServerProxy.get().getRole(username);
+                    }
+                    return role;
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-                return role;
-            } catch (InterruptedException e) {
-                e.printStackTrace();
             }
             return null;
         }
         @Override
         protected void onPostExecute(String s[]) {
-            createCharacter(username, s);
-            Intent intent = new Intent(LoginActivity.this, GameActivity.class);
-            startActivity(intent);
+            if (!setupPlayer) {
+                createCharacter(username, s);
+                Intent intent = new Intent(LoginActivity.this, GameActivity.class);
+                startActivity(intent);
+            }
         }
         private void createCharacter(String name, String role[]) {
             switch (role[0]) {

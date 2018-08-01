@@ -17,5 +17,10 @@ public class BomberKillHandler implements HttpHandler {
         Gson gson = new Gson();
         String player = gson.fromJson(WebServer.readString(is), String.class);
         Game.getGame().bomberKillPlayer(player);
+        String response = gson.toJson("response");
+        h.sendResponseHeaders(200, 0);
+        OutputStream os = h.getResponseBody();
+        os.write(response.getBytes());
+        os.close();
     }
 }
