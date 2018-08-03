@@ -1,6 +1,8 @@
 package cussingfish.mafiaplayer.Roles;
 
-public class Bodyguard extends Player {
+import cussingfish.mafiaplayer.NightResults;
+
+public class Bodyguard extends Civilian {
     public static void set(String name) {
         bodyguard = new Bodyguard(name);
     }
@@ -15,4 +17,5 @@ public class Bodyguard extends Player {
     public void guardBody() {
 
     }
+
 }

@@ -4,7 +4,10 @@
     <string name="choose_roles">Please select how many of each role you\'d like. \nPress the name of a role to see what it does.
         \nRoles marked with * should only have one of them per game.</string>
     <string name="default_number">0</string>
-    <string name="submit">Ready to Go!</string>
+    <string name="ready">Ready to Go!</string>
+    <string name="submit">Submit</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
     <string name="enter_username">Enter a username</string>
     <string name="enter_host">Enter the host IP address</string>
     <string name="setup_game">Set up the game</string>
@@ -44,4 +47,23 @@
 
     <!--Game Strings-->
     <string name="choose_lynch">Please select the player you\'d like to lynch.</string>
+    <string name="mafia_killed">%1$s, the %2$s, was killed by the mafia!\n</string>
+    <string name="bodyguard_saved">%1$s was saved by the bodyguard!\n</string>
+    <string name="da_killed">%1$s, the %2$s, was killed by a mysterious stranger!\n</string>
+    <string name="da_saved">%1$s was saved by a mysterious stranger!\n</string>
+    <string name="bomber_killed">BOOM! %1$s, the %2$s, was killed by the bomber!\n</string>
+    <string name="lynched">%1$s, the %2$s, was nominated to be lynched!\n</string>
+    <string name="voted">%1$s voted for %2$s.\n</string>
+
+    <!--Night Strings-->
+    <string name="kill">Please select a person to kill.</string>
+    <string name="mafia_team">These are your fellow mafiosi.\n</string>
+    <string name="investigate">Please select a person to investigate.</string>
+    <string name="guard">Please select a person to guard for the night.</string>
+    <string name="da_kill">If you\'d like to kill tonight, select a person. \nIf you do not select anyone, it will be assumed that you want to save your one bullet.</string>
+    <string name="da_save">%1$s is going to die tonight. Would you like to save them?</string>
+    <string name="da_already_killed">You\'ve already used your one bullet.</string>
+    <string name="da_already_saved">You\'ve already saved someone.</string>
+    <string name="bomb">Please select a person who will also die if you die this round.</string>
+    <string name="sleep">You slumber peacefully, waiting for the business of the town to be finished for the night.</string>
 </resources>

@@ -1,6 +1,6 @@
 package cussingfish.mafiaplayer.Roles;
 
-public class Matchmaker extends Player {
+public class Matchmaker extends Civilian {
     public static void set(String name) {
         matchmaker = new Matchmaker(name);
     }

@@ -1,6 +1,6 @@
 package cussingfish.mafiaplayer.Roles;
 
-public class Detective extends Player {
+public class Detective extends Civilian {
     public static void set(String name) {
         detective = new Detective(name);
     }

@@ -47,7 +47,13 @@ public class ServerProxy {
         String urlString = "http://" + hostIP + ":" + "7996" + "/dakill";
         WebClient.getConnection(urlString, json, null);
     }
-    public String guess(String suspect) {
+    public void bomberKill(String target) {
+        Gson gson = new Gson();
+        String json = gson.toJson(target);
+        String urlString = "http://" + hostIP + ":" + "7996" + "/bomberkill";
+        WebClient.getConnection(urlString, json, null);
+    }
+    public String investigate(String suspect) {
         Gson gson = new Gson();
         String json = gson.toJson(suspect);
         String urlString = "http://" + hostIP + ":" + "7996" + "/guess";
@@ -72,17 +78,17 @@ public class ServerProxy {
         String urlString = "http://" + hostIP + ":" + "7996" + "/vote";
         WebClient.getConnection(urlString, json, null);
     }
-    public Vote[] dayResult() {
+    public DayResults dayResult() {
         Gson gson = new Gson();
         String urlString = "http://" + hostIP + ":" + "7996" + "/dayresult";
         String response = WebClient.getConnection(urlString, null, null);
-        return gson.fromJson(response, Vote[].class);
+        return gson.fromJson(response, DayResults.class);
     }
-    public String nightResult() {
+    public NightResults nightResult() {
         Gson gson = new Gson();
         String urlString = "http://" + hostIP + ":" + "7996" + "/nightresult";
         String response = WebClient.getConnection(urlString, null, null);
-        return gson.fromJson(response, String.class);
+        return gson.fromJson(response, NightResults.class);
     }
     public int checkStatus() {
         Gson gson = new Gson();

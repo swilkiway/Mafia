@@ -1,22 +1,18 @@
 package cussingfish.mafiaplayer;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerHolder> {
-    private ArrayList<String> players;
+    private Player players[];
     private int lastSelectedPosition = -1;
     Context context;
-    public PlayerAdapter(Context c, ArrayList<String> r) {
+    public PlayerAdapter(Context c, Player r[]) {
         context = c;
         players = r;
     }
@@ -27,35 +23,38 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerHold
     }
     @Override
     public void onBindViewHolder(PlayerAdapter.PlayerHolder holder, int position) {
-        String option = players.get(position);
+        String option = players[position].getName();
         holder.bind(option, position);
+    }
+    public String getSelected() {
+        return players[lastSelectedPosition].getName();
     }
 
     @Override
     public int getItemCount() {
-        return players.size();
+        return players.length;
     }
-public class PlayerHolder extends RecyclerView.ViewHolder {
-    private String option;
-    private TextView eTextView;
-    private RadioButton eButton;
-    public PlayerHolder(View view) {
-        super(view);
-        eTextView = view.findViewById(R.id.playerName);
-        eButton = view.findViewById(R.id.playerSelect);
-        eButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                eButton.setChecked(true);
-                lastSelectedPosition = getAdapterPosition();
-                notifyDataSetChanged();
-            }
-        });
+    public class PlayerHolder extends RecyclerView.ViewHolder {
+        private String option;
+        private TextView eTextView;
+        private RadioButton eButton;
+        public PlayerHolder(View view) {
+            super(view);
+            eTextView = view.findViewById(R.id.playerName);
+            eButton = view.findViewById(R.id.playerSelect);
+            eButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    eButton.setChecked(true);
+                    lastSelectedPosition = getAdapterPosition();
+                    notifyDataSetChanged();
+                }
+            });
+        }
+        public void bind(String o, int position) {
+            option = o;
+            eTextView.setText(option);
+            eButton.setChecked(lastSelectedPosition == position);
+        }
     }
-    public void bind(String o, int position) {
-        option = o;
-        eTextView.setText(option);
-        eButton.setChecked(lastSelectedPosition == position);
-    }
-}
 }

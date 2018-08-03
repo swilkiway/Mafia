@@ -1,4 +1,4 @@
 package cussingfish.mafiaplayer.Roles;
 
-public class Lawyer {
+public class Lawyer extends Civilian {
 }

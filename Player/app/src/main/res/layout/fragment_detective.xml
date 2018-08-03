@@ -10,7 +10,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Please select a person to investigate"/>
+            android:id="@+id/dayResults"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/investigate"/>
         <android.support.v7.widget.RecyclerView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -19,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/submitButton"
-            android:text="Submit"/>
+            android:text="@string/submit"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

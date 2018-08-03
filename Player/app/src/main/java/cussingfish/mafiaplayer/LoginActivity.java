@@ -15,10 +15,10 @@ import android.widget.TextView;
 
 import cussingfish.mafiaplayer.Roles.Bodyguard;
 import cussingfish.mafiaplayer.Roles.Bomber;
+import cussingfish.mafiaplayer.Roles.Civilian;
 import cussingfish.mafiaplayer.Roles.Detective;
 import cussingfish.mafiaplayer.Roles.DoubleAgent;
 import cussingfish.mafiaplayer.Roles.Mafioso;
-import cussingfish.mafiaplayer.Roles.Player;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -172,7 +172,7 @@ public class LoginActivity extends AppCompatActivity {
                 case "bomber":
                     Bomber.set(name); break;
                 default:
-                    Player.set(name); break;
+                    Civilian.set(name); break;
             }
         }
         private String[] getTeammates(String role[]) {

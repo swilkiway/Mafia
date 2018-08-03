@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class NightResults {
     private Player mafiaKilled;
     private Player daKilled;
+    private Player bombed;
     private String bodyguardSaved;
     private String daSaved;
     private String defended;
@@ -17,6 +18,7 @@ public class NightResults {
     public void setDaKilled(Player p) {
         daKilled = p;
     }
+    public void setBombed(Player p) { bombed = p; }
     public void setBodyguardSaved(String p) {
         bodyguardSaved = p;
     }

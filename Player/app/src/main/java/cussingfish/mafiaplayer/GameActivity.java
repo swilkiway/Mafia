@@ -16,7 +16,6 @@ import cussingfish.mafiaplayer.Roles.Bomber;
 import cussingfish.mafiaplayer.Roles.Detective;
 import cussingfish.mafiaplayer.Roles.DoubleAgent;
 import cussingfish.mafiaplayer.Roles.Mafioso;
-import cussingfish.mafiaplayer.Roles.Player;
 
 public class GameActivity extends AppCompatActivity {
 
