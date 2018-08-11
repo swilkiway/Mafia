@@ -79,9 +79,9 @@ public class DayFragment extends Fragment {
         }
     }
 
-    public class WaitTask extends AsyncTask<String, String, String> {
+    public class WaitTask extends AsyncTask<String, String, DayResults> {
         @Override
-        protected String doInBackground(String... r) {
+        protected DayResults doInBackground(String... r) {
             try {
                 DayResults d = null;
                 while (d == null) {
@@ -89,7 +89,7 @@ public class DayFragment extends Fragment {
                     d = ServerProxy.get().dayResult();
                 }
                 Civilian.get().dayResults = d;
-                return null;
+                return d;
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -97,16 +97,25 @@ public class DayFragment extends Fragment {
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        protected void onPostExecute(DayResults s) {
             Fragment fragment;
-            if (Civilian.get().isDead) {
+            if (s.getStatus() != 0) {
+                fragment = new EndGameFragment();
+                Bundle bundle = new Bundle();
+                bundle.putInt("status", s.getStatus());
+                fragment.setArguments(bundle);
+            } else if (Civilian.get().isDead) {
                 fragment = new SleepFragment();
             } else if (Mafioso.get() != null) {
                 fragment = new MafiosiFragment();
             } else if (Detective.get() != null) {
                 fragment = new DetectiveFragment();
             } else if (DoubleAgent.get() != null) {
-                fragment = new DoubleAgentFragment();
+                if (DoubleAgent.get().hasAlreadySaved() && DoubleAgent.get().hasAlreadyKilled()) {
+                    fragment = new SleepFragment();
+                } else {
+                    fragment = new DoubleAgentFragment();
+                }
             } else if (Bodyguard.get() != null) {
                 fragment = new BodyguardFragment();
             } else if (Bomber.get() != null) {

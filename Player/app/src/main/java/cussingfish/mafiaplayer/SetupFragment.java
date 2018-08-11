@@ -11,38 +11,50 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import java.util.Arrays;
 
 import cussingfish.mafiaplayer.Roles.Bodyguard;
 import cussingfish.mafiaplayer.Roles.Bomber;
 import cussingfish.mafiaplayer.Roles.Civilian;
 import cussingfish.mafiaplayer.Roles.Detective;
 import cussingfish.mafiaplayer.Roles.DoubleAgent;
+import cussingfish.mafiaplayer.Roles.Lawyer;
 import cussingfish.mafiaplayer.Roles.Mafioso;
 
 public class SetupFragment extends Fragment {
-    enum ROLES { MAFIOSO, DETECTIVE, DOUBLE_AGENT, BODYGUARD, BOMBER, CIVILIAN }
+    enum ROLES { MAFIOSO, DETECTIVE, DOUBLE_AGENT, BODYGUARD, BOMBER, LAWYER, OFFICIAL, CIVILIAN, SUSPECT }
     private EditText mafiosi;
     private EditText detectives;
-    private EditText doubleAgent;
-    private EditText bodyguards;
-    private EditText bomber;
+    private CheckBox doubleAgent;
+    private CheckBox bodyguard;
+    private CheckBox bomber;
+    private CheckBox lawyer;
+    private CheckBox official;
     private EditText civilians;
+    private EditText suspects;
     private TextView mafiosiText;
     private TextView detectiveText;
     private TextView doubleAgentText;
     private TextView bodyguardText;
     private TextView bomberText;
+    private TextView lawyerText;
+    private TextView officialText;
     private TextView civilianText;
+    private TextView suspectText;
     private TextView description;
     private Button submit;
     private int numMafiosi;
     private int numDetectives;
-    private int numDoubleAgents;
-    private int numBodyguards;
-    private int numBombers;
+    private int hasDoubleAgent;
+    private int hasBodyguard;
+    private int hasBomber;
+    private int hasLawyer;
     private int numCivilians;
+    private int numSuspects;
     private String username;
 
     @Override
@@ -103,73 +115,34 @@ public class SetupFragment extends Fragment {
             }
         });
         doubleAgent = view.findViewById(R.id.doubleAgent);
-        doubleAgent.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String num = s.toString();
-                if (num.equals("")) {
-                    numDoubleAgents = 0;
-                } else {
-                    numDoubleAgents = Integer.parseInt(s.toString());
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        bodyguards = view.findViewById(R.id.bodyguards);
-        bodyguards.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String num = s.toString();
-                if (num.equals("")) {
-                    numBodyguards = 0;
-                } else {
-                    numBodyguards = Integer.parseInt(s.toString());
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
+        bodyguard = view.findViewById(R.id.bodyguards);
         bomber = view.findViewById(R.id.bomber);
-        bomber.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String num = s.toString();
-                if (num.equals("")) {
-                    numBombers = 0;
-                } else {
-                    numBombers = Integer.parseInt(s.toString());
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
+        lawyer = view.findViewById(R.id.lawyer);
+        official = view.findViewById(R.id.official);
         civilians = view.findViewById(R.id.civilians);
         civilians.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String num = s.toString();
+                if (num.equals("")) {
+                    numCivilians = 0;
+                } else {
+                    numCivilians = Integer.parseInt(s.toString());
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        suspects = view.findViewById(R.id.suspects);
+        suspects.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -195,7 +168,10 @@ public class SetupFragment extends Fragment {
         doubleAgentText = view.findViewById(R.id.doubleAgentText);
         bodyguardText = view.findViewById(R.id.bodyguardText);
         bomberText = view.findViewById(R.id.bomberText);
+        lawyerText = view.findViewById(R.id.lawyerText);
+        officialText = view.findViewById(R.id.officialText);
         civilianText = view.findViewById(R.id.civilianText);
+        suspectText = view.findViewById(R.id.suspectText);
         description = view.findViewById(R.id.description);
         setTextViewsClick();
         submit = view.findViewById(R.id.submit);
@@ -240,22 +216,53 @@ public class SetupFragment extends Fragment {
                 description.setText(R.string.bomber_desc);
             }
         });
+        lawyerText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                description.setText(R.string.lawyer_desc);
+            }
+        });
+        officialText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                description.setText(R.string.official_desc);
+            }
+        });
         civilianText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 description.setText(R.string.civilian_desc);
             }
         });
+        suspectText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                description.setText(R.string.suspects_desc);
+            }
+        });
     }
 
     public int[] getNums() {
-        int nums[] = new int[6];
+        int nums[] = new int[]{0,0,0,0,0,0,0,0,0};
         nums[ROLES.MAFIOSO.ordinal()] = numMafiosi;
         nums[ROLES.DETECTIVE.ordinal()] = numDetectives;
-        nums[ROLES.DOUBLE_AGENT.ordinal()] = numDoubleAgents;
-        nums[ROLES.BODYGUARD.ordinal()] = numBodyguards;
-        nums[ROLES.BOMBER.ordinal()] = numBombers;
+        if (doubleAgent.isChecked()) {
+            nums[ROLES.DOUBLE_AGENT.ordinal()] = 1;
+        }
+        if (bodyguard.isChecked()) {
+            nums[ROLES.BODYGUARD.ordinal()] = 1;
+        }
+        if (bomber.isChecked()) {
+            nums[ROLES.BOMBER.ordinal()] = 1;
+        }
+        if (lawyer.isChecked()) {
+            nums[ROLES.LAWYER.ordinal()] = 1;
+        }
+        if (official.isChecked()) {
+            nums[ROLES.OFFICIAL.ordinal()] = 1;
+        }
         nums[ROLES.CIVILIAN.ordinal()] = numCivilians;
+        nums[ROLES.SUSPECT.ordinal()] = numSuspects;
         return nums;
     }
 
@@ -294,6 +301,8 @@ public class SetupFragment extends Fragment {
                     Bodyguard.set(name); break;
                 case "bomber":
                     Bomber.set(name); break;
+                case "lawyer":
+                    Lawyer.set(name); break;
                 default:
                     Civilian.set(name); break;
             }

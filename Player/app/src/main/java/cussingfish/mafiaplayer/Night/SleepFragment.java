@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import cussingfish.mafiaplayer.DayFragment;
+import cussingfish.mafiaplayer.EndGameFragment;
 import cussingfish.mafiaplayer.NightResults;
 import cussingfish.mafiaplayer.R;
 import cussingfish.mafiaplayer.Roles.Civilian;
@@ -55,7 +56,15 @@ public class SleepFragment extends Fragment {
         protected void onPostExecute(NightResults s) {
             FragmentManager fm = getActivity().getSupportFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
-            DayFragment fragment = new DayFragment();
+            Fragment fragment;
+            if (s.getStatus() == 0) {
+                fragment = new DayFragment();
+            } else {
+                fragment = new EndGameFragment();
+                Bundle bundle = new Bundle();
+                bundle.putInt("status", s.getStatus());
+                fragment.setArguments(bundle);
+            }
             ft.replace(R.id.fragmentContainer, fragment).addToBackStack(null);
             ft.commit();
         }

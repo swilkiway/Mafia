@@ -7,9 +7,8 @@ import com.sun.net.httpserver.HttpHandler;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import cussingfish.narrator.DayResults;
+import cussingfish.narrator.Model.DayResults;
 import cussingfish.narrator.Game;
-import cussingfish.narrator.Vote;
 
 public class DayHandler implements HttpHandler {
     public void handle(HttpExchange h) throws IOException {

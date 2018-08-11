@@ -13,9 +13,7 @@ public class Bodyguard extends Civilian {
     private Bodyguard(String name) {
         userName = name;
     }
-
-    public void guardBody() {
-
-    }
-
+    private boolean hasSavedSelf = false;
+    public boolean checkSavedSelf() { return hasSavedSelf; }
+    public void saveSelf() { hasSavedSelf = true; }
 }

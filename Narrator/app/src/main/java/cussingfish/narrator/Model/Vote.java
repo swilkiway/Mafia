@@ -1,10 +1,18 @@
-package cussingfish.mafiaplayer;
+package cussingfish.narrator.Model;
 
 import java.util.ArrayList;
 
 public class Vote {
     private String nominated;
     private ArrayList<String> voters;
+    public Vote(String n, String v) {
+        nominated = n;
+        voters = new ArrayList<>();
+        voters.add(v);
+    }
+    public void addVote(String v) {
+        voters.add(v);
+    }
     public String[] getVoters() {
         return voters.toArray(new String[voters.size()]);
     }

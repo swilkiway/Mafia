@@ -8,8 +8,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import cussingfish.narrator.Game;
-import cussingfish.narrator.NightResults;
-import cussingfish.narrator.Player;
+import cussingfish.narrator.Model.NightResults;
 
 public class NightHandler implements HttpHandler {
     public void handle(HttpExchange h) throws IOException {

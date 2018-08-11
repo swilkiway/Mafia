@@ -16,11 +16,11 @@ public class DoubleAgent extends Civilian {
     public boolean hasAlreadyKilled() { return alreadyKilled; }
     public boolean hasAlreadySaved() { return alreadySaved; }
 
-    public void killPlayer(String victim) {
+    public void killPlayer() {
         alreadyKilled = true;
     }
 
-    public void savePlayer(String saved) {
+    public void savePlayer() {
         alreadySaved = true;
     }
 }

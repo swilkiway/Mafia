@@ -1,116 +1,178 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:id="@+id/middleGuide"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".4"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/choose_roles" />
+        android:text="@string/choose_roles"
+        android:id="@+id/startText"/>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <EditText
-            android:id="@+id/mafiosi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:text="@string/default_number" />
-        <TextView
-            android:id="@+id/mafiosiText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/mafiosi" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <EditText
-            android:id="@+id/detectives"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:text="@string/default_number"/>
-        <TextView
-            android:id="@+id/detectiveText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/detectives" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <EditText
-            android:id="@+id/doubleAgent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:text="@string/default_number"/>
-        <TextView
-            android:id="@+id/doubleAgentText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/double_agents" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <EditText
-            android:id="@+id/bodyguards"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:text="@string/default_number"/>
-        <TextView
-            android:id="@+id/bodyguardText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/bodyguards" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <EditText
-            android:id="@+id/bomber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:text="@string/default_number"/>
-        <TextView
-            android:id="@+id/bomberText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/bombers" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <EditText
-            android:id="@+id/civilians"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:text="@string/default_number"/>
-        <TextView
-            android:id="@+id/civilianText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/civilians" />
-    </LinearLayout>
-    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/ready"
-        android:id="@+id/submit"/>
+        android:orientation="vertical"
+        android:id="@+id/rolesList"
+        app:layout_constraintTop_toBottomOf="@id/startText">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/mafiosi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:text="@string/default_number" />
+            <TextView
+                android:id="@+id/mafiosiText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mafiosi" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/detectives"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:text="@string/default_number"/>
+            <TextView
+                android:id="@+id/detectiveText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/detectives" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <CheckBox
+                android:id="@+id/doubleAgent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/doubleAgentText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/double_agent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <CheckBox
+                android:id="@+id/bodyguards"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/bodyguardText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bodyguard" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <CheckBox
+                android:id="@+id/bomber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/bomberText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bomber" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <CheckBox
+                android:id="@+id/lawyer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/lawyerText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lawyer" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <CheckBox
+                android:id="@+id/official"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/officialText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/official" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/civilians"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:text="@string/default_number"/>
+            <TextView
+                android:id="@+id/civilianText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/civilians" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/suspects"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:text="@string/default_number"/>
+            <TextView
+                android:id="@+id/suspectText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/suspects" />
+        </LinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ready"
+            android:id="@+id/submit"/>
+    </LinearLayout>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/description"/>
+        android:id="@+id/description"
+        app:layout_constraintStart_toEndOf="@id/middleGuide"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
-</LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
