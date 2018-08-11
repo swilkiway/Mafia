@@ -15,19 +15,14 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-import java.util.ArrayList;
-
-import cussingfish.mafiaplayer.Player;
 import cussingfish.mafiaplayer.PlayerAdapter;
 import cussingfish.mafiaplayer.R;
-import cussingfish.mafiaplayer.Roles.Bodyguard;
 import cussingfish.mafiaplayer.Roles.Civilian;
+import cussingfish.mafiaplayer.Roles.Official;
 import cussingfish.mafiaplayer.ServerProxy;
 import cussingfish.mafiaplayer.Utils;
-import cussingfish.mafiaplayer.Vote;
 
-public class BodyguardFragment extends Fragment {
+public class OfficialFragment extends Fragment {
     private RecyclerView playerList;
     private PlayerAdapter playerAdapter;
     private RecyclerView.LayoutManager playerManager;
@@ -36,7 +31,7 @@ public class BodyguardFragment extends Fragment {
     private TextView dayResults;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_bodyguard, container, false);
+        return inflater.inflate(R.layout.fragment_official, container, false);
     }
 
     @Override
@@ -53,26 +48,26 @@ public class BodyguardFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 saved = playerAdapter.getSelected();
-                if (saved.equals(Bodyguard.get().userName)) {
-                    if (!Bodyguard.get().checkSavedSelf()) {
-                        Bodyguard.get().saveSelf();
-                        BodyguardTask b = new BodyguardTask();
+                if (saved.equals(Official.get().userName)) {
+                    if (!Official.get().checkVotedSelf()) {
+                        Official.get().voteSelf();
+                        OfficialTask b = new OfficialTask();
                         b.execute(saved);
                     } else {
                         Toast.makeText(getContext(), R.string.choose_other, Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    BodyguardTask b = new BodyguardTask();
+                    OfficialTask b = new OfficialTask();
                     b.execute(saved);
                 }
             }
         });
     }
 
-    public class BodyguardTask extends AsyncTask<String, String, String> {
+    public class OfficialTask extends AsyncTask<String, String, String> {
         @Override
         protected String doInBackground(String... r) {
-            ServerProxy.get().bodyguardSave(r[0]);
+            ServerProxy.get().officialVote(r[0]);
             return null;
         }
 

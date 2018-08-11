@@ -11,6 +11,7 @@ public class Official extends Civilian {
     private Official(String name) {
         userName = name;
     }
-    public void enfranchise() {
-    }
+    private boolean hasVotedSelf = false;
+    public boolean checkVotedSelf() { return hasVotedSelf; }
+    public void voteSelf() { hasVotedSelf = true; }
 }

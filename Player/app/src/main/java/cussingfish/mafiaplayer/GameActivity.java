@@ -10,11 +10,14 @@ import cussingfish.mafiaplayer.Night.BodyguardFragment;
 import cussingfish.mafiaplayer.Night.BomberFragment;
 import cussingfish.mafiaplayer.Night.DetectiveFragment;
 import cussingfish.mafiaplayer.Night.DoubleAgentFragment;
+import cussingfish.mafiaplayer.Night.LawyerFragment;
 import cussingfish.mafiaplayer.Night.MafiosiFragment;
+import cussingfish.mafiaplayer.Night.SleepFragment;
 import cussingfish.mafiaplayer.Roles.Bodyguard;
 import cussingfish.mafiaplayer.Roles.Bomber;
 import cussingfish.mafiaplayer.Roles.Detective;
 import cussingfish.mafiaplayer.Roles.DoubleAgent;
+import cussingfish.mafiaplayer.Roles.Lawyer;
 import cussingfish.mafiaplayer.Roles.Mafioso;
 
 public class GameActivity extends AppCompatActivity {
@@ -26,36 +29,22 @@ public class GameActivity extends AppCompatActivity {
         Fragment fragment;
         if (Mafioso.get() != null) {
             fragment = new MafiosiFragment();
-            FragmentManager fm = getSupportFragmentManager();
-            FragmentTransaction ft = fm.beginTransaction();
-            ft.add(R.id.fragmentContainer, fragment);
-            ft.commit();
         } else if (Detective.get() != null) {
             fragment = new DetectiveFragment();
-            FragmentManager fm = getSupportFragmentManager();
-            FragmentTransaction ft = fm.beginTransaction();
-            ft.add(R.id.fragmentContainer, fragment);
-            ft.commit();
         } else if (DoubleAgent.get() != null) {
             fragment = new DoubleAgentFragment();
-            FragmentManager fm = getSupportFragmentManager();
-            FragmentTransaction ft = fm.beginTransaction();
-            ft.add(R.id.fragmentContainer, fragment);
-            ft.commit();
         } else if (Bodyguard.get() != null) {
             fragment = new BodyguardFragment();
-            FragmentManager fm = getSupportFragmentManager();
-            FragmentTransaction ft = fm.beginTransaction();
-            ft.add(R.id.fragmentContainer, fragment);
-            ft.commit();
         } else if (Bomber.get() != null) {
             fragment = new BomberFragment();
-            FragmentManager fm = getSupportFragmentManager();
-            FragmentTransaction ft = fm.beginTransaction();
-            ft.add(R.id.fragmentContainer, fragment);
-            ft.commit();
+        } else if (Lawyer.get() != null) {
+            fragment = new LawyerFragment();
         } else {
-
+            fragment = new SleepFragment();
         }
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.add(R.id.fragmentContainer, fragment);
+        ft.commit();
     }
 }

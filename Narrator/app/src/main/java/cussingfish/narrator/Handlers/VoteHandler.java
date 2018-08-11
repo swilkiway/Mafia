@@ -9,8 +9,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import cussingfish.narrator.Game;
-import cussingfish.narrator.Player;
-import cussingfish.narrator.Vote;
 import cussingfish.narrator.WebServer;
 
 public class VoteHandler implements HttpHandler {

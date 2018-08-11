@@ -2,7 +2,7 @@
     <!--Login Strings-->
     <string name="app_name">MafiaPlayer</string>
     <string name="choose_roles">Please select how many of each role you\'d like. \nPress the name of a role to see what it does.
-        \nRoles marked with * should only have one of them per game.</string>
+        \nRoles with a checkmark can only have one of them per game.</string>
     <string name="default_number">0</string>
     <string name="ready">Ready to Go!</string>
     <string name="submit">Submit</string>
@@ -22,28 +22,29 @@
     <string name="detective_desc">The detectives choose a person to learn about (have their alignment,
         mafia or civilian, revealed) every night. If there is more than one, they work separately, not
         knowing who the other detectives are.</string>
-    <string name="double_agents">Double Agent*</string>
+    <string name="double_agent">Double Agent</string>
     <string name="double_agent_desc">The double agent can kill one person and save one person per game.</string>
-    <string name="bodyguards">Bodyguards</string>
-    <string name="bodyguard_desc">The bodyguards choose a person to protect from the mafia every night.
-        The saved person will be selected randomly from those the bodyguards choose.</string>
-    <string name="bombers">Bomber*</string>
+    <string name="bodyguard">Bodyguard</string>
+    <string name="bodyguard_desc">The bodyguard chooses a person to protect from the mafia every night.</string>
+    <string name="bomber">Bomber</string>
     <string name="bomber_desc">The bomber selects a target at the beginning of the round. If the bomber
         dies during the round, the target will die too.</string>
     <string name="civilians">Civilians</string>
     <string name="civilian_desc">Civilians don\'t do anything at night.</string>
-    <string name="matchmaker">Matchmaker*</string>
+    <string name="matchmaker">Matchmaker</string>
     <string name="matchmaker_desc">At the beginning of the game, the matchmaker chooses two people to
         be in love. If one of them dies, the other will also.</string>
-    <string name="official">Official*</string>
+    <string name="official">Official</string>
     <string name="official_desc">The official chooses a person at night. That person\'s vote will count
         double the next day.</string>
     <string name="suspects">Suspects</string>
     <string name="suspects_desc">The suspects are normal civilians; however, when investigated by a
         detective, they appear to be mafia.</string>
-    <string name="journalist">Journalist*</string>
+    <string name="journalist">Journalist</string>
     <string name="journalist_desc">The journalist is a normal civilian; however, if killed, roles will
         no longer be announced when other players are killed.</string>
+    <string name="lawyer">Lawyer</string>
+    <string name="lawyer_desc">The lawyer chooses a person every night to protect from lynching the following day.</string>
 
     <!--Game Strings-->
     <string name="choose_lynch">Please select the player you\'d like to lynch.</string>
@@ -53,7 +54,13 @@
     <string name="da_saved">%1$s was saved by a mysterious stranger!\n</string>
     <string name="bomber_killed">BOOM! %1$s, the %2$s, was killed by the bomber!\n</string>
     <string name="lynched">%1$s, the %2$s, was nominated to be lynched!\n</string>
+    <string name="lawyer_defended">%1$s was nominated to be lynched, but was successfully defended in court by the lawyer!</string>
     <string name="voted">%1$s voted for %2$s.\n</string>
+    <string name="civilian_win">The civilians cleared all the mafiosi from the town!</string>
+    <string name="mafia_win">The mafia took over the town!</string>
+    <string name="close_app">If you\'d like to play another round, please restart the app.\nThe narrator
+        app on your computer will also need to be restarted.</string>
+    <string name="choose_other">You\'re only allowed to select yourself once. Please choose someone else.</string>
 
     <!--Night Strings-->
     <string name="kill">Please select a person to kill.</string>
@@ -61,9 +68,12 @@
     <string name="investigate">Please select a person to investigate.</string>
     <string name="guard">Please select a person to guard for the night.</string>
     <string name="da_kill">If you\'d like to kill tonight, select a person. \nIf you do not select anyone, it will be assumed that you want to save your one bullet.</string>
+    <string name="da_wait">Please wait while the mafia decide who they\'re going to kill.</string>
     <string name="da_save">%1$s is going to die tonight. Would you like to save them?</string>
     <string name="da_already_killed">You\'ve already used your one bullet.</string>
     <string name="da_already_saved">You\'ve already saved someone.</string>
     <string name="bomb">Please select a person who will also die if you die this round.</string>
+    <string name="defend">Please select a person to defend against being lynched during the next day.</string>
+    <string name="enfranchise">Please select a person whose vote will count double during the next day.</string>
     <string name="sleep">You slumber peacefully, waiting for the business of the town to be finished for the night.</string>
 </resources>

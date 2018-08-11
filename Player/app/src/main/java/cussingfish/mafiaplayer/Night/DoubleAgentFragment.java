@@ -24,7 +24,6 @@ import cussingfish.mafiaplayer.ServerProxy;
 import cussingfish.mafiaplayer.Utils;
 
 public class DoubleAgentFragment extends Fragment {
-    private ArrayList<String> players;
     private RecyclerView playerList;
     private PlayerAdapter playerAdapter;
     private RecyclerView.LayoutManager playerManager;
@@ -34,6 +33,8 @@ public class DoubleAgentFragment extends Fragment {
     private String victim;
     private String mafiaVictim;
     private TextView dayResults;
+    private TextView daSave;
+    private TextView daKill;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,17 +50,71 @@ public class DoubleAgentFragment extends Fragment {
         playerList.setAdapter(playerAdapter);
         dayResults = view.findViewById(R.id.dayResults);
         dayResults.setText(Utils.getVotingResults(getContext(), Civilian.get().dayResults));
+        daSave = view.findViewById(R.id.daSave);
+        daKill = view.findViewById(R.id.daKill);
+        yesButton = view.findViewById(R.id.yesButton);
+        noButton = view.findViewById(R.id.noButton);
         submitButton = view.findViewById(R.id.submitButton);
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                victim = playerAdapter.getSelected();
-                KillTask b = new KillTask();
-                b.execute(victim);
-            }
-        });
+        if (!DoubleAgent.get().hasAlreadyKilled()) {
+            submitButton.setEnabled(true);
+            submitButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DoubleAgent.get().killPlayer();
+                    victim = playerAdapter.getSelected();
+                    KillTask b = new KillTask();
+                    b.execute(victim);
+                }
+            });
+        } else {
+            daKill.setText(R.string.da_already_killed);
+        }
         if (!DoubleAgent.get().hasAlreadySaved()) {
-
+            daSave.setVisibility(View.VISIBLE);
+            daSave.setText(R.string.da_wait);
+            AgentTask a = new AgentTask();
+            a.execute();
+        } else {
+            daSave.setText(R.string.da_already_saved);
+        }
+    }
+    public class AgentTask extends AsyncTask<String, String, String> {
+        @Override
+        protected String doInBackground(String... r) {
+            try {
+                String n = null;
+                while (n == null) {
+                    Thread.sleep(1000);
+                    n = ServerProxy.get().daGetMafiaKilled();
+                }
+                return n;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+        @Override
+        protected void onPostExecute(String s) {
+            mafiaVictim = s;
+            daSave.setText(getString(R.string.da_save, mafiaVictim));
+            daSave.setVisibility(View.VISIBLE);
+            yesButton.setEnabled(true);
+            yesButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DoubleAgent.get().savePlayer();
+                    SaveTask t = new SaveTask();
+                    t.execute(mafiaVictim);
+                }
+            });
+            noButton.setEnabled(true);
+            noButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SaveTask t = new SaveTask();
+                    t.execute("pass");
+                }
+            });
         }
     }
     public class KillTask extends AsyncTask<String, String, String> {

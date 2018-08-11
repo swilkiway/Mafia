@@ -6,15 +6,25 @@ import cussingfish.mafiaplayer.Roles.Civilian;
 
 public class Utils {
     public static String getVotingResults(Context context, DayResults d) {
-        String lynched = context.getString(R.string.lynched, d.getLynched().getName(), d.getLynched().getRole());
-        if (lynched.equals(Civilian.get().userName)) {
+        String lynched = null;
+        String defended = null;
+        if (d.getLynched() != null) {
+            lynched = context.getString(R.string.lynched, d.getLynched().getName(), d.getLynched().getRole());
+        } else {
+            defended = context.getString(R.string.lawyer_defended, d.getDefended());
+        }
+        if (lynched != null && lynched.equals(Civilian.get().userName)) {
             Civilian.get().kill();
         }
         StringBuilder votes = new StringBuilder();
         for (Vote v : d.getBallot()) {
-            votes.append(context.getString(R.string.voted, v.getVoter(), v.getNominated()));
+            //votes.append(context.getString(R.string.voted, v.getVoter(), v.getNominated()));
         }
-        return lynched + votes.toString();
+        if (lynched != null) {
+            return lynched + votes.toString();
+        } else {
+            return defended + votes.toString();
+        }
     }
     public static String getNightResults(Context context, NightResults n) {
         Player mafiaKilled = n.getMafiaKilled();
