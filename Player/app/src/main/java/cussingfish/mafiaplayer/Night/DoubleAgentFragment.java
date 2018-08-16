@@ -20,6 +20,7 @@ import cussingfish.mafiaplayer.PlayerAdapter;
 import cussingfish.mafiaplayer.R;
 import cussingfish.mafiaplayer.Roles.Civilian;
 import cussingfish.mafiaplayer.Roles.DoubleAgent;
+import cussingfish.mafiaplayer.Roles.Mafioso;
 import cussingfish.mafiaplayer.ServerProxy;
 import cussingfish.mafiaplayer.Utils;
 
@@ -27,7 +28,8 @@ public class DoubleAgentFragment extends Fragment {
     private RecyclerView playerList;
     private PlayerAdapter playerAdapter;
     private RecyclerView.LayoutManager playerManager;
-    private Button submitButton;
+    private Button killButton;
+    private Button passButton;
     private Button yesButton;
     private Button noButton;
     private String victim;
@@ -38,32 +40,46 @@ public class DoubleAgentFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_mafioso, container, false);
+        return inflater.inflate(R.layout.fragment_double_agent, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        playerList = view.findViewById(R.id.playerList);
+        playerList = view.findViewById(R.id.killList);
         playerManager = new LinearLayoutManager(getContext());
         playerList.setLayoutManager(playerManager);
-        playerAdapter = new PlayerAdapter(getActivity(), Civilian.get().dayResults.getAlive());
-        playerList.setAdapter(playerAdapter);
         dayResults = view.findViewById(R.id.dayResults);
-        dayResults.setText(Utils.getVotingResults(getContext(), Civilian.get().dayResults));
+        if (DoubleAgent.get().dayResults != null) {
+            playerAdapter = new PlayerAdapter(getActivity(), DoubleAgent.get().dayResults.getAlive());
+            dayResults.setText(Utils.getVotingResults(getContext(), DoubleAgent.get().dayResults));
+        } else {
+            playerAdapter = new PlayerAdapter(getActivity(), DoubleAgent.get().startResults.getAlive());
+            dayResults.setText(getString(R.string.double_agent_goal));
+        }
+        playerList.setAdapter(playerAdapter);
         daSave = view.findViewById(R.id.daSave);
         daKill = view.findViewById(R.id.daKill);
         yesButton = view.findViewById(R.id.yesButton);
         noButton = view.findViewById(R.id.noButton);
-        submitButton = view.findViewById(R.id.submitButton);
+        killButton = view.findViewById(R.id.killButton);
+        passButton = view.findViewById(R.id.passButton);
         if (!DoubleAgent.get().hasAlreadyKilled()) {
-            submitButton.setEnabled(true);
-            submitButton.setOnClickListener(new View.OnClickListener() {
+            killButton.setEnabled(true);
+            passButton.setEnabled(true);
+            killButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     DoubleAgent.get().killPlayer();
                     victim = playerAdapter.getSelected();
                     KillTask b = new KillTask();
                     b.execute(victim);
+                }
+            });
+            passButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    KillTask b = new KillTask();
+                    b.execute("pass");
                 }
             });
         } else {

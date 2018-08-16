@@ -19,6 +19,7 @@ import cussingfish.mafiaplayer.PlayerAdapter;
 import cussingfish.mafiaplayer.R;
 import cussingfish.mafiaplayer.Roles.Civilian;
 import cussingfish.mafiaplayer.Roles.Lawyer;
+import cussingfish.mafiaplayer.Roles.Mafioso;
 import cussingfish.mafiaplayer.ServerProxy;
 import cussingfish.mafiaplayer.Utils;
 
@@ -39,10 +40,15 @@ public class LawyerFragment extends Fragment {
         playerList = view.findViewById(R.id.playerList);
         playerManager = new LinearLayoutManager(getContext());
         playerList.setLayoutManager(playerManager);
-        playerAdapter = new PlayerAdapter(getActivity(), Civilian.get().dayResults.getAlive());
-        playerList.setAdapter(playerAdapter);
         dayResults = view.findViewById(R.id.dayResults);
-        dayResults.setText(Utils.getVotingResults(getContext(), Civilian.get().dayResults));
+        if (Lawyer.get().dayResults != null) {
+            playerAdapter = new PlayerAdapter(getActivity(), Lawyer.get().dayResults.getAlive());
+            dayResults.setText(Utils.getVotingResults(getContext(), Lawyer.get().dayResults));
+        } else {
+            playerAdapter = new PlayerAdapter(getActivity(), Lawyer.get().startResults.getAlive());
+            dayResults.setText(getString(R.string.lawyer_goal));
+        }
+        playerList.setAdapter(playerAdapter);
         submitButton = view.findViewById(R.id.submitButton);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override

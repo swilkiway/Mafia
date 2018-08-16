@@ -13,12 +13,11 @@ import cussingfish.narrator.WebServer;
 
 public class SetupHandler implements HttpHandler {
     public void handle(HttpExchange h) throws IOException {
-        System.out.println("in handler");
         InputStream is = h.getRequestBody();
         Gson gson = new Gson();
         int roles[] = gson.fromJson(WebServer.readString(is), int[].class);
         Game.getGame().setupRoles(roles);
-        String response = gson.toJson("response");
+        String response = gson.toJson("\n\n");
         h.sendResponseHeaders(200, 0);
         OutputStream os = h.getResponseBody();
         os.write(response.getBytes());

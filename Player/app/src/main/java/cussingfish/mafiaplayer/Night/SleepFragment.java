@@ -31,7 +31,11 @@ public class SleepFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         dayResults = view.findViewById(R.id.dayResults);
-        dayResults.setText(Utils.getVotingResults(getContext(), Civilian.get().dayResults));
+        if (Civilian.get().dayResults != null) {
+            dayResults.setText(Utils.getVotingResults(getContext(), Civilian.get().dayResults));
+        } else {
+            dayResults.setText(getString(R.string.civilian_goal));
+        }
         SleepTask s = new SleepTask();
         s.execute();
     }
@@ -40,13 +44,13 @@ public class SleepFragment extends Fragment {
         @Override
         protected NightResults doInBackground(String... r) {
             try {
-                NightResults n = null;
-                while (n == null) {
+                NightResults n = new NightResults();
+                while (n.getNull()) {
                     Thread.sleep(1000);
                     n = ServerProxy.get().nightResult();
                 }
                 Civilian.get().nightResults = n;
-                return null;
+                return n;
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

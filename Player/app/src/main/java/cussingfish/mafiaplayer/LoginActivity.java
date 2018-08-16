@@ -18,6 +18,7 @@ import cussingfish.mafiaplayer.Roles.Bomber;
 import cussingfish.mafiaplayer.Roles.Civilian;
 import cussingfish.mafiaplayer.Roles.Detective;
 import cussingfish.mafiaplayer.Roles.DoubleAgent;
+import cussingfish.mafiaplayer.Roles.Lawyer;
 import cussingfish.mafiaplayer.Roles.Mafioso;
 
 
@@ -131,20 +132,20 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
-    public class RegisterTask extends AsyncTask<String, String, String[]> {
+    public class RegisterTask extends AsyncTask<String, String, StartResults> {
         @Override
-        protected String[] doInBackground(String... s) {
+        protected StartResults doInBackground(String... s) {
             String name = username;
             ServerProxy.get().setHostIP(hostIP);
             ServerProxy.get().register(username);
             if (!setupPlayer) {
                 try {
-                    String role[] = null;
-                    while (role == null) {
+                    StartResults r = new StartResults();
+                    while (r.getNull()) {
                         Thread.sleep(1000);
-                        role = ServerProxy.get().getRole(username);
+                        r = ServerProxy.get().getRole(username);
                     }
-                    return role;
+                    return r;
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -152,33 +153,29 @@ public class LoginActivity extends AppCompatActivity {
             return null;
         }
         @Override
-        protected void onPostExecute(String s[]) {
+        protected void onPostExecute(StartResults s) {
             if (!setupPlayer) {
                 createCharacter(username, s);
                 Intent intent = new Intent(LoginActivity.this, GameActivity.class);
                 startActivity(intent);
             }
         }
-        private void createCharacter(String name, String role[]) {
-            switch (role[0]) {
+        private void createCharacter(String name, StartResults s) {
+            switch (s.getRole()) {
                 case "mafioso":
-                    Mafioso.set(name, getTeammates(role)); break;
+                    Mafioso.set(name, s); break;
                 case "detective":
-                    Detective.set(name); break;
+                    Detective.set(name, s); break;
                 case "double agent":
-                    DoubleAgent.set(name); break;
+                    DoubleAgent.set(name, s); break;
                 case "bodyguard":
-                    Bodyguard.set(name); break;
+                    Bodyguard.set(name, s); break;
                 case "bomber":
-                    Bomber.set(name); break;
-                default:
-                    Civilian.set(name); break;
+                    Bomber.set(name, s); break;
+                case "lawyer":
+                    Lawyer.set(name, s); break;
             }
-        }
-        private String[] getTeammates(String role[]) {
-            String team[] = new String[role.length - 1];
-            System.arraycopy(role, 1, team, 0, role.length - 1);
-            return team;
+            Civilian.set(name, s);
         }
     }
 }

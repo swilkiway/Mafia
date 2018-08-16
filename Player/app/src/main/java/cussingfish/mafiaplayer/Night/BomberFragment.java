@@ -21,6 +21,7 @@ import cussingfish.mafiaplayer.PlayerAdapter;
 import cussingfish.mafiaplayer.R;
 import cussingfish.mafiaplayer.Roles.Bomber;
 import cussingfish.mafiaplayer.Roles.Civilian;
+import cussingfish.mafiaplayer.Roles.Mafioso;
 import cussingfish.mafiaplayer.ServerProxy;
 import cussingfish.mafiaplayer.Utils;
 
@@ -42,11 +43,16 @@ public class BomberFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         playerList = view.findViewById(R.id.playerList);
         playerManager = new LinearLayoutManager(getContext());
-        playerList.setLayoutManager(playerManager);
-        playerAdapter = new PlayerAdapter(getActivity(), Civilian.get().dayResults.getAlive());
-        playerList.setAdapter(playerAdapter);
         dayResults = view.findViewById(R.id.dayResults);
-        dayResults.setText(Utils.getVotingResults(getContext(), Civilian.get().dayResults));
+        if (Bomber.get().dayResults != null) {
+            playerAdapter = new PlayerAdapter(getActivity(), Bomber.get().dayResults.getAlive());
+            dayResults.setText(Utils.getVotingResults(getContext(), Bomber.get().dayResults));
+        } else {
+            playerAdapter = new PlayerAdapter(getActivity(), Bomber.get().startResults.getAlive());
+            dayResults.setText(getString(R.string.bomber_goal));
+        }
+        playerList.setLayoutManager(playerManager);
+        playerList.setAdapter(playerAdapter);
         submitButton = view.findViewById(R.id.submitButton);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override

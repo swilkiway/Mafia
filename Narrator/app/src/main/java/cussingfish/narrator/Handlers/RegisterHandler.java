@@ -17,7 +17,7 @@ public class RegisterHandler implements HttpHandler {
         Gson gson = new Gson();
         String name = gson.fromJson(WebServer.readString(is), String.class);
         Game.getGame().addPlayer(name);
-        String response = gson.toJson("response");
+        String response = gson.toJson("\n\n");
         h.sendResponseHeaders(200, 0);
         OutputStream os = h.getResponseBody();
         os.write(response.getBytes());

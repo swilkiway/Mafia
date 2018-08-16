@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import cussingfish.mafiaplayer.PlayerAdapter;
 import cussingfish.mafiaplayer.R;
 import cussingfish.mafiaplayer.Roles.Civilian;
+import cussingfish.mafiaplayer.Roles.Detective;
+import cussingfish.mafiaplayer.Roles.Mafioso;
 import cussingfish.mafiaplayer.ServerProxy;
 import cussingfish.mafiaplayer.Utils;
 
@@ -40,10 +42,15 @@ public class DetectiveFragment extends Fragment {
         playerList = view.findViewById(R.id.playerList);
         playerManager = new LinearLayoutManager(getContext());
         playerList.setLayoutManager(playerManager);
-        playerAdapter = new PlayerAdapter(getActivity(), Civilian.get().dayResults.getAlive());
-        playerList.setAdapter(playerAdapter);
         dayResults = view.findViewById(R.id.dayResults);
-        dayResults.setText(Utils.getVotingResults(getContext(), Civilian.get().dayResults));
+        if (Detective.get().dayResults != null) {
+            playerAdapter = new PlayerAdapter(getActivity(), Detective.get().dayResults.getAlive());
+            dayResults.setText(Utils.getVotingResults(getContext(), Detective.get().dayResults));
+        } else {
+            playerAdapter = new PlayerAdapter(getActivity(), Detective.get().startResults.getAlive());
+            dayResults.setText(getString(R.string.detectives_goal));
+        }
+        playerList.setAdapter(playerAdapter);
         submitButton = view.findViewById(R.id.submitButton);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -83,8 +83,8 @@ public class DayFragment extends Fragment {
         @Override
         protected DayResults doInBackground(String... r) {
             try {
-                DayResults d = null;
-                while (d == null) {
+                DayResults d = new DayResults();
+                while (d.getNull()) {
                     Thread.sleep(1000);
                     d = ServerProxy.get().dayResult();
                 }

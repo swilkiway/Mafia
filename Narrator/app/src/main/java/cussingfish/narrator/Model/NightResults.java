@@ -13,6 +13,7 @@ public class NightResults {
     private String silenced;
     private Player[] alive;
     private int status;
+    private boolean isNull = false;
     public void setMafiaKilled(Player p) {
         mafiaKilled = p;
     }
@@ -37,4 +38,5 @@ public class NightResults {
     }
     public void setAlive(ArrayList<Player> a) { alive = a.toArray(new Player[a.size()]); }
     public void setStatus(int s) { status = s; }
+    public void setNull() { isNull = true; }
 }

@@ -2,19 +2,19 @@ package cussingfish.mafiaplayer.Roles;
 
 import cussingfish.mafiaplayer.DayResults;
 import cussingfish.mafiaplayer.NightResults;
+import cussingfish.mafiaplayer.StartResults;
 
 public class Civilian {
-    public static void set(String name) {
-        Civilian = new Civilian(name);
+    public static void set(String name, StartResults s) {
+        Civilian = new Civilian(name, s);
     }
     public static Civilian get() {
         return Civilian;
     }
     private static Civilian Civilian;
-    public Civilian(String name) {
+    public Civilian(String name, StartResults s) {
         userName = name;
-        nightResults = new NightResults();
-        dayResults = new DayResults();
+        startResults = s;
     }
     public Civilian() {
 
@@ -26,9 +26,7 @@ public class Civilian {
     public Boolean isEnfranchised = false;
     public NightResults nightResults;
     public DayResults dayResults;
-    public void castDayVote() {
-
-    }
+    public StartResults startResults;
     public void kill() {
         isDead = true;
     }

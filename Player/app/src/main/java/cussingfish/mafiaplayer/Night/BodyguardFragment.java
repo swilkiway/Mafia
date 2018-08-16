@@ -23,6 +23,7 @@ import cussingfish.mafiaplayer.PlayerAdapter;
 import cussingfish.mafiaplayer.R;
 import cussingfish.mafiaplayer.Roles.Bodyguard;
 import cussingfish.mafiaplayer.Roles.Civilian;
+import cussingfish.mafiaplayer.Roles.Mafioso;
 import cussingfish.mafiaplayer.ServerProxy;
 import cussingfish.mafiaplayer.Utils;
 import cussingfish.mafiaplayer.Vote;
@@ -43,11 +44,15 @@ public class BodyguardFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         playerList = view.findViewById(R.id.playerList);
         playerManager = new LinearLayoutManager(getContext());
-        playerList.setLayoutManager(playerManager);
-        playerAdapter = new PlayerAdapter(getActivity(), Civilian.get().dayResults.getAlive());
+        playerList.setLayoutManager(playerManager);dayResults = view.findViewById(R.id.dayResults);
+        if (Bodyguard.get().dayResults != null) {
+            playerAdapter = new PlayerAdapter(getActivity(), Bodyguard.get().dayResults.getAlive());
+            dayResults.setText(Utils.getVotingResults(getContext(), Bodyguard.get().dayResults));
+        } else {
+            playerAdapter = new PlayerAdapter(getActivity(), Bodyguard.get().startResults.getAlive());
+            dayResults.setText(getString(R.string.bodyguard_goal));
+        }
         playerList.setAdapter(playerAdapter);
-        dayResults = view.findViewById(R.id.dayResults);
-        dayResults.setText(Utils.getVotingResults(getContext(), Civilian.get().dayResults));
         submitButton = view.findViewById(R.id.submitButton);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override

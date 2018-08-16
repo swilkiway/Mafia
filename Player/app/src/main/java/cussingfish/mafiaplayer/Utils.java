@@ -26,6 +26,7 @@ public class Utils {
             return defended + votes.toString();
         }
     }
+
     public static String getNightResults(Context context, NightResults n) {
         Player mafiaKilled = n.getMafiaKilled();
         String bodyguardSaved = n.getBodyguardSaved();
@@ -59,6 +60,7 @@ public class Utils {
         }
         return results.toString();
     }
+
     public static String getTeammates(Context context, String team[]) {
         StringBuilder sb = new StringBuilder();
         sb.append(context.getString(R.string.mafia_team));

@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import cussingfish.narrator.Game;
+import cussingfish.narrator.Model.StartResults;
 import cussingfish.narrator.WebServer;
 
 public class RoleHandler implements HttpHandler {
@@ -16,8 +17,7 @@ public class RoleHandler implements HttpHandler {
         InputStream is = h.getRequestBody();
         Gson gson = new Gson();
         String player = gson.fromJson(WebServer.readString(is), String.class);
-        String[] role = Game.getGame().getRole(player);
-        if (role == null) { return; }
+        StartResults role = Game.getGame().getRole(player);
         String response = gson.toJson(role);
         h.sendResponseHeaders(200, 0);
         OutputStream os = h.getResponseBody();

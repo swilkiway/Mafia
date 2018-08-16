@@ -21,7 +21,6 @@ import cussingfish.narrator.Handlers.OfficialHandler;
 import cussingfish.narrator.Handlers.RegisterHandler;
 import cussingfish.narrator.Handlers.RoleHandler;
 import cussingfish.narrator.Handlers.SetupHandler;
-import cussingfish.narrator.Handlers.StatusHandler;
 import cussingfish.narrator.Handlers.VoteHandler;
 
 public class WebServer {
@@ -44,7 +43,6 @@ public class WebServer {
         server.createContext("/dayresult", new DayHandler());
         server.createContext("/nightresult", new NightHandler());
         server.createContext("/doubleagent", new AgentHandler());
-        server.createContext("/checkstatus", new StatusHandler());
 
         server.setExecutor(null);
         server.start();

@@ -16,27 +16,43 @@
 
     <!--Role Descriptions-->
     <string name="mafiosi">Mafiosi</string>
-    <string name="mafiosi_desc">The mafiosi choose a person to kill every night. The victim will be selected
-        randomly from those the mafiosi choose.</string>
+    <string name="mafiosi_desc">The mafiosi choose a person to kill every night. The victim will be
+        selected randomly from those the mafiosi choose.</string>
+    <string name="mafiosi_goal">You are a mafioso! Your goal is to pick off civilians until there are
+        fewer civilians than mafiosi.</string>
     <string name="detectives">Detectives</string>
-    <string name="detective_desc">The detectives choose a person to learn about (have their alignment,
+    <string name="detectives_desc">The detectives choose a person to learn about (have their alignment,
         mafia or civilian, revealed) every night. If there is more than one, they work separately, not
         knowing who the other detectives are.</string>
+    <string name="detectives_goal">You are a detective! Your goal is to figure out who the mafiosi are
+        and convince everyone else to lynch them.</string>
     <string name="double_agent">Double Agent</string>
     <string name="double_agent_desc">The double agent can kill one person and save one person per game.</string>
+    <string name="double_agent_goal">You are the double agent! Your goal is to use your abilities to
+        defeat the mafia.</string>
     <string name="bodyguard">Bodyguard</string>
     <string name="bodyguard_desc">The bodyguard chooses a person to protect from the mafia every night.</string>
+    <string name="bodyguard_goal">You are the bodyguard! Your goal is to protect as many people as possible
+        from the mafia.</string>
     <string name="bomber">Bomber</string>
     <string name="bomber_desc">The bomber selects a target at the beginning of the round. If the bomber
         dies during the round, the target will die too.</string>
+    <string name="bomber_goal">You are the bomber! Your goal is to try and take down a mafioso with
+        you if the mafia kills you.</string>
     <string name="civilians">Civilians</string>
     <string name="civilian_desc">Civilians don\'t do anything at night.</string>
+    <string name="civilian_goal">You are a civilian (in addition to any other roles you got)! Your goal
+        is to vote for the mafiosi during the day so they get lynched.</string>
     <string name="matchmaker">Matchmaker</string>
     <string name="matchmaker_desc">At the beginning of the game, the matchmaker chooses two people to
         be in love. If one of them dies, the other will also.</string>
+    <string name="matchmaker_goal">You are the matchmaker! You don\'t really have a goal- you just
+        make two people fall in love.</string>
     <string name="official">Official</string>
     <string name="official_desc">The official chooses a person at night. That person\'s vote will count
         double the next day.</string>
+    <string name="official_goal">You are the official! Your goal is to give two votes to people who
+        will vote for mafiosi during the day.</string>
     <string name="suspects">Suspects</string>
     <string name="suspects_desc">The suspects are normal civilians; however, when investigated by a
         detective, they appear to be mafia.</string>
@@ -44,7 +60,10 @@
     <string name="journalist_desc">The journalist is a normal civilian; however, if killed, roles will
         no longer be announced when other players are killed.</string>
     <string name="lawyer">Lawyer</string>
-    <string name="lawyer_desc">The lawyer chooses a person every night to protect from lynching the following day.</string>
+    <string name="lawyer_desc">The lawyer chooses a person every night to protect from lynching the
+        following day.</string>
+    <string name="lawyer_goal">You are the lawyer! Your goal is to defend innocent civilians from being
+        lynched.</string>
 
     <!--Game Strings-->
     <string name="choose_lynch">Please select the player you\'d like to lynch.</string>
@@ -61,9 +80,11 @@
     <string name="close_app">If you\'d like to play another round, please restart the app.\nThe narrator
         app on your computer will also need to be restarted.</string>
     <string name="choose_other">You\'re only allowed to select yourself once. Please choose someone else.</string>
+    <string name="kill">Kill</string>
+    <string name="pass">Pass</string>
 
     <!--Night Strings-->
-    <string name="kill">Please select a person to kill.</string>
+    <string name="mafia_kill">Please select a person to kill.</string>
     <string name="mafia_team">These are your fellow mafiosi.\n</string>
     <string name="investigate">Please select a person to investigate.</string>
     <string name="guard">Please select a person to guard for the night.</string>

@@ -1,18 +1,19 @@
 package cussingfish.mafiaplayer.Roles;
 
 import cussingfish.mafiaplayer.NightResults;
+import cussingfish.mafiaplayer.StartResults;
 
 public class Bomber extends Civilian {
-    public static void set(String name) {
-        bomber = new Bomber(name);
+    public static void set(String name, StartResults s) {
+        bomber = new Bomber(name, s);
     }
     public static Bomber get() {
         return bomber;
     }
     private static Bomber bomber = null;
-    private Bomber(String name) {
+    private Bomber(String name, StartResults s) {
         userName = name;
-        nightResults = new NightResults();
+        startResults = s;
     }
 
     private String target = "";

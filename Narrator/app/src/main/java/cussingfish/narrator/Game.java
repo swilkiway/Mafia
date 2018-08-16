@@ -7,6 +7,7 @@ import cussingfish.narrator.Model.Ballot;
 import cussingfish.narrator.Model.DayResults;
 import cussingfish.narrator.Model.NightResults;
 import cussingfish.narrator.Model.Player;
+import cussingfish.narrator.Model.StartResults;
 import cussingfish.narrator.Model.Vote;
 
 public class Game {
@@ -21,6 +22,8 @@ public class Game {
     private STATUS status;
     private JOURNALIST journalist;
     private boolean rolesReady;
+    private boolean dayReady;
+    private boolean nightReady;
     private ArrayList<String> roles;
     private int civilianSize;
     private ArrayList<Player> alive;
@@ -43,6 +46,8 @@ public class Game {
 
     private Game() {
         rolesReady = false;
+        dayReady = false;
+        nightReady = false;
         status = STATUS.NO_WIN;
         journalist = JOURNALIST.DISABLED;
         civilianSize = 0;
@@ -69,7 +74,6 @@ public class Game {
     }
 
     public void setupRoles(int[] rolesList) {
-        System.out.println("In setupGame");
         for (int i = 0; i < rolesList[ROLES.MAFIOSO.ordinal()]; i++) {
             roles.add("mafioso");
         }
@@ -129,17 +133,20 @@ public class Game {
         rolesReady = true;
     }
 
-    public String[] getRole(String player) {
-        if (!rolesReady) { return null; }
-        //used to store names of teammates if any are known
-        ArrayList<String> role = new ArrayList<>();
+    public StartResults getRole(String player) {
+        StartResults s = new StartResults();
+        if (!rolesReady) {
+            s.setNull();
+            return s;
+        }
+        s.setAlive(alive);
         for (Player p : alive) {
             if (p.getName().equals(player)) {
-                role.add(p.getRole());
+                s.setRole(p.getRole());
                 if (p.getRole().equals("mafioso")) {
-                    role.addAll(mafia);
+                    s.setTeammates(mafia);
                 }
-                return role.toArray(new String[role.size()]);
+                return s;
             }
         }
         return null;
@@ -224,7 +231,12 @@ public class Game {
     }
 
     private void resolveNight() {
+        dayReady = false;
+        System.out.println(bodyguardSaved);
+        System.out.println(doubleAgentSaved);
+        System.out.println(mafiaKilled);
         if (!mafiaKilled.equals(bodyguardSaved) && !mafiaKilled.equals(doubleAgentSaved)) {
+            System.out.println("wrong!");
             Player p = findPlayer(mafiaKilled);
             nightResults.setMafiaKilled(p);
             removePlayer(p);
@@ -237,9 +249,10 @@ public class Game {
                 nightResults.setBombed(null);
             }
         } else {
+            System.out.println("right!");
             nightResults.setBodyguardSaved(mafiaKilled);
         }
-        if (!doubleAgentKilled.equals("pass")) {
+        if (!doubleAgentKilled.equals("pass") && !doubleAgentKilled.equals(D)) {
             if (!doubleAgentKilled.equals(bodyguardSaved)) {
                 Player p = findPlayer(doubleAgentKilled);
                 nightResults.setDaKilled(p);
@@ -258,7 +271,10 @@ public class Game {
         }
         nightResults.setSilenced(silenced);
         nightResults.setStatus(status.ordinal());
+        nightResults.setAlive(alive);
         resetForNextNight();
+        nightReady = true;
+        System.out.println("finished");
     }
 
     private Player findPlayer(String name) {
@@ -334,8 +350,13 @@ public class Game {
     }
 
     public NightResults getNightResults() {
-        nightResults.setAlive(alive);
-        return nightResults;
+        if (nightReady) {
+            return nightResults;
+        } else {
+            NightResults n = new NightResults();
+            n.setNull();
+            return n;
+        }
     }
 
     public String investigatePlayer(String guess) {
@@ -371,6 +392,7 @@ public class Game {
     }
 
     private void resolveVoting() {
+        nightReady = false;
         dayResults.setBallot(ballot);
         boolean isTied = false;
         Vote lynched = null;
@@ -402,12 +424,19 @@ public class Game {
             }
         }
         dayResults.setStatus(status.ordinal());
+        dayResults.setAlive(alive);
         clearVotes();
+        dayReady = true;
     }
 
     public DayResults getVotingResult() {
-        dayResults.setAlive(alive);
-        return dayResults;
+        if (dayReady) {
+            return dayResults;
+        } else {
+            DayResults d = new DayResults();
+            d.setNull();
+            return d;
+        }
     }
 
     private void clearVotes() {

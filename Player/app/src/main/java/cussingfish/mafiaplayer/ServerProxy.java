@@ -27,12 +27,12 @@ public class ServerProxy {
         String urlString = "http://" + hostIP + ":" + "7996" + "/register";
         WebClient.getConnection(urlString, json);
     }
-    public String[] getRole(String username) {
+    public StartResults getRole(String username) {
         Gson gson = new Gson();
         String json = gson.toJson(username);
         String urlString = "http://" + hostIP + ":" + "7996" + "/getrole";
         String response = WebClient.getConnection(urlString, json);
-        return gson.fromJson(response, String[].class);
+        return gson.fromJson(response, StartResults.class);
     }
     public void mafiaKill(String victim) {
         Gson gson = new Gson();
@@ -74,7 +74,7 @@ public class ServerProxy {
     public String daGetMafiaKilled() {
         Gson gson = new Gson();
         String urlString = "http://" + hostIP + ":" + "7996" + "/doubleagent";
-        String response = WebClient.getConnection(urlString, null);
+        String response = WebClient.getConnection(urlString, "");
         return gson.fromJson(response, String.class);
     }
     public void lawyerDefend(String player) {
@@ -98,19 +98,19 @@ public class ServerProxy {
     public DayResults dayResult() {
         Gson gson = new Gson();
         String urlString = "http://" + hostIP + ":" + "7996" + "/dayresult";
-        String response = WebClient.getConnection(urlString, null);
+        String response = WebClient.getConnection(urlString, "");
         return gson.fromJson(response, DayResults.class);
     }
     public NightResults nightResult() {
         Gson gson = new Gson();
         String urlString = "http://" + hostIP + ":" + "7996" + "/nightresult";
-        String response = WebClient.getConnection(urlString, null);
+        String response = WebClient.getConnection(urlString, "");
         return gson.fromJson(response, NightResults.class);
     }
     public int checkStatus() {
         Gson gson = new Gson();
         String urlString = "http://" + hostIP + ":" + "7996" + "/checkstatus";
-        String response = WebClient.getConnection(urlString, null);
+        String response = WebClient.getConnection(urlString, "");
         return gson.fromJson(response, int.class);
     }
 }

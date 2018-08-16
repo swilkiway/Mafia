@@ -1,6 +1,7 @@
 package cussingfish.mafiaplayer;
 
 public class NightResults {
+    public NightResults() { isNull = true; }
     private Player mafiaKilled;
     private Player daKilled;
     private Player bomberKilled;
@@ -9,6 +10,7 @@ public class NightResults {
     private String silenced;
     private Player[] alive;
     private int status;
+    private boolean isNull;
     public Player getMafiaKilled() {
         return mafiaKilled;
     }
@@ -19,4 +21,5 @@ public class NightResults {
     public String getSilenced() { return silenced; }
     public Player[] getAlive() { return alive; }
     public int getStatus() { return status; }
+    public boolean getNull() { return isNull; }
 }
