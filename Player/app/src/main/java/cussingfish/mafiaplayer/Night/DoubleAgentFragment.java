@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -49,11 +50,11 @@ public class DoubleAgentFragment extends Fragment {
         playerManager = new LinearLayoutManager(getContext());
         playerList.setLayoutManager(playerManager);
         dayResults = view.findViewById(R.id.dayResults);
-        if (DoubleAgent.get().dayResults != null) {
-            playerAdapter = new PlayerAdapter(getActivity(), DoubleAgent.get().dayResults.getAlive());
-            dayResults.setText(Utils.getVotingResults(getContext(), DoubleAgent.get().dayResults));
+        if (DoubleAgent.getDayResults() != null) {
+            playerAdapter = new PlayerAdapter(getActivity(), DoubleAgent.getDayResults().getAlive());
+            dayResults.setText(Utils.getVotingResults(getContext(), DoubleAgent.getDayResults()));
         } else {
-            playerAdapter = new PlayerAdapter(getActivity(), DoubleAgent.get().startResults.getAlive());
+            playerAdapter = new PlayerAdapter(getActivity(), DoubleAgent.getStartResults().getAlive());
             dayResults.setText(getString(R.string.double_agent_goal));
         }
         playerList.setAdapter(playerAdapter);
@@ -63,16 +64,20 @@ public class DoubleAgentFragment extends Fragment {
         noButton = view.findViewById(R.id.noButton);
         killButton = view.findViewById(R.id.killButton);
         passButton = view.findViewById(R.id.passButton);
-        if (!DoubleAgent.get().hasAlreadyKilled()) {
+        if (!DoubleAgent.hasAlreadyKilled()) {
             killButton.setEnabled(true);
             passButton.setEnabled(true);
             killButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    DoubleAgent.get().killPlayer();
                     victim = playerAdapter.getSelected();
-                    KillTask b = new KillTask();
-                    b.execute(victim);
+                    if (victim == null) {
+                        Toast.makeText(getContext(), R.string.da_kill, Toast.LENGTH_SHORT).show();
+                    } else {
+                        DoubleAgent.killPlayer();
+                        KillTask b = new KillTask();
+                        b.execute(victim);
+                    }
                 }
             });
             passButton.setOnClickListener(new View.OnClickListener() {
@@ -85,7 +90,7 @@ public class DoubleAgentFragment extends Fragment {
         } else {
             daKill.setText(R.string.da_already_killed);
         }
-        if (!DoubleAgent.get().hasAlreadySaved()) {
+        if (!DoubleAgent.hasAlreadySaved()) {
             daSave.setVisibility(View.VISIBLE);
             daSave.setText(R.string.da_wait);
             AgentTask a = new AgentTask();
@@ -118,7 +123,7 @@ public class DoubleAgentFragment extends Fragment {
             yesButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    DoubleAgent.get().savePlayer();
+                    DoubleAgent.savePlayer();
                     SaveTask t = new SaveTask();
                     t.execute(mafiaVictim);
                 }
@@ -142,7 +147,7 @@ public class DoubleAgentFragment extends Fragment {
 
         @Override
         protected void onPostExecute(String s) {
-            if (DoubleAgent.get().hasAlreadySaved()) {
+            if (DoubleAgent.hasAlreadySaved()) {
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 SleepFragment fragment = new SleepFragment();

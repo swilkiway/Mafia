@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import cussingfish.mafiaplayer.Model.Player;
+
 public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerHolder> {
     private Player players[];
     private int lastSelectedPosition = -1;
@@ -27,7 +29,11 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerHold
         holder.bind(option, position);
     }
     public String getSelected() {
-        return players[lastSelectedPosition].getName();
+        if (lastSelectedPosition != -1) {
+            return players[lastSelectedPosition].getName();
+        } else {
+            return null;
+        }
     }
 
     @Override

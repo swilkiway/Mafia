@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -43,11 +44,11 @@ public class DetectiveFragment extends Fragment {
         playerManager = new LinearLayoutManager(getContext());
         playerList.setLayoutManager(playerManager);
         dayResults = view.findViewById(R.id.dayResults);
-        if (Detective.get().dayResults != null) {
-            playerAdapter = new PlayerAdapter(getActivity(), Detective.get().dayResults.getAlive());
-            dayResults.setText(Utils.getVotingResults(getContext(), Detective.get().dayResults));
+        if (Detective.getDayResults() != null) {
+            playerAdapter = new PlayerAdapter(getActivity(), Detective.getDayResults().getAlive());
+            dayResults.setText(Utils.getVotingResults(getContext(), Detective.getDayResults()));
         } else {
-            playerAdapter = new PlayerAdapter(getActivity(), Detective.get().startResults.getAlive());
+            playerAdapter = new PlayerAdapter(getActivity(), Detective.getStartResults().getAlive());
             dayResults.setText(getString(R.string.detectives_goal));
         }
         playerList.setAdapter(playerAdapter);
@@ -56,8 +57,12 @@ public class DetectiveFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 victim = playerAdapter.getSelected();
-                DetectiveTask b = new DetectiveTask();
-                b.execute(victim);
+                if (victim == null) {
+                    Toast.makeText(getContext(), R.string.investigate, Toast.LENGTH_SHORT).show();
+                } else {
+                    DetectiveTask b = new DetectiveTask();
+                    b.execute(victim);
+                }
             }
         });
     }

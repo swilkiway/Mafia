@@ -1,33 +1,31 @@
 package cussingfish.mafiaplayer.Roles;
 
-import cussingfish.mafiaplayer.DayResults;
-import cussingfish.mafiaplayer.NightResults;
-import cussingfish.mafiaplayer.StartResults;
+import cussingfish.mafiaplayer.Model.DayResults;
+import cussingfish.mafiaplayer.Model.NightResults;
+import cussingfish.mafiaplayer.Model.StartResults;
 
 public class Civilian {
-    public static void set(String name, StartResults s) {
-        Civilian = new Civilian(name, s);
-    }
-    public static Civilian get() {
-        return Civilian;
-    }
-    private static Civilian Civilian;
-    public Civilian(String name, StartResults s) {
+    public static void instantiate(String name, StartResults s) {
         userName = name;
+        dayResults = null;
+        nightResults = null;
         startResults = s;
     }
-    public Civilian() {
-
-    }
-
-    public String userName = "";
-    public Boolean isDead = false;
-    public Boolean isInLove = false;
-    public Boolean isEnfranchised = false;
-    public NightResults nightResults;
-    public DayResults dayResults;
-    public StartResults startResults;
-    public void kill() {
+    private static String userName = "";
+    public static String getUserName() { return userName; }
+    public static void setUserName(String u) { userName = u; }
+    private static boolean isDead = false;
+    public static boolean getDead() { return isDead; }
+    public static void kill() {
         isDead = true;
     }
+    private static NightResults nightResults;
+    public static NightResults getNightResults() { return nightResults; }
+    public static void setNightResults(NightResults n) { nightResults = n; }
+    private static DayResults dayResults;
+    public static DayResults getDayResults() { return dayResults; }
+    public static void setDayResults(DayResults d) { dayResults = d; }
+    private static StartResults startResults;
+    public static StartResults getStartResults() { return startResults; }
+    public static void setStartResults(StartResults s) { startResults = s; }
 }

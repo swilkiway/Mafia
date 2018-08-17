@@ -2,6 +2,10 @@ package cussingfish.mafiaplayer;
 
 import com.google.gson.Gson;
 
+import cussingfish.mafiaplayer.Model.DayResults;
+import cussingfish.mafiaplayer.Model.NightResults;
+import cussingfish.mafiaplayer.Model.StartResults;
+
 public class ServerProxy {
     public static ServerProxy get() {
         if (serverProxy == null) {

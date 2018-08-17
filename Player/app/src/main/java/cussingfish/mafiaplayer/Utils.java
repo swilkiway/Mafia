@@ -2,6 +2,10 @@ package cussingfish.mafiaplayer;
 
 import android.content.Context;
 
+import cussingfish.mafiaplayer.Model.DayResults;
+import cussingfish.mafiaplayer.Model.NightResults;
+import cussingfish.mafiaplayer.Model.Player;
+import cussingfish.mafiaplayer.Model.Vote;
 import cussingfish.mafiaplayer.Roles.Civilian;
 
 public class Utils {
@@ -13,8 +17,8 @@ public class Utils {
         } else {
             defended = context.getString(R.string.lawyer_defended, d.getDefended());
         }
-        if (lynched != null && lynched.equals(Civilian.get().userName)) {
-            Civilian.get().kill();
+        if (lynched != null && lynched.equals(Civilian.getUserName())) {
+            Civilian.kill();
         }
         StringBuilder votes = new StringBuilder();
         for (Vote v : d.getBallot()) {
@@ -36,8 +40,8 @@ public class Utils {
         StringBuilder results = new StringBuilder();
         if (mafiaKilled != null) {
             results.append(context.getString(R.string.mafia_killed, mafiaKilled.getName(), mafiaKilled.getRole()));
-            if (mafiaKilled.getName().equals(Civilian.get().userName)) {
-                Civilian.get().kill();
+            if (mafiaKilled.getName().equals(Civilian.getUserName())) {
+                Civilian.kill();
             }
         }
         if (bodyguardSaved != null) {
@@ -45,8 +49,8 @@ public class Utils {
         }
         if (daKilled != null) {
             results.append(context.getString(R.string.da_killed, daKilled.getName(), daKilled.getRole()));
-            if (daKilled.getName().equals(Civilian.get().userName)) {
-                Civilian.get().kill();
+            if (daKilled.getName().equals(Civilian.getUserName())) {
+                Civilian.kill();
             }
         }
         if (daSaved != null) {
@@ -54,8 +58,8 @@ public class Utils {
         }
         if (bomberKilled != null) {
             results.append(context.getString(R.string.da_killed, bomberKilled.getName(), bomberKilled.getRole()));
-            if (bomberKilled.getName().equals(Civilian.get().userName)) {
-                Civilian.get().kill();
+            if (bomberKilled.getName().equals(Civilian.getUserName())) {
+                Civilian.kill();
             }
         }
         return results.toString();

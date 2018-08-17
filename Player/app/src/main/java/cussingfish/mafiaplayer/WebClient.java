@@ -25,12 +25,11 @@ public class WebClient {
                 InputStream responseBody = connection.getInputStream();
                 ByteArrayOutputStream out = new ByteArrayOutputStream();
                 byte[] buffer = new byte[1024];
-                int length = 0;
+                int length;
                 while ((length = responseBody.read(buffer)) != -1) {
                     out.write(buffer, 0, length);
                 }
-                String responseBodyData = out.toString();
-                return responseBodyData;
+                return out.toString();
             }
         } catch (Exception e) {
             e.printStackTrace();

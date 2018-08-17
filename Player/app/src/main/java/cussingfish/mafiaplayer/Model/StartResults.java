@@ -1,6 +1,6 @@
-package cussingfish.mafiaplayer;
+package cussingfish.mafiaplayer.Model;
 
-import java.util.ArrayList;
+import cussingfish.mafiaplayer.Model.Player;
 
 public class StartResults {
     public StartResults() {

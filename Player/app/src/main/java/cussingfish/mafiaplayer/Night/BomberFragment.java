@@ -13,15 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import cussingfish.mafiaplayer.NightResults;
 import cussingfish.mafiaplayer.PlayerAdapter;
 import cussingfish.mafiaplayer.R;
 import cussingfish.mafiaplayer.Roles.Bomber;
-import cussingfish.mafiaplayer.Roles.Civilian;
-import cussingfish.mafiaplayer.Roles.Mafioso;
 import cussingfish.mafiaplayer.ServerProxy;
 import cussingfish.mafiaplayer.Utils;
 
@@ -44,11 +42,11 @@ public class BomberFragment extends Fragment {
         playerList = view.findViewById(R.id.playerList);
         playerManager = new LinearLayoutManager(getContext());
         dayResults = view.findViewById(R.id.dayResults);
-        if (Bomber.get().dayResults != null) {
-            playerAdapter = new PlayerAdapter(getActivity(), Bomber.get().dayResults.getAlive());
-            dayResults.setText(Utils.getVotingResults(getContext(), Bomber.get().dayResults));
+        if (Bomber.getDayResults() != null) {
+            playerAdapter = new PlayerAdapter(getActivity(), Bomber.getDayResults().getAlive());
+            dayResults.setText(Utils.getVotingResults(getContext(), Bomber.getDayResults()));
         } else {
-            playerAdapter = new PlayerAdapter(getActivity(), Bomber.get().startResults.getAlive());
+            playerAdapter = new PlayerAdapter(getActivity(), Bomber.getStartResults().getAlive());
             dayResults.setText(getString(R.string.bomber_goal));
         }
         playerList.setLayoutManager(playerManager);
@@ -58,8 +56,12 @@ public class BomberFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 target = playerAdapter.getSelected();
-                BomberTask b = new BomberTask();
-                b.execute(target);
+                if (target == null) {
+                    Toast.makeText(getContext(), R.string.bomb, Toast.LENGTH_SHORT).show();
+                } else {
+                    BomberTask b = new BomberTask();
+                    b.execute(target);
+                }
             }
         });
     }

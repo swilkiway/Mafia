@@ -1,4 +1,4 @@
-package cussingfish.mafiaplayer;
+package cussingfish.mafiaplayer.Model;
 
 public class Player {
     private String role;

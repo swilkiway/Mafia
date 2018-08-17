@@ -41,11 +41,11 @@ public class LawyerFragment extends Fragment {
         playerManager = new LinearLayoutManager(getContext());
         playerList.setLayoutManager(playerManager);
         dayResults = view.findViewById(R.id.dayResults);
-        if (Lawyer.get().dayResults != null) {
-            playerAdapter = new PlayerAdapter(getActivity(), Lawyer.get().dayResults.getAlive());
-            dayResults.setText(Utils.getVotingResults(getContext(), Lawyer.get().dayResults));
+        if (Lawyer.getDayResults() != null) {
+            playerAdapter = new PlayerAdapter(getActivity(), Lawyer.getDayResults().getAlive());
+            dayResults.setText(Utils.getVotingResults(getContext(), Lawyer.getDayResults()));
         } else {
-            playerAdapter = new PlayerAdapter(getActivity(), Lawyer.get().startResults.getAlive());
+            playerAdapter = new PlayerAdapter(getActivity(), Lawyer.getStartResults().getAlive());
             dayResults.setText(getString(R.string.lawyer_goal));
         }
         playerList.setAdapter(playerAdapter);
@@ -54,9 +54,11 @@ public class LawyerFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 saved = playerAdapter.getSelected();
-                if (saved.equals(Lawyer.get().userName)) {
-                    if (!Lawyer.get().checkDefendedSelf()) {
-                        Lawyer.get().defendSelf();
+                if (saved == null) {
+                    Toast.makeText(getContext(), R.string.defend, Toast.LENGTH_SHORT).show();
+                } else if (saved.equals(Lawyer.getUserName())) {
+                    if (!Lawyer.checkDefendedSelf()) {
+                        Lawyer.defendSelf();
                         LawyerTask b = new LawyerTask();
                         b.execute(saved);
                     } else {

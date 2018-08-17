@@ -1,17 +1,9 @@
 package cussingfish.mafiaplayer.Roles;
 
+import cussingfish.mafiaplayer.Model.StartResults;
+
 public class Official extends Civilian {
-    public static void set(String name) {
-        official = new Official(name);
-    }
-    public static Official get() {
-        return official;
-    }
-    private static Official official = null;
-    private Official(String name) {
-        userName = name;
-    }
-    private boolean hasVotedSelf = false;
-    public boolean checkVotedSelf() { return hasVotedSelf; }
-    public void voteSelf() { hasVotedSelf = true; }
+    private static boolean hasVotedSelf = false;
+    public static boolean checkVotedSelf() { return hasVotedSelf; }
+    public static void voteSelf() { hasVotedSelf = true; }
 }

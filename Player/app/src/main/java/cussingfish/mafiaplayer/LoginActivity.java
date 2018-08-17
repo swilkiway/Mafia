@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import cussingfish.mafiaplayer.Model.StartResults;
 import cussingfish.mafiaplayer.Roles.Bodyguard;
 import cussingfish.mafiaplayer.Roles.Bomber;
 import cussingfish.mafiaplayer.Roles.Civilian;
@@ -161,21 +162,23 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
         private void createCharacter(String name, StartResults s) {
+            Civilian c;
             switch (s.getRole()) {
                 case "mafioso":
-                    Mafioso.set(name, s); break;
+                    c = new Mafioso(name, s); break;
                 case "detective":
-                    Detective.set(name, s); break;
+                    c = new Detective(name, s); break;
                 case "double agent":
-                    DoubleAgent.set(name, s); break;
+                    c = new DoubleAgent(name, s); break;
                 case "bodyguard":
-                    Bodyguard.set(name, s); break;
+                    c = new Bodyguard(name, s); break;
                 case "bomber":
-                    Bomber.set(name, s); break;
+                    c = new Bomber(name, s); break;
                 case "lawyer":
-                    Lawyer.set(name, s); break;
+                    c = new Lawyer(name, s); break;
+                default:
+                    c = new Civilian(name, s); break;
             }
-            Civilian.set(name, s);
         }
     }
 }

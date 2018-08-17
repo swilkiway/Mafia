@@ -1,6 +1,5 @@
 package cussingfish.mafiaplayer;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,8 +14,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.Arrays;
-
+import cussingfish.mafiaplayer.Model.StartResults;
 import cussingfish.mafiaplayer.Roles.Bodyguard;
 import cussingfish.mafiaplayer.Roles.Bomber;
 import cussingfish.mafiaplayer.Roles.Civilian;
@@ -291,19 +289,20 @@ public class SetupFragment extends Fragment {
         private void createCharacter(String name, StartResults s) {
             switch (s.getRole()) {
                 case "mafioso":
-                    Mafioso.set(name, s); break;
+                    Mafioso.instantiate(name, s); break;
                 case "detective":
-                    Detective.set(name, s); break;
+                    Detective.instantiate(name, s); break;
                 case "double agent":
-                    DoubleAgent.set(name, s); break;
+                    DoubleAgent.instantiate(name, s); break;
                 case "bodyguard":
-                    Bodyguard.set(name, s); break;
+                    Bodyguard.instantiate(name, s); break;
                 case "bomber":
-                    Bomber.set(name, s); break;
+                    Bomber.instantiate(name, s); break;
                 case "lawyer":
-                    Lawyer.set(name, s); break;
+                    Lawyer.instantiate(name, s); break;
+                default:
+                    Civilian.instantiate(name, s); break;
             }
-            Civilian.set(name, s);
         }
     }
 }

@@ -13,18 +13,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import cussingfish.mafiaplayer.Model.DayResults;
 import cussingfish.mafiaplayer.Night.BodyguardFragment;
 import cussingfish.mafiaplayer.Night.BomberFragment;
 import cussingfish.mafiaplayer.Night.DetectiveFragment;
 import cussingfish.mafiaplayer.Night.DoubleAgentFragment;
+import cussingfish.mafiaplayer.Night.LawyerFragment;
 import cussingfish.mafiaplayer.Night.MafiosiFragment;
+import cussingfish.mafiaplayer.Night.OfficialFragment;
 import cussingfish.mafiaplayer.Night.SleepFragment;
-import cussingfish.mafiaplayer.Roles.Bodyguard;
-import cussingfish.mafiaplayer.Roles.Bomber;
 import cussingfish.mafiaplayer.Roles.Civilian;
-import cussingfish.mafiaplayer.Roles.Detective;
 import cussingfish.mafiaplayer.Roles.DoubleAgent;
-import cussingfish.mafiaplayer.Roles.Mafioso;
 
 public class DayFragment extends Fragment {
     private RecyclerView playerList;
@@ -43,12 +43,12 @@ public class DayFragment extends Fragment {
         playerList = view.findViewById(R.id.playerList);
         playerManager = new LinearLayoutManager(getContext());
         playerList.setLayoutManager(playerManager);
-        playerAdapter = new PlayerAdapter(getActivity(), Civilian.get().nightResults.getAlive());
+        playerAdapter = new PlayerAdapter(getActivity(), Civilian.getNightResults().getAlive());
         playerList.setAdapter(playerAdapter);
         nightResults = view.findViewById(R.id.nightResults);
-        nightResults.setText(Utils.getNightResults(getContext(), Civilian.get().nightResults));
+        nightResults.setText(Utils.getNightResults(getContext(), Civilian.getNightResults()));
         submitButton = view.findViewById(R.id.submitButton);
-        if (!Civilian.get().isDead) {
+        if (!Civilian.getDead()) {
             submitButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -88,7 +88,7 @@ public class DayFragment extends Fragment {
                     Thread.sleep(1000);
                     d = ServerProxy.get().dayResult();
                 }
-                Civilian.get().dayResults = d;
+                Civilian.setDayResults(d);
                 return d;
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -104,24 +104,29 @@ public class DayFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putInt("status", s.getStatus());
                 fragment.setArguments(bundle);
-            } else if (Civilian.get().isDead) {
+            } else if (Civilian.getDead()) {
                 fragment = new SleepFragment();
-            } else if (Mafioso.get() != null) {
-                fragment = new MafiosiFragment();
-            } else if (Detective.get() != null) {
-                fragment = new DetectiveFragment();
-            } else if (DoubleAgent.get() != null) {
-                if (DoubleAgent.get().hasAlreadySaved() && DoubleAgent.get().hasAlreadyKilled()) {
-                    fragment = new SleepFragment();
-                } else {
-                    fragment = new DoubleAgentFragment();
-                }
-            } else if (Bodyguard.get() != null) {
-                fragment = new BodyguardFragment();
-            } else if (Bomber.get() != null) {
-                fragment = new BomberFragment();
             } else {
-                fragment = new SleepFragment();
+                switch (Civilian.getStartResults().getRole()) {
+                    case "mafioso":
+                        fragment = new MafiosiFragment(); break;
+                    case "detective":
+                        fragment = new DetectiveFragment(); break;
+                    case "double agent":
+                        if (DoubleAgent.hasAlreadyKilled() && DoubleAgent.hasAlreadySaved()) fragment = new SleepFragment();
+                        else fragment = new DoubleAgentFragment();
+                        break;
+                    case "bodyguard":
+                        fragment = new BodyguardFragment(); break;
+                    case "bomber":
+                        fragment = new BomberFragment(); break;
+                    case "lawyer":
+                        fragment = new LawyerFragment(); break;
+                    case "official":
+                        fragment = new OfficialFragment(); break;
+                    default:
+                        fragment = new SleepFragment(); break;
+                }
             }
             FragmentManager fm = getActivity().getSupportFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();

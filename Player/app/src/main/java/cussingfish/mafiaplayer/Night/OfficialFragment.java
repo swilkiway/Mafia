@@ -41,11 +41,11 @@ public class OfficialFragment extends Fragment {
         playerManager = new LinearLayoutManager(getContext());
         playerList.setLayoutManager(playerManager);
         dayResults = view.findViewById(R.id.dayResults);
-        if (Official.get().dayResults != null) {
-            playerAdapter = new PlayerAdapter(getActivity(), Official.get().dayResults.getAlive());
-            dayResults.setText(Utils.getVotingResults(getContext(), Official.get().dayResults));
+        if (Official.getDayResults() != null) {
+            playerAdapter = new PlayerAdapter(getActivity(), Official.getDayResults().getAlive());
+            dayResults.setText(Utils.getVotingResults(getContext(), Official.getDayResults()));
         } else {
-            playerAdapter = new PlayerAdapter(getActivity(), Official.get().startResults.getAlive());
+            playerAdapter = new PlayerAdapter(getActivity(), Official.getStartResults().getAlive());
             dayResults.setText(getString(R.string.official_goal));
         }
         playerList.setAdapter(playerAdapter);
@@ -54,9 +54,11 @@ public class OfficialFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 saved = playerAdapter.getSelected();
-                if (saved.equals(Official.get().userName)) {
-                    if (!Official.get().checkVotedSelf()) {
-                        Official.get().voteSelf();
+                if (saved == null) {
+                    Toast.makeText(getContext(), R.string.enfranchise, Toast.LENGTH_SHORT).show();
+                } else if (saved.equals(Official.getUserName())) {
+                    if (!Official.checkVotedSelf()) {
+                        Official.voteSelf();
                         OfficialTask b = new OfficialTask();
                         b.execute(saved);
                     } else {

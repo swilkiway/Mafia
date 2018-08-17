@@ -16,17 +16,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import java.util.ArrayList;
-
-import cussingfish.mafiaplayer.Player;
 import cussingfish.mafiaplayer.PlayerAdapter;
 import cussingfish.mafiaplayer.R;
 import cussingfish.mafiaplayer.Roles.Bodyguard;
-import cussingfish.mafiaplayer.Roles.Civilian;
-import cussingfish.mafiaplayer.Roles.Mafioso;
 import cussingfish.mafiaplayer.ServerProxy;
 import cussingfish.mafiaplayer.Utils;
-import cussingfish.mafiaplayer.Vote;
 
 public class BodyguardFragment extends Fragment {
     private RecyclerView playerList;
@@ -45,11 +39,11 @@ public class BodyguardFragment extends Fragment {
         playerList = view.findViewById(R.id.playerList);
         playerManager = new LinearLayoutManager(getContext());
         playerList.setLayoutManager(playerManager);dayResults = view.findViewById(R.id.dayResults);
-        if (Bodyguard.get().dayResults != null) {
-            playerAdapter = new PlayerAdapter(getActivity(), Bodyguard.get().dayResults.getAlive());
-            dayResults.setText(Utils.getVotingResults(getContext(), Bodyguard.get().dayResults));
+        if (Bodyguard.getDayResults() != null) {
+            playerAdapter = new PlayerAdapter(getActivity(), Bodyguard.getDayResults().getAlive());
+            dayResults.setText(Utils.getVotingResults(getContext(), Bodyguard.getDayResults()));
         } else {
-            playerAdapter = new PlayerAdapter(getActivity(), Bodyguard.get().startResults.getAlive());
+            playerAdapter = new PlayerAdapter(getActivity(), Bodyguard.getStartResults().getAlive());
             dayResults.setText(getString(R.string.bodyguard_goal));
         }
         playerList.setAdapter(playerAdapter);
@@ -58,13 +52,15 @@ public class BodyguardFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 saved = playerAdapter.getSelected();
-                if (saved.equals(Bodyguard.get().userName)) {
-                    if (!Bodyguard.get().checkSavedSelf()) {
-                        Bodyguard.get().saveSelf();
+                if (saved == null) {
+                    Toast.makeText(getContext(), R.string.guard, Toast.LENGTH_SHORT).show();
+                } else if (saved.equals(Bodyguard.getUserName())) {
+                    if (!Bodyguard.checkSavedSelf()) {
+                        Bodyguard.saveSelf();
                         BodyguardTask b = new BodyguardTask();
                         b.execute(saved);
                     } else {
-                        Toast.makeText(getContext(), R.string.choose_other, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), R.string.choose_other, Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     BodyguardTask b = new BodyguardTask();

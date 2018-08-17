@@ -12,9 +12,11 @@ import cussingfish.mafiaplayer.Night.DetectiveFragment;
 import cussingfish.mafiaplayer.Night.DoubleAgentFragment;
 import cussingfish.mafiaplayer.Night.LawyerFragment;
 import cussingfish.mafiaplayer.Night.MafiosiFragment;
+import cussingfish.mafiaplayer.Night.OfficialFragment;
 import cussingfish.mafiaplayer.Night.SleepFragment;
 import cussingfish.mafiaplayer.Roles.Bodyguard;
 import cussingfish.mafiaplayer.Roles.Bomber;
+import cussingfish.mafiaplayer.Roles.Civilian;
 import cussingfish.mafiaplayer.Roles.Detective;
 import cussingfish.mafiaplayer.Roles.DoubleAgent;
 import cussingfish.mafiaplayer.Roles.Lawyer;
@@ -27,20 +29,23 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         Fragment fragment;
-        if (Mafioso.get() != null) {
-            fragment = new MafiosiFragment();
-        } else if (Detective.get() != null) {
-            fragment = new DetectiveFragment();
-        } else if (DoubleAgent.get() != null) {
-            fragment = new DoubleAgentFragment();
-        } else if (Bodyguard.get() != null) {
-            fragment = new BodyguardFragment();
-        } else if (Bomber.get() != null) {
-            fragment = new BomberFragment();
-        } else if (Lawyer.get() != null) {
-            fragment = new LawyerFragment();
-        } else {
-            fragment = new SleepFragment();
+        switch (Civilian.getStartResults().getRole()) {
+            case "mafioso":
+                fragment = new MafiosiFragment(); break;
+            case "detective":
+                fragment = new DetectiveFragment(); break;
+            case "double agent":
+                fragment = new DoubleAgentFragment(); break;
+            case "bodyguard":
+                fragment = new BodyguardFragment(); break;
+            case "bomber":
+                fragment = new BomberFragment(); break;
+            case "lawyer":
+                fragment = new LawyerFragment(); break;
+            case "official":
+                fragment = new OfficialFragment(); break;
+            default:
+                fragment = new SleepFragment(); break;
         }
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();

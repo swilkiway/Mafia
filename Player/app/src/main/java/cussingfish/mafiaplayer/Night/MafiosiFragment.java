@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -42,23 +43,27 @@ public class MafiosiFragment extends Fragment {
         playerManager = new LinearLayoutManager(getContext());
         playerList.setLayoutManager(playerManager);
         dayResults = view.findViewById(R.id.dayResults);
-        if (Mafioso.get().dayResults != null) {
-            playerAdapter = new PlayerAdapter(getActivity(), Mafioso.get().dayResults.getAlive());
-            dayResults.setText(Utils.getVotingResults(getContext(), Mafioso.get().dayResults));
+        if (Mafioso.getDayResults() != null) {
+            playerAdapter = new PlayerAdapter(getActivity(), Mafioso.getDayResults().getAlive());
+            dayResults.setText(Utils.getVotingResults(getContext(), Mafioso.getDayResults()));
         } else {
-            playerAdapter = new PlayerAdapter(getActivity(), Mafioso.get().startResults.getAlive());
+            playerAdapter = new PlayerAdapter(getActivity(), Mafioso.getStartResults().getAlive());
             dayResults.setText(getString(R.string.mafiosi_goal));
         }
         playerList.setAdapter(playerAdapter);
         teamList = view.findViewById(R.id.teamList);
-        teamList.setText(Utils.getTeammates(getContext(), Mafioso.get().getTeammates()));
+        teamList.setText(Utils.getTeammates(getContext(), Mafioso.getStartResults().getTeammates()));
         submitButton = view.findViewById(R.id.submitButton);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 victim = playerAdapter.getSelected();
-                MafiosiTask b = new MafiosiTask();
-                b.execute(victim);
+                if (victim == null) {
+                    Toast.makeText(getContext(), R.string.mafia_kill, Toast.LENGTH_SHORT).show();
+                } else {
+                    MafiosiTask b = new MafiosiTask();
+                    b.execute(victim);
+                }
             }
         });
     }

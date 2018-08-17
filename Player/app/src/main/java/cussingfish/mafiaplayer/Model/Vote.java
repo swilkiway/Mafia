@@ -1,4 +1,4 @@
-package cussingfish.mafiaplayer;
+package cussingfish.mafiaplayer.Model;
 
 import java.util.ArrayList;
 

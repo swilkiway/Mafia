@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import cussingfish.mafiaplayer.DayFragment;
 import cussingfish.mafiaplayer.EndGameFragment;
-import cussingfish.mafiaplayer.NightResults;
+import cussingfish.mafiaplayer.Model.NightResults;
 import cussingfish.mafiaplayer.R;
 import cussingfish.mafiaplayer.Roles.Civilian;
 import cussingfish.mafiaplayer.ServerProxy;
@@ -31,8 +31,8 @@ public class SleepFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         dayResults = view.findViewById(R.id.dayResults);
-        if (Civilian.get().dayResults != null) {
-            dayResults.setText(Utils.getVotingResults(getContext(), Civilian.get().dayResults));
+        if (Civilian.getDayResults() != null) {
+            dayResults.setText(Utils.getVotingResults(getContext(), Civilian.getDayResults()));
         } else {
             dayResults.setText(getString(R.string.civilian_goal));
         }
@@ -49,7 +49,7 @@ public class SleepFragment extends Fragment {
                     Thread.sleep(1000);
                     n = ServerProxy.get().nightResult();
                 }
-                Civilian.get().nightResults = n;
+                Civilian.setNightResults(n);
                 return n;
             } catch (InterruptedException e) {
                 e.printStackTrace();
