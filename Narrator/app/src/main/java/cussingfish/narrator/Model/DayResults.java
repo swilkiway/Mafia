@@ -8,6 +8,7 @@ public class DayResults {
     private Player alive[];
     private Ballot ballot;
     private Player bombed;
+    private Player lover;
     private int status;
     private boolean isNull = false;
     public void setLynched(Player p) { lynched = p; }
@@ -15,6 +16,7 @@ public class DayResults {
     public void setAlive(ArrayList<Player> a) { alive = a.toArray(new Player[a.size()]); }
     public void setBallot(Ballot b) { ballot = b; }
     public void setBombed(Player p) { bombed = p; }
+    public void setLover(Player l) { lover = l; }
     public void setStatus(int s) { status = s; }
     public void setNull() { isNull = true; }
 }

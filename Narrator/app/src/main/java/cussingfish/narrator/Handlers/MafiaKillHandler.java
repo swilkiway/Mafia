@@ -17,7 +17,7 @@ public class MafiaKillHandler implements HttpHandler {
         Gson gson = new Gson();
         String player = gson.fromJson(WebServer.readString(is), String.class);
         Game.getGame().mafiaKillPlayer(player);
-        String response = gson.toJson("response");
+        String response = gson.toJson("\n\n");
         h.sendResponseHeaders(200, 0);
         OutputStream os = h.getResponseBody();
         os.write(response.getBytes());

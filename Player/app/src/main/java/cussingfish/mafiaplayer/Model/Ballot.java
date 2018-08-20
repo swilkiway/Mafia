@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public class Ballot {
     private int totalVotes;
-    private ArrayList<Vote> votes;
-    public ArrayList<Vote> getVotes() {
-        return votes;
+    private ArrayList<Candidate> candidates;
+    public ArrayList<Candidate> getCandidates() {
+        return candidates;
     }
 
     public int getTotalVotes() {

@@ -5,6 +5,8 @@ import com.google.gson.Gson;
 import cussingfish.mafiaplayer.Model.DayResults;
 import cussingfish.mafiaplayer.Model.NightResults;
 import cussingfish.mafiaplayer.Model.StartResults;
+import cussingfish.mafiaplayer.Model.Vote;
+import cussingfish.mafiaplayer.Roles.Civilian;
 
 public class ServerProxy {
     public static ServerProxy get() {
@@ -93,9 +95,18 @@ public class ServerProxy {
         String urlString = "http://" + hostIP +":" + "7996" + "/officialenfranchise";
         WebClient.getConnection(urlString, json);
     }
+    public void matchmake(String players[]) {
+        Gson gson = new Gson();
+        String json = gson.toJson(players);
+        String urlString = "http://" + hostIP +":" + "7996" + "/matchmake";
+        WebClient.getConnection(urlString, json);
+    }
     public void vote(String player) {
         Gson gson = new Gson();
-        String json = gson.toJson(player);
+        Vote vote = new Vote();
+        vote.setNominated(player);
+        vote.setVoter(Civilian.getUserName());
+        String json = gson.toJson(vote);
         String urlString = "http://" + hostIP + ":" + "7996" + "/vote";
         WebClient.getConnection(urlString, json);
     }
@@ -110,11 +121,5 @@ public class ServerProxy {
         String urlString = "http://" + hostIP + ":" + "7996" + "/nightresult";
         String response = WebClient.getConnection(urlString, "");
         return gson.fromJson(response, NightResults.class);
-    }
-    public int checkStatus() {
-        Gson gson = new Gson();
-        String urlString = "http://" + hostIP + ":" + "7996" + "/checkstatus";
-        String response = WebClient.getConnection(urlString, "");
-        return gson.fromJson(response, int.class);
     }
 }

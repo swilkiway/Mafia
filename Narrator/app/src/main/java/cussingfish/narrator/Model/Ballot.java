@@ -4,21 +4,27 @@ import java.util.ArrayList;
 
 public class Ballot {
     private int totalVotes;
-    private ArrayList<Vote> votes;
+    private ArrayList<Candidate> candidates;
+    public Ballot() {
+        totalVotes = 0;
+        candidates = new ArrayList<>();
+    }
     public void addVote(String nominated, String voter) {
         totalVotes++;
-        for (Vote v : votes) {
-            if (v.getNominated().equals(nominated)) {
-                v.addVote(voter);
-                return;
+        if (!candidates.isEmpty()) {
+            for (Candidate c : candidates) {
+                if (c.getNominated().equals(nominated)) {
+                    c.addVote(voter);
+                    return;
+                }
             }
         }
-        Vote v = new Vote(nominated, voter);
-        votes.add(v);
+        Candidate c = new Candidate(nominated, voter);
+        candidates.add(c);
     }
 
-    public ArrayList<Vote> getVotes() {
-        return votes;
+    public ArrayList<Candidate> getCandidates() {
+        return candidates;
     }
 
     public int getTotalVotes() {

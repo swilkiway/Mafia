@@ -42,7 +42,8 @@
     <string name="civilians">Civilians</string>
     <string name="civilian_desc">Civilians don\'t do anything at night.</string>
     <string name="civilian_goal">You are a civilian (in addition to any other roles you got)! Your goal
-        is to vote for the mafiosi during the day so they get lynched.</string>
+        is to vote for the mafiosi during the day so they get lynched (or just to pretend to vote for
+        the mafiosi if you are one).</string>
     <string name="matchmaker">Matchmaker</string>
     <string name="matchmaker_desc">At the beginning of the game, the matchmaker chooses two people to
         be in love. If one of them dies, the other will also.</string>
@@ -64,6 +65,9 @@
         following day.</string>
     <string name="lawyer_goal">You are the lawyer! Your goal is to defend innocent civilians from being
         lynched.</string>
+    <string name="gossip">Town Gossip</string>
+    <string name="gossip_desc">The town gossip is a normal civilian; however, if a detective visits
+        him/her, that detective will not be able to investigate anyone else that game.</string>
 
     <!--Game Strings-->
     <string name="choose_lynch">Please select the player you\'d like to lynch.</string>
@@ -72,6 +76,7 @@
     <string name="da_killed">%1$s, the %2$s, was killed by a mysterious stranger!\n</string>
     <string name="da_saved">%1$s was saved by a mysterious stranger!\n</string>
     <string name="bomber_killed">BOOM! %1$s, the %2$s, was killed by the bomber!\n</string>
+    <string name="lover_died">Their lover, %1$s, the %2$s, died of a broken heart!</string>
     <string name="lynched">%1$s, the %2$s, was nominated to be lynched!\n</string>
     <string name="lawyer_defended">%1$s was nominated to be lynched, but was successfully defended in court by the lawyer!</string>
     <string name="voted">%1$s voted for %2$s.\n</string>
@@ -96,5 +101,7 @@
     <string name="bomb">Please select a person who will also die if you die this round.</string>
     <string name="defend">Please select a person to defend against being lynched during the next day.</string>
     <string name="enfranchise">Please select a person whose vote will count double during the next day.</string>
+    <string name="matchmaker_one">Please select the first lover.</string>
+    <string name="matchmaker_two">Please select the second lover.</string>
     <string name="sleep">You slumber peacefully, waiting for the business of the town to be finished for the night.</string>
 </resources>

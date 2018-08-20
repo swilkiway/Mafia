@@ -26,7 +26,6 @@ import cussingfish.mafiaplayer.ServerProxy;
 import cussingfish.mafiaplayer.Utils;
 
 public class DetectiveFragment extends Fragment {
-    private ArrayList<String> players;
     private RecyclerView playerList;
     private PlayerAdapter playerAdapter;
     private RecyclerView.LayoutManager playerManager;
@@ -69,12 +68,15 @@ public class DetectiveFragment extends Fragment {
     public class DetectiveTask extends AsyncTask<String, String, String> {
         @Override
         protected String doInBackground(String... r) {
-            ServerProxy.get().investigate(r[0]);
-            return null;
+            return ServerProxy.get().investigate(r[0]);
         }
 
         @Override
         protected void onPostExecute(String s) {
+            if (s.contains("gossip")) {
+                Detective.setFoundGossip();
+            }
+            Toast.makeText(getContext(), s, Toast.LENGTH_LONG).show();
             FragmentManager fm = getActivity().getSupportFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
             SleepFragment fragment = new SleepFragment();

@@ -16,6 +16,7 @@ import cussingfish.narrator.Handlers.DayHandler;
 import cussingfish.narrator.Handlers.DetectiveHandler;
 import cussingfish.narrator.Handlers.LawyerHandler;
 import cussingfish.narrator.Handlers.MafiaKillHandler;
+import cussingfish.narrator.Handlers.MatchmakerHandler;
 import cussingfish.narrator.Handlers.NightHandler;
 import cussingfish.narrator.Handlers.OfficialHandler;
 import cussingfish.narrator.Handlers.RegisterHandler;
@@ -39,6 +40,7 @@ public class WebServer {
         server.createContext("/dasave", new DASaveHandler());
         server.createContext("/lawyerdefend", new LawyerHandler());
         server.createContext("/officialenfranchise", new OfficialHandler());
+        server.createContext("/matchmake", new MatchmakerHandler());
         server.createContext("/vote", new VoteHandler());
         server.createContext("/dayresult", new DayHandler());
         server.createContext("/nightresult", new NightHandler());

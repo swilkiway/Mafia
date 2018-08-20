@@ -12,6 +12,7 @@ import cussingfish.mafiaplayer.Night.DetectiveFragment;
 import cussingfish.mafiaplayer.Night.DoubleAgentFragment;
 import cussingfish.mafiaplayer.Night.LawyerFragment;
 import cussingfish.mafiaplayer.Night.MafiosiFragment;
+import cussingfish.mafiaplayer.Night.MatchmakerFragment;
 import cussingfish.mafiaplayer.Night.OfficialFragment;
 import cussingfish.mafiaplayer.Night.SleepFragment;
 import cussingfish.mafiaplayer.Roles.Bodyguard;
@@ -44,6 +45,8 @@ public class GameActivity extends AppCompatActivity {
                 fragment = new LawyerFragment(); break;
             case "official":
                 fragment = new OfficialFragment(); break;
+            case "matchmaker":
+                fragment = new MatchmakerFragment(); break;
             default:
                 fragment = new SleepFragment(); break;
         }

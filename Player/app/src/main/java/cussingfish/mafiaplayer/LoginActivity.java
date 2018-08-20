@@ -21,6 +21,7 @@ import cussingfish.mafiaplayer.Roles.Detective;
 import cussingfish.mafiaplayer.Roles.DoubleAgent;
 import cussingfish.mafiaplayer.Roles.Lawyer;
 import cussingfish.mafiaplayer.Roles.Mafioso;
+import cussingfish.mafiaplayer.Roles.Official;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -162,22 +163,23 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
         private void createCharacter(String name, StartResults s) {
-            Civilian c;
             switch (s.getRole()) {
                 case "mafioso":
-                    c = new Mafioso(name, s); break;
+                    Mafioso.instantiate(name, s); break;
                 case "detective":
-                    c = new Detective(name, s); break;
+                    Detective.instantiate(name, s); break;
                 case "double agent":
-                    c = new DoubleAgent(name, s); break;
+                    DoubleAgent.instantiate(name, s); break;
                 case "bodyguard":
-                    c = new Bodyguard(name, s); break;
+                    Bodyguard.instantiate(name, s); break;
                 case "bomber":
-                    c = new Bomber(name, s); break;
+                    Bomber.instantiate(name, s); break;
                 case "lawyer":
-                    c = new Lawyer(name, s); break;
+                    Lawyer.instantiate(name, s); break;
+                case "official":
+                    Official.instantiate(name, s); break;
                 default:
-                    c = new Civilian(name, s); break;
+                    Civilian.instantiate(name, s); break;
             }
         }
     }

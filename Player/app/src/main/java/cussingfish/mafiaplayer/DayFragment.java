@@ -24,6 +24,7 @@ import cussingfish.mafiaplayer.Night.MafiosiFragment;
 import cussingfish.mafiaplayer.Night.OfficialFragment;
 import cussingfish.mafiaplayer.Night.SleepFragment;
 import cussingfish.mafiaplayer.Roles.Civilian;
+import cussingfish.mafiaplayer.Roles.Detective;
 import cussingfish.mafiaplayer.Roles.DoubleAgent;
 
 public class DayFragment extends Fragment {
@@ -111,7 +112,9 @@ public class DayFragment extends Fragment {
                     case "mafioso":
                         fragment = new MafiosiFragment(); break;
                     case "detective":
-                        fragment = new DetectiveFragment(); break;
+                        if (Detective.checkFoundGossip()) fragment = new SleepFragment();
+                        else fragment = new DetectiveFragment();
+                        break;
                     case "double agent":
                         if (DoubleAgent.hasAlreadyKilled() && DoubleAgent.hasAlreadySaved()) fragment = new SleepFragment();
                         else fragment = new DoubleAgentFragment();

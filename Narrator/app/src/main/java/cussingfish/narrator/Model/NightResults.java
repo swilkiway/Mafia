@@ -11,6 +11,7 @@ public class NightResults {
     private String defended;
     private String enfranchised;
     private String silenced;
+    private Player lover;
     private Player[] alive;
     private int status;
     private boolean isNull = false;
@@ -36,6 +37,7 @@ public class NightResults {
     public void setSilenced(String p) {
         silenced = p;
     }
+    public void setLover(Player l) { lover = l; }
     public void setAlive(ArrayList<Player> a) { alive = a.toArray(new Player[a.size()]); }
     public void setStatus(int s) { status = s; }
     public void setNull() { isNull = true; }

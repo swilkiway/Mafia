@@ -1,17 +1,8 @@
 package cussingfish.mafiaplayer.Model;
 
-import java.util.ArrayList;
-
 public class Vote {
     private String nominated;
-    private ArrayList<String> voters;
-    public String[] getVoters() {
-        return voters.toArray(new String[voters.size()]);
-    }
-    public int getVotes() {
-        return voters.size();
-    }
-    public String getNominated() {
-        return nominated;
-    }
+    private String voter;
+    public void setNominated(String n) { nominated = n; }
+    public void setVoter(String v) { voter = v; }
 }

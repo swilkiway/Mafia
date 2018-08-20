@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import cussingfish.narrator.Model.Ballot;
+import cussingfish.narrator.Model.Candidate;
 import cussingfish.narrator.Model.DayResults;
 import cussingfish.narrator.Model.NightResults;
 import cussingfish.narrator.Model.Player;
@@ -14,7 +15,8 @@ public class Game {
     /* other possible roles: official (two votes to a player), matchmaker (chooses two players
     to be in love), journalist (if killed, roles are no longer announced when others die), suspect
     (appears to be mafia if investigated by detectives) */
-    enum ROLES { MAFIOSO, DETECTIVE, DOUBLE_AGENT, BODYGUARD, BOMBER, LAWYER, OFFICIAL, CIVILIAN, SUSPECT }
+    enum ROLES { MAFIOSO, DETECTIVE, DOUBLE_AGENT, BODYGUARD, BOMBER, LAWYER, OFFICIAL, TOWN_GOSSIP,
+        CIVILIAN, SUSPECT }
     enum STATUS { NO_WIN, CIVILIAN_WIN, MAFIA_WIN }
     enum JOURNALIST { DISABLED, ALIVE, DEAD }
     private final String W = "waiting";
@@ -41,6 +43,8 @@ public class Game {
     private String defended = D;
     private String enfranchised = D;
     private String silenced = D;
+    private String lovers[];
+    private Player lover;
 
     private static Game game = null;
 
@@ -59,6 +63,8 @@ public class Game {
         nightResults = new NightResults();
         dayResults = new DayResults();
         ballot = new Ballot();
+        lovers = null;
+        lover = null;
     }
 
     public static Game getGame() {
@@ -69,6 +75,7 @@ public class Game {
     }
 
     public void addPlayer(String name) {
+        System.out.println("added " + name);
         Player p = new Player(name);
         alive.add(p);
     }
@@ -106,6 +113,10 @@ public class Game {
             civilianSize++;
             roles.add("official");
             enfranchised = W;
+        }
+        if (rolesList[ROLES.TOWN_GOSSIP.ordinal()] == 1) {
+            civilianSize++;
+            roles.add("town gossip");
         }
         civilianSize += rolesList[ROLES.CIVILIAN.ordinal()];
         for (int i = 0; i < rolesList[ROLES.CIVILIAN.ordinal()]; i++) {
@@ -232,11 +243,7 @@ public class Game {
 
     private void resolveNight() {
         dayReady = false;
-        System.out.println(bodyguardSaved);
-        System.out.println(doubleAgentSaved);
-        System.out.println(mafiaKilled);
         if (!mafiaKilled.equals(bodyguardSaved) && !mafiaKilled.equals(doubleAgentSaved)) {
-            System.out.println("wrong!");
             Player p = findPlayer(mafiaKilled);
             nightResults.setMafiaKilled(p);
             removePlayer(p);
@@ -249,7 +256,6 @@ public class Game {
                 nightResults.setBombed(null);
             }
         } else {
-            System.out.println("right!");
             nightResults.setBodyguardSaved(mafiaKilled);
         }
         if (!doubleAgentKilled.equals("pass") && !doubleAgentKilled.equals(D)) {
@@ -270,11 +276,11 @@ public class Game {
             }
         }
         nightResults.setSilenced(silenced);
+        nightResults.setLover(lover);
         nightResults.setStatus(status.ordinal());
         nightResults.setAlive(alive);
         resetForNextNight();
         nightReady = true;
-        System.out.println("finished");
     }
 
     private Player findPlayer(String name) {
@@ -301,6 +307,9 @@ public class Game {
             if (p.equals(victim)) {
                 dead.add(p);
                 alive.remove(p);
+                if (lover == null && lovers != null) {
+                    checkLovers(p.getName());
+                }
             }
         }
         if (victim.getRole().equals("mafioso")) {
@@ -313,6 +322,18 @@ public class Game {
             status = STATUS.CIVILIAN_WIN;
         } else if (civilianSize < mafia.size()) {
             status = STATUS.MAFIA_WIN;
+        }
+    }
+
+    private void checkLovers(String player) {
+        if (lovers[0].equals(player)) {
+            lover = findPlayer(lovers[1]);
+            removePlayer(lover);
+            lovers = null;
+        } else if (lovers[1].equals(player)) {
+            lover = findPlayer(lovers[0]);
+            removePlayer(lover);
+            lovers = null;
         }
     }
 
@@ -347,6 +368,7 @@ public class Game {
         if (!enfranchised.equals(D)) {
             enfranchised = W;
         }
+        lover = null;
     }
 
     public NightResults getNightResults() {
@@ -364,6 +386,8 @@ public class Game {
             if (p.getName().equals(guess)) {
                 if (p.getRole().equals("mafioso") || p.getRole().equals("suspect")) {
                     return guess + " is a member of the mafia";
+                } else if (p.getRole().equals("town gossip")) {
+                    return guess + " is the town gossip! Better lie low for a while";
                 } else {
                     return guess + " is an innocent civilian";
                 }
@@ -371,8 +395,10 @@ public class Game {
         }
         for (Player p : dead) {
             if (p.getName().equals(guess)) {
-                if (p.getRole().equals("mafioso")) {
+                if (p.getRole().equals("mafioso") || p.getRole().equals("suspect")) {
                     return guess + " is a member of the mafia";
+                } else if (p.getRole().equals("town gossip")) {
+                    return guess + " is the town gossip! Better lie low for a while";
                 } else {
                     return guess + " is an innocent civilian";
                 }
@@ -381,10 +407,14 @@ public class Game {
         return null;
     }
 
-    public void votePlayer(String vote[]) {
-        ballot.addVote(vote[0],vote[1]);
-        if (vote[1].equals(enfranchised)) {
-            ballot.addVote(vote[0], vote[1]);
+    public void matchmake(String players[]) {
+        lovers = players;
+    }
+
+    public void votePlayer(Vote vote) {
+        ballot.addVote(vote.getNominated(), vote.getVoter());
+        if (vote.getVoter().equals(enfranchised)) {
+            ballot.addVote(vote.getNominated(), vote.getVoter());
         }
         if (ballot.getTotalVotes() == alive.size()) {
             resolveVoting();
@@ -395,18 +425,19 @@ public class Game {
         nightReady = false;
         dayResults.setBallot(ballot);
         boolean isTied = false;
-        Vote lynched = null;
-        for (Vote v : ballot.getVotes()) {
+        Candidate lynched = null;
+        for (Candidate c : ballot.getCandidates()) {
             if (lynched == null) {
-                lynched = v;
-            } else if (v.getVotes() > lynched.getVotes()) {
-                lynched = v;
+                lynched = c;
+            } else if (c.getVotes() > lynched.getVotes()) {
+                lynched = c;
                 isTied = false;
-            } else if (v.getVotes() == lynched.getVotes()) {
+            } else if (c.getVotes() == lynched.getVotes()) {
                 isTied = true;
             }
         }
         if (!isTied) {
+            System.out.println("entered isTied");
             if (lynched.getNominated().equals(defended)) {
                 dayResults.setDefended(defended);
                 dayResults.setBombed(null);
@@ -423,6 +454,7 @@ public class Game {
                 }
             }
         }
+        dayResults.setLover(lover);
         dayResults.setStatus(status.ordinal());
         dayResults.setAlive(alive);
         clearVotes();
@@ -441,5 +473,6 @@ public class Game {
 
     private void clearVotes() {
         ballot = new Ballot();
+        lover = null;
     }
 }

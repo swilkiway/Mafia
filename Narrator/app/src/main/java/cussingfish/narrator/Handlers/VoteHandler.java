@@ -9,15 +9,16 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import cussingfish.narrator.Game;
+import cussingfish.narrator.Model.Vote;
 import cussingfish.narrator.WebServer;
 
 public class VoteHandler implements HttpHandler {
     public void handle(HttpExchange h) throws IOException {
         InputStream is = h.getRequestBody();
         Gson gson = new Gson();
-        String vote[] = gson.fromJson(WebServer.readString(is), String[].class);
-        Game.getGame().votePlayer(vote);
-        String response = gson.toJson("response");
+        Vote v = gson.fromJson(WebServer.readString(is), Vote.class);
+        Game.getGame().votePlayer(v);
+        String response = gson.toJson("\n\n");
         h.sendResponseHeaders(200, 0);
         OutputStream os = h.getResponseBody();
         os.write(response.getBytes());

@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 import cussingfish.mafiaplayer.PlayerAdapter;
 import cussingfish.mafiaplayer.R;
+import cussingfish.mafiaplayer.Roles.Civilian;
 import cussingfish.mafiaplayer.Roles.Mafioso;
 import cussingfish.mafiaplayer.ServerProxy;
 import cussingfish.mafiaplayer.Utils;
@@ -43,9 +44,9 @@ public class MafiosiFragment extends Fragment {
         playerManager = new LinearLayoutManager(getContext());
         playerList.setLayoutManager(playerManager);
         dayResults = view.findViewById(R.id.dayResults);
-        if (Mafioso.getDayResults() != null) {
-            playerAdapter = new PlayerAdapter(getActivity(), Mafioso.getDayResults().getAlive());
-            dayResults.setText(Utils.getVotingResults(getContext(), Mafioso.getDayResults()));
+        if (Civilian.getDayResults() != null) {
+            playerAdapter = new PlayerAdapter(getActivity(), Civilian.getDayResults().getAlive());
+            dayResults.setText(Utils.getVotingResults(getContext(), Civilian.getDayResults()));
         } else {
             playerAdapter = new PlayerAdapter(getActivity(), Mafioso.getStartResults().getAlive());
             dayResults.setText(getString(R.string.mafiosi_goal));
