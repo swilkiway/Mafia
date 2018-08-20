@@ -23,7 +23,7 @@ public class VoteAdapter extends RecyclerView.Adapter<VoteAdapter.VoteHolder> {
     @Override
     public VoteAdapter.VoteHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        return new VoteHolder(inflater.inflate(R.layout.item_player, parent, false));
+        return new VoteHolder(inflater.inflate(R.layout.item_vote, parent, false));
     }
     @Override
     public void onBindViewHolder(VoteAdapter.VoteHolder holder, int position) {

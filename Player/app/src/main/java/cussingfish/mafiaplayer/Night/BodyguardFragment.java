@@ -77,10 +77,9 @@ public class BodyguardFragment extends Fragment {
         if (Bodyguard.getDayResults() != null) {
             voteList = view.findViewById(R.id.voteList);
             voteManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-            voteList.setLayoutManager(playerManager);
+            voteList.setLayoutManager(voteManager);
             dayResults = view.findViewById(R.id.dayResults);
             voteAdapter = new VoteAdapter(getActivity(), Bodyguard.getDayResults().getBallot().getCandidates());
-            dayResults.setText(Utils.getVotingResults(getContext(), Bodyguard.getDayResults()));
             voteList.setAdapter(voteAdapter);
         }
 
