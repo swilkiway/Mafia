@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class Ballot {
     private int totalVotes;
     private ArrayList<Candidate> candidates;
-    public ArrayList<Candidate> getCandidates() {
-        return candidates;
+    public Candidate[] getCandidates() {
+        return candidates.toArray(new Candidate[candidates.size()]);
     }
 
     public int getTotalVotes() {

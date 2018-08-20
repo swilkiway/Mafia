@@ -21,11 +21,15 @@ import cussingfish.mafiaplayer.R;
 import cussingfish.mafiaplayer.Roles.Bodyguard;
 import cussingfish.mafiaplayer.ServerProxy;
 import cussingfish.mafiaplayer.Utils;
+import cussingfish.mafiaplayer.VoteAdapter;
 
 public class BodyguardFragment extends Fragment {
     private RecyclerView playerList;
     private PlayerAdapter playerAdapter;
     private RecyclerView.LayoutManager playerManager;
+    private RecyclerView voteList;
+    private VoteAdapter voteAdapter;
+    private RecyclerView.LayoutManager voteManager;
     private Button submitButton;
     private String saved;
     private TextView dayResults;
@@ -38,7 +42,8 @@ public class BodyguardFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         playerList = view.findViewById(R.id.playerList);
         playerManager = new LinearLayoutManager(getContext());
-        playerList.setLayoutManager(playerManager);dayResults = view.findViewById(R.id.dayResults);
+        playerList.setLayoutManager(playerManager);
+        dayResults = view.findViewById(R.id.dayResults);
         if (Bodyguard.getDayResults() != null) {
             playerAdapter = new PlayerAdapter(getActivity(), Bodyguard.getDayResults().getAlive());
             dayResults.setText(Utils.getVotingResults(getContext(), Bodyguard.getDayResults()));
@@ -68,6 +73,17 @@ public class BodyguardFragment extends Fragment {
                 }
             }
         });
+
+        if (Bodyguard.getDayResults() != null) {
+            voteList = view.findViewById(R.id.voteList);
+            voteManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+            voteList.setLayoutManager(playerManager);
+            dayResults = view.findViewById(R.id.dayResults);
+            voteAdapter = new VoteAdapter(getActivity(), Bodyguard.getDayResults().getBallot().getCandidates());
+            dayResults.setText(Utils.getVotingResults(getContext(), Bodyguard.getDayResults()));
+            voteList.setAdapter(voteAdapter);
+        }
+
     }
 
     public class BodyguardTask extends AsyncTask<String, String, String> {
