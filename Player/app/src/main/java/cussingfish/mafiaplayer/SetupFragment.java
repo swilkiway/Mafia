@@ -170,6 +170,7 @@ public class SetupFragment extends Fragment {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                submit.setEnabled(false);
                 int roles[] = getNums();
                 SetupTask s = new SetupTask();
                 s.execute(roles);

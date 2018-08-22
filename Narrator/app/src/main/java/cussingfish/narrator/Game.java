@@ -1,6 +1,7 @@
 package cussingfish.narrator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 import cussingfish.narrator.Model.Ballot;
@@ -126,13 +127,7 @@ public class Game {
         for (int i = 0; i < rolesList[ROLES.SUSPECT.ordinal()]; i++) {
             roles.add("suspect");
         }
-        for (int i = 0; i < 100; i++) {
-            Random rand = new Random(System.currentTimeMillis());
-            int index = rand.nextInt(roles.size());
-            String tmp = roles.get(index);
-            roles.set(index, roles.get(0));
-            roles.set(0, tmp);
-        }
+        Collections.shuffle(roles);
         for (int i = 0; i < roles.size(); i++) {
             alive.get(i).setRole(roles.get(i));
         }
