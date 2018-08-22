@@ -127,6 +127,10 @@ public class Game {
         for (int i = 0; i < rolesList[ROLES.SUSPECT.ordinal()]; i++) {
             roles.add("suspect");
         }
+        while (roles.size() < alive.size()) {
+            civilianSize++;
+            roles.add("civilian");
+        }
         Collections.shuffle(roles);
         for (int i = 0; i < roles.size(); i++) {
             alive.get(i).setRole(roles.get(i));
@@ -292,6 +296,10 @@ public class Game {
         return null;
     }
 
+    public void removePlayer(String name) {
+        removePlayer(findPlayer(name));
+    }
+
     private void removePlayer(Player victim) {
         for (Player p : dead) {
             if (p.equals(victim)) {
@@ -322,12 +330,10 @@ public class Game {
 
     private void checkLovers(String player) {
         if (lovers[0].equals(player)) {
-            lover = findPlayer(lovers[1]);
-            removePlayer(lover);
+            removePlayer(lovers[1]);
             lovers = null;
         } else if (lovers[1].equals(player)) {
-            lover = findPlayer(lovers[0]);
-            removePlayer(lover);
+            removePlayer(lovers[1]);
             lovers = null;
         }
     }

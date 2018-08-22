@@ -15,6 +15,7 @@ import cussingfish.narrator.Handlers.DASaveHandler;
 import cussingfish.narrator.Handlers.DayHandler;
 import cussingfish.narrator.Handlers.DetectiveHandler;
 import cussingfish.narrator.Handlers.LawyerHandler;
+import cussingfish.narrator.Handlers.LeaveHandler;
 import cussingfish.narrator.Handlers.MafiaKillHandler;
 import cussingfish.narrator.Handlers.MatchmakerHandler;
 import cussingfish.narrator.Handlers.NightHandler;
@@ -45,6 +46,7 @@ public class WebServer {
         server.createContext("/dayresult", new DayHandler());
         server.createContext("/nightresult", new NightHandler());
         server.createContext("/doubleagent", new AgentHandler());
+        server.createContext("/leavegame", new LeaveHandler());
 
         server.setExecutor(null);
         server.start();

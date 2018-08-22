@@ -122,4 +122,11 @@ public class ServerProxy {
         String response = WebClient.getConnection(urlString, "");
         return gson.fromJson(response, NightResults.class);
     }
+
+    public void leaveGame(String name) {
+        Gson gson = new Gson();
+        String json = gson.toJson(name);
+        String urlString = "http://" + hostIP + ":" + "7996" + "/leavegame";
+        WebClient.getConnection(urlString, json);
+    }
 }

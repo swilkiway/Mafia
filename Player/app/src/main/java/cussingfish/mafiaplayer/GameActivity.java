@@ -1,5 +1,7 @@
 package cussingfish.mafiaplayer;
 
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -54,5 +56,22 @@ public class GameActivity extends AppCompatActivity {
         FragmentTransaction ft = fm.beginTransaction();
         ft.add(R.id.fragmentContainer, fragment);
         ft.commit();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (isFinishing()) {
+            LeaveTask l = new LeaveTask();
+            l.execute(Civilian.getUserName());
+        }
+    }
+
+    public class LeaveTask extends AsyncTask<String, String, String> {
+        @Override
+        protected String doInBackground(String... s) {
+            ServerProxy.get().leaveGame(s[0]);
+            return null;
+        }
     }
 }
