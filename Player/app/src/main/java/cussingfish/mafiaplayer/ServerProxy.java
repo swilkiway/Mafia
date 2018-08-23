@@ -17,88 +17,88 @@ public class ServerProxy {
     }
     private static ServerProxy serverProxy = null;
     private ServerProxy() { }
-    private String hostIP = null;
-    public void setHostIP(String ip) {
-        hostIP = ip;
+    private String baseUrl = null;
+    public void setBaseUrl(String ip) {
+        baseUrl = "http://" + ip + ":" + "7996";
     }
     public void setup(int roles[]) {
         Gson gson = new Gson();
         String json = gson.toJson(roles);
-        String urlString = "http://" + hostIP + ":" + "7996" + "/setup";
+        String urlString = baseUrl + "/setup";
         WebClient.getConnection(urlString, json);
     }
     public void register(String username) {
         Gson gson = new Gson();
         String json = gson.toJson(username);
-        String urlString = "http://" + hostIP + ":" + "7996" + "/register";
+        String urlString = baseUrl + "/register";
         WebClient.getConnection(urlString, json);
     }
     public StartResults getRole(String username) {
         Gson gson = new Gson();
         String json = gson.toJson(username);
-        String urlString = "http://" + hostIP + ":" + "7996" + "/getrole";
+        String urlString = baseUrl + "/getrole";
         String response = WebClient.getConnection(urlString, json);
         return gson.fromJson(response, StartResults.class);
     }
     public void mafiaKill(String victim) {
         Gson gson = new Gson();
         String json = gson.toJson(victim);
-        String urlString = "http://" + hostIP + ":" + "7996" + "/mafiakill";
+        String urlString = baseUrl + "/mafiakill";
         WebClient.getConnection(urlString, json);
     }
     public void daKill(String victim) {
         Gson gson = new Gson();
         String json = gson.toJson(victim);
-        String urlString = "http://" + hostIP + ":" + "7996" + "/dakill";
+        String urlString = baseUrl + "/dakill";
         WebClient.getConnection(urlString, json);
     }
     public void bomberKill(String target) {
         Gson gson = new Gson();
         String json = gson.toJson(target);
-        String urlString = "http://" + hostIP + ":" + "7996" + "/bomberkill";
+        String urlString = baseUrl + "/bomberkill";
         WebClient.getConnection(urlString, json);
     }
     public String investigate(String suspect) {
         Gson gson = new Gson();
         String json = gson.toJson(suspect);
-        String urlString = "http://" + hostIP + ":" + "7996" + "/detectiveinvestigate";
+        String urlString = baseUrl + "/detectiveinvestigate";
         String response = WebClient.getConnection(urlString, json);
         return gson.fromJson(response, String.class);
     }
     public void bodyguardSave(String saved) {
         Gson gson = new Gson();
         String json = gson.toJson(saved);
-        String urlString = "http://" + hostIP + ":" + "7996" + "/bodyguardsave";
+        String urlString = baseUrl + "/bodyguardsave";
         WebClient.getConnection(urlString, json);
     }
     public void daSave(String saved) {
         Gson gson = new Gson();
         String json = gson.toJson(saved);
-        String urlString = "http://" + hostIP + ":" + "7996" + "/dasave";
+        String urlString = baseUrl + "/dasave";
         WebClient.getConnection(urlString, json);
     }
     public String daGetMafiaKilled() {
         Gson gson = new Gson();
-        String urlString = "http://" + hostIP + ":" + "7996" + "/doubleagent";
+        String urlString = baseUrl + "/doubleagent";
         String response = WebClient.getConnection(urlString, "");
         return gson.fromJson(response, String.class);
     }
     public void lawyerDefend(String player) {
         Gson gson = new Gson();
         String json = gson.toJson(player);
-        String urlString = "http://" + hostIP + ":" + "7996" + "/lawyerdefend";
+        String urlString = baseUrl + "/lawyerdefend";
         WebClient.getConnection(urlString, json);
     }
     public void officialVote(String player) {
         Gson gson = new Gson();
         String json = gson.toJson(player);
-        String urlString = "http://" + hostIP +":" + "7996" + "/officialenfranchise";
+        String urlString = baseUrl + "/officialenfranchise";
         WebClient.getConnection(urlString, json);
     }
     public void matchmake(String players[]) {
         Gson gson = new Gson();
         String json = gson.toJson(players);
-        String urlString = "http://" + hostIP +":" + "7996" + "/matchmake";
+        String urlString = baseUrl + "/matchmake";
         WebClient.getConnection(urlString, json);
     }
     public void vote(String player) {
@@ -107,18 +107,18 @@ public class ServerProxy {
         vote.setNominated(player);
         vote.setVoter(Civilian.getUserName());
         String json = gson.toJson(vote);
-        String urlString = "http://" + hostIP + ":" + "7996" + "/vote";
+        String urlString = baseUrl + "/vote";
         WebClient.getConnection(urlString, json);
     }
     public DayResults dayResult() {
         Gson gson = new Gson();
-        String urlString = "http://" + hostIP + ":" + "7996" + "/dayresult";
+        String urlString = baseUrl + "/dayresult";
         String response = WebClient.getConnection(urlString, "");
         return gson.fromJson(response, DayResults.class);
     }
     public NightResults nightResult() {
         Gson gson = new Gson();
-        String urlString = "http://" + hostIP + ":" + "7996" + "/nightresult";
+        String urlString = baseUrl + "/nightresult";
         String response = WebClient.getConnection(urlString, "");
         return gson.fromJson(response, NightResults.class);
     }
@@ -126,7 +126,7 @@ public class ServerProxy {
     public void leaveGame(String name) {
         Gson gson = new Gson();
         String json = gson.toJson(name);
-        String urlString = "http://" + hostIP + ":" + "7996" + "/leavegame";
+        String urlString = baseUrl + "/leavegame";
         WebClient.getConnection(urlString, json);
     }
 }

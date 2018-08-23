@@ -138,7 +138,7 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected StartResults doInBackground(String... s) {
             String name = username;
-            ServerProxy.get().setHostIP(hostIP);
+            ServerProxy.get().setBaseUrl(hostIP);
             ServerProxy.get().register(username);
             if (!setupPlayer) {
                 try {
