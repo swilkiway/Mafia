@@ -12,15 +12,24 @@ public class Utils {
         StringBuilder results = new StringBuilder();
         Player lynched = d.getLynched();
         String defended = d.getDefended();
+        Player bomberKilled = d.getBombed();
+        boolean isTied = d.getTied();
         Player lover = d.getLover();
-        if (lynched != null) {
+        if (isTied) {
+            results.append(context.getString(R.string.tied));
+        } else if (lynched != null) {
             results.append(context.getString(R.string.lynched, d.getLynched().getName(), d.getLynched().getRole()));
             if (lynched.getName().equals(Civilian.getUserName())) {
                 Civilian.kill();
             }
-        }
-        if (defended != null) {
+        } else if (defended != null) {
             results.append(context.getString(R.string.lawyer_defended, d.getDefended()));
+        }
+        if (bomberKilled != null) {
+            results.append(context.getString(R.string.bomber_killed, bomberKilled.getName(), bomberKilled.getRole()));
+            if (bomberKilled.getName().equals(Civilian.getUserName())) {
+                Civilian.kill();
+            }
         }
         if (lover != null) {
             results.append(context.getString(R.string.lover_died, lover.getName(), lover.getRole()));
@@ -58,7 +67,7 @@ public class Utils {
             results.append(context.getString(R.string.da_saved, daSaved));
         }
         if (bomberKilled != null) {
-            results.append(context.getString(R.string.da_killed, bomberKilled.getName(), bomberKilled.getRole()));
+            results.append(context.getString(R.string.bomber_killed, bomberKilled.getName(), bomberKilled.getRole()));
             if (bomberKilled.getName().equals(Civilian.getUserName())) {
                 Civilian.kill();
             }

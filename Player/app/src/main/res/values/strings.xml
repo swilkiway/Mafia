@@ -79,6 +79,7 @@
     <string name="lover_died">Their lover, %1$s, the %2$s, died of a broken heart!</string>
     <string name="lynched">%1$s, the %2$s, was nominated to be lynched!\n</string>
     <string name="lawyer_defended">%1$s was nominated to be lynched, but was successfully defended in court by the lawyer!</string>
+    <string name="tied">No one could agree on who to lynch, so no one got lynched today.</string>
     <string name="voted">%1$s voted for %2$s.\n</string>
     <string name="civilian_win">The civilians cleared all the mafiosi from the town!</string>
     <string name="mafia_win">The mafia took over the town!</string>

@@ -425,20 +425,19 @@ public class Game {
     private void resolveVoting() {
         nightReady = false;
         dayResults.setBallot(ballot);
-        boolean isTied = false;
+        dayResults.setTied(false);
         Candidate lynched = null;
         for (Candidate c : ballot.getCandidates()) {
             if (lynched == null) {
                 lynched = c;
             } else if (c.getVotes() > lynched.getVotes()) {
                 lynched = c;
-                isTied = false;
+                dayResults.setTied(false);
             } else if (c.getVotes() == lynched.getVotes()) {
-                isTied = true;
+                dayResults.setTied(true);
             }
         }
-        if (!isTied) {
-            System.out.println("entered isTied");
+        if (!dayResults.getTied()) {
             if (lynched.getNominated().equals(defended)) {
                 dayResults.setDefended(defended);
                 dayResults.setBombed(null);
@@ -454,6 +453,11 @@ public class Game {
                     dayResults.setBombed(null);
                 }
             }
+        } else {
+            dayResults.setLover(null);
+            dayResults.setLynched(null);
+            dayResults.setDefended(null);
+            dayResults.setBombed(null);
         }
         dayResults.setLover(lover);
         dayResults.setStatus(status.ordinal());
