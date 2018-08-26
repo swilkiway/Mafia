@@ -47,6 +47,11 @@ public class BodyguardFragment extends Fragment {
         if (Bodyguard.getDayResults() != null) {
             playerAdapter = new PlayerAdapter(getActivity(), Bodyguard.getDayResults().getAlive());
             dayResults.setText(Utils.getVotingResults(getContext(), Bodyguard.getDayResults()));
+            voteList = view.findViewById(R.id.voteList);
+            voteManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+            voteList.setLayoutManager(voteManager);
+            voteAdapter = new VoteAdapter(getActivity(), Bodyguard.getDayResults().getBallot().getCandidates());
+            voteList.setAdapter(voteAdapter);
         } else {
             playerAdapter = new PlayerAdapter(getActivity(), Bodyguard.getStartResults().getAlive());
             dayResults.setText(getString(R.string.bodyguard_goal));
@@ -73,16 +78,6 @@ public class BodyguardFragment extends Fragment {
                 }
             }
         });
-
-        if (Bodyguard.getDayResults() != null) {
-            voteList = view.findViewById(R.id.voteList);
-            voteManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-            voteList.setLayoutManager(voteManager);
-            dayResults = view.findViewById(R.id.dayResults);
-            voteAdapter = new VoteAdapter(getActivity(), Bodyguard.getDayResults().getBallot().getCandidates());
-            voteList.setAdapter(voteAdapter);
-        }
-
     }
 
     public class BodyguardTask extends AsyncTask<String, String, String> {

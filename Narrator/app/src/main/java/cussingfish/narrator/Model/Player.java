@@ -18,6 +18,6 @@ public class Player {
 
     @Override
     public boolean equals(Object o) {
-        return !(o instanceof Player) && name.equals(((Player)o).getName());
+        return (o instanceof Player) && name.equals(((Player)o).getName());
     }
 }

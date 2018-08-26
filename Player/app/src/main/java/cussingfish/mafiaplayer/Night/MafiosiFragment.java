@@ -23,12 +23,16 @@ import cussingfish.mafiaplayer.Roles.Civilian;
 import cussingfish.mafiaplayer.Roles.Mafioso;
 import cussingfish.mafiaplayer.ServerProxy;
 import cussingfish.mafiaplayer.Utils;
+import cussingfish.mafiaplayer.VoteAdapter;
 
 public class MafiosiFragment extends Fragment {
 
     private RecyclerView playerList;
     private PlayerAdapter playerAdapter;
     private RecyclerView.LayoutManager playerManager;
+    private RecyclerView voteList;
+    private VoteAdapter voteAdapter;
+    private RecyclerView.LayoutManager voteManager;
     private Button submitButton;
     private TextView dayResults;
     private TextView teamList;
@@ -47,6 +51,11 @@ public class MafiosiFragment extends Fragment {
         if (Civilian.getDayResults() != null) {
             playerAdapter = new PlayerAdapter(getActivity(), Civilian.getDayResults().getAlive());
             dayResults.setText(Utils.getVotingResults(getContext(), Civilian.getDayResults()));
+            voteList = view.findViewById(R.id.voteList);
+            voteManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+            voteList.setLayoutManager(voteManager);
+            voteAdapter = new VoteAdapter(getActivity(), Mafioso.getDayResults().getBallot().getCandidates());
+            voteList.setAdapter(voteAdapter);
         } else {
             playerAdapter = new PlayerAdapter(getActivity(), Mafioso.getStartResults().getAlive());
             dayResults.setText(getString(R.string.mafiosi_goal));

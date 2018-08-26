@@ -363,9 +363,6 @@ public class Game {
         if (!bomberKilled.equals(D)) {
             bomberKilled = W;
         }
-        if (!defended.equals(D)) {
-            defended = W;
-        }
         if (!enfranchised.equals(D)) {
             enfranchised = W;
         }
@@ -478,6 +475,9 @@ public class Game {
 
     private void clearVotes() {
         ballot = new Ballot();
+        if (!defended.equals(D)) {
+            defended = W;
+        }
         lover = null;
     }
 }

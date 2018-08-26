@@ -6,6 +6,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +20,14 @@ import cussingfish.mafiaplayer.R;
 import cussingfish.mafiaplayer.Roles.Civilian;
 import cussingfish.mafiaplayer.ServerProxy;
 import cussingfish.mafiaplayer.Utils;
+import cussingfish.mafiaplayer.VoteAdapter;
 
 public class SleepFragment extends Fragment {
 
     private TextView dayResults;
+    private RecyclerView voteList;
+    private VoteAdapter voteAdapter;
+    private RecyclerView.LayoutManager voteManager;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,6 +39,11 @@ public class SleepFragment extends Fragment {
         dayResults = view.findViewById(R.id.dayResults);
         if (Civilian.getDayResults() != null) {
             dayResults.setText(Utils.getVotingResults(getContext(), Civilian.getDayResults()));
+            voteList = view.findViewById(R.id.voteList);
+            voteManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+            voteList.setLayoutManager(voteManager);
+            voteAdapter = new VoteAdapter(getActivity(), Civilian.getDayResults().getBallot().getCandidates());
+            voteList.setAdapter(voteAdapter);
         } else {
             dayResults.setText(getString(R.string.civilian_goal));
         }

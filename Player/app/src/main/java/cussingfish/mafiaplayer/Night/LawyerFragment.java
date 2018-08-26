@@ -22,11 +22,15 @@ import cussingfish.mafiaplayer.Roles.Lawyer;
 import cussingfish.mafiaplayer.Roles.Mafioso;
 import cussingfish.mafiaplayer.ServerProxy;
 import cussingfish.mafiaplayer.Utils;
+import cussingfish.mafiaplayer.VoteAdapter;
 
 public class LawyerFragment extends Fragment {
     private RecyclerView playerList;
     private PlayerAdapter playerAdapter;
     private RecyclerView.LayoutManager playerManager;
+    private RecyclerView voteList;
+    private VoteAdapter voteAdapter;
+    private RecyclerView.LayoutManager voteManager;
     private Button submitButton;
     private String saved;
     private TextView dayResults;
@@ -44,6 +48,11 @@ public class LawyerFragment extends Fragment {
         if (Lawyer.getDayResults() != null) {
             playerAdapter = new PlayerAdapter(getActivity(), Lawyer.getDayResults().getAlive());
             dayResults.setText(Utils.getVotingResults(getContext(), Lawyer.getDayResults()));
+            voteList = view.findViewById(R.id.voteList);
+            voteManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+            voteList.setLayoutManager(voteManager);
+            voteAdapter = new VoteAdapter(getActivity(), Lawyer.getDayResults().getBallot().getCandidates());
+            voteList.setAdapter(voteAdapter);
         } else {
             playerAdapter = new PlayerAdapter(getActivity(), Lawyer.getStartResults().getAlive());
             dayResults.setText(getString(R.string.lawyer_goal));

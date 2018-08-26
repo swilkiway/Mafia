@@ -24,11 +24,15 @@ import cussingfish.mafiaplayer.Roles.DoubleAgent;
 import cussingfish.mafiaplayer.Roles.Mafioso;
 import cussingfish.mafiaplayer.ServerProxy;
 import cussingfish.mafiaplayer.Utils;
+import cussingfish.mafiaplayer.VoteAdapter;
 
 public class DoubleAgentFragment extends Fragment {
     private RecyclerView playerList;
     private PlayerAdapter playerAdapter;
     private RecyclerView.LayoutManager playerManager;
+    private RecyclerView voteList;
+    private VoteAdapter voteAdapter;
+    private RecyclerView.LayoutManager voteManager;
     private Button killButton;
     private Button passButton;
     private Button yesButton;
@@ -53,6 +57,11 @@ public class DoubleAgentFragment extends Fragment {
         if (DoubleAgent.getDayResults() != null) {
             playerAdapter = new PlayerAdapter(getActivity(), DoubleAgent.getDayResults().getAlive());
             dayResults.setText(Utils.getVotingResults(getContext(), DoubleAgent.getDayResults()));
+            voteList = view.findViewById(R.id.voteList);
+            voteManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+            voteList.setLayoutManager(voteManager);
+            voteAdapter = new VoteAdapter(getActivity(), DoubleAgent.getDayResults().getBallot().getCandidates());
+            voteList.setAdapter(voteAdapter);
         } else {
             playerAdapter = new PlayerAdapter(getActivity(), DoubleAgent.getStartResults().getAlive());
             dayResults.setText(getString(R.string.double_agent_goal));

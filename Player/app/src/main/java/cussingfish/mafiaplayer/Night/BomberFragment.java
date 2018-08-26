@@ -22,12 +22,16 @@ import cussingfish.mafiaplayer.R;
 import cussingfish.mafiaplayer.Roles.Bomber;
 import cussingfish.mafiaplayer.ServerProxy;
 import cussingfish.mafiaplayer.Utils;
+import cussingfish.mafiaplayer.VoteAdapter;
 
 public class BomberFragment extends Fragment {
     private ArrayList<String> players;
     private RecyclerView playerList;
     private PlayerAdapter playerAdapter;
     private RecyclerView.LayoutManager playerManager;
+    private RecyclerView voteList;
+    private VoteAdapter voteAdapter;
+    private RecyclerView.LayoutManager voteManager;
     private Button submitButton;
     private TextView dayResults;
     private String target;
@@ -45,6 +49,11 @@ public class BomberFragment extends Fragment {
         if (Bomber.getDayResults() != null) {
             playerAdapter = new PlayerAdapter(getActivity(), Bomber.getDayResults().getAlive());
             dayResults.setText(Utils.getVotingResults(getContext(), Bomber.getDayResults()));
+            voteList = view.findViewById(R.id.voteList);
+            voteManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+            voteList.setLayoutManager(voteManager);
+            voteAdapter = new VoteAdapter(getActivity(), Bomber.getDayResults().getBallot().getCandidates());
+            voteList.setAdapter(voteAdapter);
         } else {
             playerAdapter = new PlayerAdapter(getActivity(), Bomber.getStartResults().getAlive());
             dayResults.setText(getString(R.string.bomber_goal));

@@ -10,22 +10,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <HorizontalScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp">
+        <include layout="@layout/merge_dayresults"/>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/voteList"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" />
-        </HorizontalScrollView>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/dayResults"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
