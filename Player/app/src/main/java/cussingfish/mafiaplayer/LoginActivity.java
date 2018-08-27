@@ -1,6 +1,7 @@
 package cussingfish.mafiaplayer;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -39,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         waitingText = findViewById(R.id.waitingText);
         enterUsername = findViewById(R.id.enterUsername);
         enterUsername.addTextChangedListener(new TextWatcher() {
