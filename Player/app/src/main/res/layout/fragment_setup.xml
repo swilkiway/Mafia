@@ -10,7 +10,14 @@
         android:layout_height="0dp"
         android:id="@+id/middleGuide"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent=".4"/>
+        app:layout_constraintGuide_percent=".5"/>
+
+    <android.support.constraint.Guideline
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/rolesGuide"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent=".3"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -18,12 +25,22 @@
         android:text="@string/choose_roles"
         android:id="@+id/startText"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/description"
+        android:padding="6dp"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/startText"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:id="@+id/rolesList"
-        app:layout_constraintTop_toBottomOf="@id/startText">
+        android:id="@+id/rolesListLeft"
+        app:layout_constraintTop_toBottomOf="@id/rolesGuide">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -111,49 +128,15 @@
                 android:layout_height="wrap_content"
                 android:text="@string/lawyer" />
         </LinearLayout>
+    </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <CheckBox
-                android:id="@+id/official"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/officialText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/official" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <CheckBox
-                android:id="@+id/matchmaker"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/matchmakerText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/matchmaker" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <CheckBox
-                android:id="@+id/gossip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/gossipText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/gossip" />
-        </LinearLayout>
-
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/rolesListRight"
+        android:orientation="vertical"
+        app:layout_constraintStart_toEndOf="@id/middleGuide"
+        app:layout_constraintTop_toBottomOf="@id/rolesGuide">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -185,22 +168,53 @@
                 android:layout_height="wrap_content"
                 android:text="@string/suspects" />
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <CheckBox
+                android:id="@+id/official"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/officialText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/official" />
+        </LinearLayout>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/ready"
-            android:id="@+id/submit"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <CheckBox
+                android:id="@+id/matchmaker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/matchmakerText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/matchmaker" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <CheckBox
+                android:id="@+id/gossip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/gossipText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/gossip" />
+        </LinearLayout>
     </LinearLayout>
 
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/description"
-        app:layout_constraintStart_toEndOf="@id/middleGuide"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/ready"
+        android:id="@+id/submit"
         app:layout_constraintBottom_toBottomOf="parent"/>
-
 
 </android.support.constraint.ConstraintLayout>
