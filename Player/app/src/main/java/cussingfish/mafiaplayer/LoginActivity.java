@@ -1,6 +1,8 @@
 package cussingfish.mafiaplayer;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentManager;
@@ -41,8 +43,10 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
         waitingText = findViewById(R.id.waitingText);
         enterUsername = findViewById(R.id.enterUsername);
+        enterUsername.setText(sharedPref.getString("storedUsername", ""));
         enterUsername.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -67,6 +71,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         enterHost = findViewById(R.id.enterHost);
+        enterHost.setText(sharedPref.getString("storedAddress", ""));
         enterHost.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -99,6 +104,16 @@ public class LoginActivity extends AppCompatActivity {
                 enterUsername.setVisibility(View.GONE);
                 enterHost.setVisibility(View.GONE);
                 setupPlayer = true;
+                //
+                SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("storedUsername", username);
+                editor.putString("storedAddress", hostIP);
+                editor.commit();
+                System.out.print("Why i be dumb");
+                System.out.print(sharedPref.getString("storedUsername", "Username not found"));
+                System.out.print(sharedPref.getString("storedAddress", "Address not found"));
+                //
                 RegisterTask r = new RegisterTask();
                 r.execute(username);
                 Bundle bundle = new Bundle();
