@@ -69,6 +69,9 @@ public class SleepFragment extends Fragment {
         }
         @Override
         protected void onPostExecute(NightResults s) {
+            if (s.checkDead(Civilian.getUserName())) {
+                Civilian.kill();
+            }
             FragmentManager fm = getActivity().getSupportFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
             Fragment fragment;

@@ -20,4 +20,9 @@ public class DayResults {
     public boolean getTied() { return isTied; }
     public int getStatus() { return status; }
     public boolean getNull() { return isNull; }
+    public boolean checkDead(String username) {
+        return ((lynched != null && username.equals(lynched.getName()))
+                || (bombed != null && username.equals(bombed.getName()))
+                || (lover != null && username.equals(lover.getName())));
+    }
 }

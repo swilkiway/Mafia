@@ -99,6 +99,9 @@ public class DayFragment extends Fragment {
 
         @Override
         protected void onPostExecute(DayResults s) {
+            if (s.checkDead(Civilian.getUserName())) {
+                Civilian.kill();
+            }
             Fragment fragment;
             if (s.getStatus() != 0) {
                 fragment = new EndGameFragment();

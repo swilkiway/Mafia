@@ -51,11 +51,7 @@ public class MafiosiFragment extends Fragment {
         if (Civilian.getDayResults() != null) {
             playerAdapter = new PlayerAdapter(getActivity(), Civilian.getDayResults().getAlive());
             dayResults.setText(Utils.getVotingResults(getContext(), Civilian.getDayResults()));
-            voteList = view.findViewById(R.id.voteList);
-            voteManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-            voteList.setLayoutManager(voteManager);
-            voteAdapter = new VoteAdapter(getActivity(), Mafioso.getDayResults().getBallot().getCandidates());
-            voteList.setAdapter(voteAdapter);
+
         } else {
             playerAdapter = new PlayerAdapter(getActivity(), Mafioso.getStartResults().getAlive());
             dayResults.setText(getString(R.string.mafiosi_goal));

@@ -132,7 +132,7 @@ public class Game {
             roles.add("civilian");
         }
         Collections.shuffle(roles);
-        for (int i = 0; i < roles.size(); i++) {
+        for (int i = 0; i < alive.size(); i++) {
             alive.get(i).setRole(roles.get(i));
         }
         for (Player p : alive) {
@@ -313,6 +313,7 @@ public class Game {
                 if (lover == null && lovers != null) {
                     checkLovers(p.getName());
                 }
+                break;
             }
         }
         if (victim.getRole().equals("mafioso")) {
@@ -451,7 +452,6 @@ public class Game {
                 }
             }
         } else {
-            dayResults.setLover(null);
             dayResults.setLynched(null);
             dayResults.setDefended(null);
             dayResults.setBombed(null);

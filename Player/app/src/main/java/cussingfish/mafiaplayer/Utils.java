@@ -19,23 +19,14 @@ public class Utils {
             results.append(context.getString(R.string.tied));
         } else if (lynched != null) {
             results.append(context.getString(R.string.lynched, d.getLynched().getName(), d.getLynched().getRole()));
-            if (lynched.getName().equals(Civilian.getUserName())) {
-                Civilian.kill();
-            }
         } else if (defended != null) {
             results.append(context.getString(R.string.lawyer_defended, d.getDefended()));
         }
         if (bomberKilled != null) {
             results.append(context.getString(R.string.bomber_killed, bomberKilled.getName(), bomberKilled.getRole()));
-            if (bomberKilled.getName().equals(Civilian.getUserName())) {
-                Civilian.kill();
-            }
         }
         if (lover != null) {
             results.append(context.getString(R.string.lover_died, lover.getName(), lover.getRole()));
-            if (lover.getName().equals(Civilian.getUserName())) {
-                Civilian.kill();
-            }
         }
         return results.toString();
     }
@@ -50,33 +41,21 @@ public class Utils {
         StringBuilder results = new StringBuilder();
         if (mafiaKilled != null) {
             results.append(context.getString(R.string.mafia_killed, mafiaKilled.getName(), mafiaKilled.getRole()));
-            if (mafiaKilled.getName().equals(Civilian.getUserName())) {
-                Civilian.kill();
-            }
         }
         if (bodyguardSaved != null) {
             results.append(context.getString(R.string.bodyguard_saved, bodyguardSaved));
         }
         if (daKilled != null) {
             results.append(context.getString(R.string.da_killed, daKilled.getName(), daKilled.getRole()));
-            if (daKilled.getName().equals(Civilian.getUserName())) {
-                Civilian.kill();
-            }
         }
         if (daSaved != null) {
             results.append(context.getString(R.string.da_saved, daSaved));
         }
         if (bomberKilled != null) {
             results.append(context.getString(R.string.bomber_killed, bomberKilled.getName(), bomberKilled.getRole()));
-            if (bomberKilled.getName().equals(Civilian.getUserName())) {
-                Civilian.kill();
-            }
         }
         if (lover != null) {
             results.append(context.getString(R.string.lover_died, lover.getName(), lover.getRole()));
-            if (lover.getName().equals(Civilian.getUserName())) {
-                Civilian.kill();
-            }
         }
         return results.toString();
     }

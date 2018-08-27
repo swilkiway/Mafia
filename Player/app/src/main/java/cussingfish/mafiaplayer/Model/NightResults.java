@@ -24,4 +24,10 @@ public class NightResults {
     public Player getLover() { return lover; }
     public int getStatus() { return status; }
     public boolean getNull() { return isNull; }
+    public boolean checkDead(String username) {
+        return ((mafiaKilled != null && username.equals(mafiaKilled.getName()))
+                || (daKilled != null && username.equals(daKilled.getName()))
+                || (bomberKilled != null && username.equals(bomberKilled.getName()))
+                || (lover != null && username.equals(lover.getName())));
+    }
 }
