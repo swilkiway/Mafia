@@ -146,6 +146,7 @@ public class Game {
     public StartResults getRole(String player) {
         StartResults s = new StartResults();
         if (!rolesReady) {
+            System.out.println("in not roles ready");
             s.setNull();
             return s;
         }
