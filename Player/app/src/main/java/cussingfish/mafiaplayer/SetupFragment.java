@@ -15,19 +15,22 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import cussingfish.mafiaplayer.Model.StartResults;
+import cussingfish.mafiaplayer.Roles.Blackmailer;
 import cussingfish.mafiaplayer.Roles.Bodyguard;
 import cussingfish.mafiaplayer.Roles.Bomber;
 import cussingfish.mafiaplayer.Roles.Civilian;
 import cussingfish.mafiaplayer.Roles.Detective;
 import cussingfish.mafiaplayer.Roles.DoubleAgent;
 import cussingfish.mafiaplayer.Roles.Lawyer;
-import cussingfish.mafiaplayer.Roles.Mafioso;
+import cussingfish.mafiaplayer.Roles.HitMan;
+import cussingfish.mafiaplayer.Roles.Matchmaker;
 import cussingfish.mafiaplayer.Roles.Official;
+import cussingfish.mafiaplayer.Roles.Poisoner;
 
 public class SetupFragment extends Fragment {
-    enum ROLES { MAFIOSO, DETECTIVE, DOUBLE_AGENT, BODYGUARD, BOMBER, LAWYER, OFFICIAL, MATCHMAKER,
-        TOWN_GOSSIP, CIVILIAN, SUSPECT }
-    private EditText mafiosi;
+    enum ROLES { HIT_MAN, DETECTIVE, DOUBLE_AGENT, BODYGUARD, BOMBER, LAWYER, OFFICIAL, MATCHMAKER,
+        TOWN_GOSSIP, BLACKMAILER, GODFATHER, POISONER, CIVILIAN, SUSPECT }
+    private EditText hitMen;
     private EditText detectives;
     private CheckBox doubleAgent;
     private CheckBox bodyguard;
@@ -36,9 +39,12 @@ public class SetupFragment extends Fragment {
     private CheckBox official;
     private CheckBox matchmaker;
     private CheckBox gossip;
+    private CheckBox blackmailer;
+    private CheckBox godfather;
+    private CheckBox poisoner;
     private EditText civilians;
     private EditText suspects;
-    private TextView mafiosiText;
+    private TextView hitMenText;
     private TextView detectiveText;
     private TextView doubleAgentText;
     private TextView bodyguardText;
@@ -49,9 +55,12 @@ public class SetupFragment extends Fragment {
     private TextView gossipText;
     private TextView civilianText;
     private TextView suspectText;
+    private TextView blackmailerText;
+    private TextView godfatherText;
+    private TextView poisonerText;
     private TextView description;
     private Button submit;
-    private int numMafiosi;
+    private int numHitMen;
     private int numDetectives;
     private int numCivilians;
     private int numSuspects;
@@ -70,8 +79,8 @@ public class SetupFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        mafiosi = view.findViewById(R.id.mafiosi);
-        mafiosi.addTextChangedListener(new TextWatcher() {
+        hitMen = view.findViewById(R.id.hitMen);
+        hitMen.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -81,9 +90,9 @@ public class SetupFragment extends Fragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String num = s.toString();
                 if (num.equals("")) {
-                    numMafiosi = 0;
+                    numHitMen = 0;
                 } else {
-                    numMafiosi = Integer.parseInt(s.toString());
+                    numHitMen = Integer.parseInt(s.toString());
                 }
             }
 
@@ -121,6 +130,9 @@ public class SetupFragment extends Fragment {
         official = view.findViewById(R.id.official);
         matchmaker = view.findViewById(R.id.matchmaker);
         gossip = view.findViewById(R.id.gossip);
+        blackmailer = view.findViewById(R.id.blackmailer);
+        godfather = view.findViewById(R.id.godfather);
+        poisoner = view.findViewById(R.id.poisoner);
         civilians = view.findViewById(R.id.civilians);
         civilians.addTextChangedListener(new TextWatcher() {
             @Override
@@ -179,7 +191,7 @@ public class SetupFragment extends Fragment {
     }
 
     protected void setTextViewsClick(View view) {
-        mafiosiText = view.findViewById(R.id.mafiosiText);
+        hitMenText = view.findViewById(R.id.hitMenText);
         detectiveText = view.findViewById(R.id.detectiveText);
         doubleAgentText = view.findViewById(R.id.doubleAgentText);
         bodyguardText = view.findViewById(R.id.bodyguardText);
@@ -190,11 +202,14 @@ public class SetupFragment extends Fragment {
         gossipText = view.findViewById(R.id.gossipText);
         civilianText = view.findViewById(R.id.civilianText);
         suspectText = view.findViewById(R.id.suspectText);
+        blackmailerText = view.findViewById(R.id.blackmailerText);
+        godfatherText = view.findViewById(R.id.godfatherText);
+        poisonerText = view.findViewById(R.id.poisonerText);
         description = view.findViewById(R.id.description);
-        mafiosiText.setOnClickListener(new View.OnClickListener() {
+        hitMenText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                description.setText(R.string.mafiosi_desc);
+                description.setText(R.string.hit_men_desc);
             }
         });
         detectiveText.setOnClickListener(new View.OnClickListener() {
@@ -257,11 +272,29 @@ public class SetupFragment extends Fragment {
                 description.setText(R.string.suspects_desc);
             }
         });
+        blackmailerText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                description.setText(R.string.blackmailer_desc);
+            }
+        });
+        godfatherText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                description.setText(R.string.godfather_desc);
+            }
+        });
+        poisonerText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                description.setText(R.string.poisoner_desc);
+            }
+        });
     }
 
     public int[] getNums() {
-        int nums[] = new int[]{0,0,0,0,0,0,0,0,0,0,0};
-        nums[ROLES.MAFIOSO.ordinal()] = numMafiosi;
+        int nums[] = new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+        nums[ROLES.HIT_MAN.ordinal()] = numHitMen;
         nums[ROLES.DETECTIVE.ordinal()] = numDetectives;
         if (doubleAgent.isChecked()) {
             nums[ROLES.DOUBLE_AGENT.ordinal()] = 1;
@@ -283,6 +316,15 @@ public class SetupFragment extends Fragment {
         }
         if (gossip.isChecked()) {
             nums[ROLES.TOWN_GOSSIP.ordinal()] = 1;
+        }
+        if (blackmailer.isChecked()) {
+            nums[ROLES.BLACKMAILER.ordinal()] = 1;
+        }
+        if (godfather.isChecked()) {
+            nums[ROLES.GODFATHER.ordinal()] = 1;
+        }
+        if (poisoner.isChecked()) {
+            nums[ROLES.POISONER.ordinal()] = 1;
         }
         nums[ROLES.CIVILIAN.ordinal()] = numCivilians;
         nums[ROLES.SUSPECT.ordinal()] = numSuspects;
@@ -313,8 +355,9 @@ public class SetupFragment extends Fragment {
         }
         private void createCharacter(String name, StartResults s) {
             switch (s.getRole()) {
-                case "mafioso":
-                    Mafioso.instantiate(name, s); break;
+                case "godfather":
+                case "hit man":
+                    HitMan.instantiate(name, s); break;
                 case "detective":
                     Detective.instantiate(name, s); break;
                 case "double agent":
@@ -327,6 +370,12 @@ public class SetupFragment extends Fragment {
                     Lawyer.instantiate(name, s); break;
                 case "official":
                     Official.instantiate(name, s); break;
+                case "matchmaker":
+                    Matchmaker.instantiate(name, s); break;
+                case "blackmailer":
+                    Blackmailer.instantiate(name, s); break;
+                case "poisoner":
+                    Poisoner.instantiate(name, s); break;
                 default:
                     Civilian.instantiate(name, s); break;
             }

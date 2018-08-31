@@ -10,15 +10,16 @@
     <string name="no">No</string>
     <string name="enter_username">Enter a username</string>
     <string name="enter_host">Enter the host IP address</string>
-    <string name="setup_game">Set up the game</string>
-    <string name="wait_setup">Wait for setup</string>
+    <string name="setup_player">I am the setup player</string>
     <string name="please_wait">Please wait for setup to complete.</string>
+    <string name="leave_game">Leave Game</string>
+    <string name="restart">Restart Game</string>
 
     <!--Role Descriptions-->
-    <string name="mafiosi">Mafiosi</string>
-    <string name="mafiosi_desc">The mafiosi choose a person to kill every night. The victim will be
-        selected randomly from those the mafiosi choose.</string>
-    <string name="mafiosi_goal">You are a mafioso! Your goal is to pick off civilians until there are
+    <string name="hit_men">Hit Men</string>
+    <string name="hit_men_desc">The hit men are part of the mafia. They choose a person to kill every
+        night. The victim will be selected randomly from those the hit men choose.</string>
+    <string name="hit_men_goal">You are a hit man! Your goal is to pick off civilians until there are
         fewer civilians than mafiosi.</string>
     <string name="detectives">Detectives</string>
     <string name="detectives_desc">The detectives choose a person to learn about (have their alignment,
@@ -68,6 +69,19 @@
     <string name="gossip">Town Gossip</string>
     <string name="gossip_desc">The town gossip is a normal civilian; however, if a detective visits
         him/her, that detective will not be able to investigate anyone else that game.</string>
+    <string name="blackmailer">Blackmailer</string>
+    <string name="blackmailer_desc">The blackmailer is part of the mafia. He/she chooses a person every
+        night who will not be able to vote the next day.</string>
+    <string name="blackmailer_goal">You are the blackmailer! Your goal is to figure out who might vote
+        for the mafia and keep them from voting.</string>
+    <string name="godfather">Godfather</string>
+    <string name="godfather_desc">The godfather is a regular hit man, except he/she will appear to be
+        innocent if investigated by a detective.</string>
+    <string name="poisoner">Poisoner</string>
+    <string name="poisoner_desc">The poisoner is part of the mafia. He/she chooses a person to kill
+        every night; that person will die unless visited by someone else that night.</string>
+    <string name="poisoner_goal">You are the poisoner! Your goal is to poison civilians until there
+        are fewer civilians than mafiosi.</string>
 
     <!--Game Strings-->
     <string name="choose_lynch">Please select the player you\'d like to lynch.</string>
@@ -76,7 +90,9 @@
     <string name="da_killed">%1$s, the %2$s, was killed by a mysterious stranger!\n</string>
     <string name="da_saved">%1$s was saved by a mysterious stranger!\n</string>
     <string name="bomber_killed">BOOM! %1$s, the %2$s, was killed by the bomber!\n</string>
-    <string name="lover_died">Their lover, %1$s, the %2$s, died of a broken heart!</string>
+    <string name="lover_died">Their lover, %1$s, the %2$s, died of a broken heart!\n</string>
+    <string name="poisoner_killed">%1$s, the %2$s, was poisoned last night!\n</string>
+    <string name="silenced">%1$s was blackmailed last night and refuses to vote!</string>
     <string name="lynched">%1$s, the %2$s, was nominated to be lynched!\n</string>
     <string name="lawyer_defended">%1$s was nominated to be lynched, but was successfully defended in court by the lawyer!</string>
     <string name="tied">No one could agree on who to lynch, so no one got lynched today.</string>
@@ -86,6 +102,8 @@
     <string name="close_app">If you\'d like to play another round, please restart the app.\nThe narrator
         app on your computer will also need to be restarted.</string>
     <string name="choose_other">You\'re only allowed to select yourself once. Please choose someone else.</string>
+    <string name="kill_other">You can\'t select yourself. Please choose someone else.</string>
+    <string name="kill_other_mafia">You can\'t select yourself or your teammates. Please choose someone else.</string>
     <string name="kill">Kill</string>
     <string name="pass">Pass</string>
 
@@ -94,7 +112,8 @@
     <string name="mafia_team">These are your fellow mafiosi.\n</string>
     <string name="investigate">Please select a person to investigate.</string>
     <string name="guard">Please select a person to guard for the night.</string>
-    <string name="da_kill">If you\'d like to kill tonight, select a person. \nIf you do not select anyone, it will be assumed that you want to save your one bullet.</string>
+    <string name="da_kill">If you\'d like to kill tonight, select a person. \nIf you do not select anyone,
+        it will be assumed that you want to save your one bullet.</string>
     <string name="da_wait">Please wait while the mafia decide who they\'re going to kill.</string>
     <string name="da_save">%1$s is going to die tonight. Would you like to save them?</string>
     <string name="da_already_killed">You\'ve already used your one bullet.</string>
@@ -104,5 +123,8 @@
     <string name="enfranchise">Please select a person whose vote will count double during the next day.</string>
     <string name="matchmaker_one">Please select the first lover.</string>
     <string name="matchmaker_two">Please select the second lover.</string>
+    <string name="blackmail">Please select a person to prevent from voting during the next day.</string>
+    <string name="poisoner_kill">Please select a person to poison. He/she will die unless someone else
+        visits them tonight.</string>
     <string name="sleep">You slumber peacefully, waiting for the business of the town to be finished for the night.</string>
 </resources>

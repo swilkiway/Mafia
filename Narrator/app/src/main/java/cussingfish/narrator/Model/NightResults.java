@@ -8,9 +8,8 @@ public class NightResults {
     private Player bomberKilled;
     private String bodyguardSaved;
     private String daSaved;
-    private String defended;
-    private String enfranchised;
     private String silenced;
+    private Player poisoned;
     private Player lover;
     private Player[] alive;
     private int status;
@@ -28,15 +27,10 @@ public class NightResults {
     public void setDaSaved(String p) {
         daSaved = p;
     }
-    public void setDefended(String p) {
-        defended = p;
-    }
-    public void setEnfranchised(String p) {
-        enfranchised = p;
-    }
     public void setSilenced(String p) {
         silenced = p;
     }
+    public void setPoisoned(Player p) { poisoned = p; }
     public void setLover(Player l) { lover = l; }
     public void setAlive(ArrayList<Player> a) { alive = a.toArray(new Player[a.size()]); }
     public void setStatus(int s) { status = s; }

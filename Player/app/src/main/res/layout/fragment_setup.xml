@@ -23,6 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/choose_roles"
+        android:padding="6dp"
         android:id="@+id/startText"/>
 
     <TextView
@@ -30,10 +31,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/description"
         android:padding="6dp"
-        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/startText"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/startText"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -45,16 +45,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <EditText
-                android:id="@+id/mafiosi"
+                android:id="@+id/hitMen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:text="@string/default_number" />
             <TextView
-                android:id="@+id/mafiosiText"
+                android:id="@+id/hitMenText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/mafiosi" />
+                android:text="@string/hit_men" />
         </LinearLayout>
 
         <LinearLayout
@@ -114,7 +114,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/bomber" />
         </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -127,6 +126,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/lawyer" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <CheckBox
+                android:id="@+id/official"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/officialText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/official" />
         </LinearLayout>
     </LinearLayout>
 
@@ -172,20 +184,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <CheckBox
-                android:id="@+id/official"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/officialText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/official" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <CheckBox
                 android:id="@+id/matchmaker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -207,6 +205,45 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/gossip" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <CheckBox
+                android:id="@+id/blackmailer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/blackmailerText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/blackmailer" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <CheckBox
+                android:id="@+id/godfather"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/godfatherText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/godfather" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <CheckBox
+                android:id="@+id/poisoner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/poisonerText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/poisoner" />
         </LinearLayout>
     </LinearLayout>
 

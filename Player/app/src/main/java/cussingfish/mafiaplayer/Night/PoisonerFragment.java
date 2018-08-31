@@ -15,17 +15,17 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 
 import cussingfish.mafiaplayer.PlayerAdapter;
 import cussingfish.mafiaplayer.R;
 import cussingfish.mafiaplayer.Roles.Civilian;
-import cussingfish.mafiaplayer.Roles.Mafioso;
+import cussingfish.mafiaplayer.Roles.Poisoner;
 import cussingfish.mafiaplayer.ServerProxy;
 import cussingfish.mafiaplayer.Utils;
 import cussingfish.mafiaplayer.VoteAdapter;
 
-public class MafiosiFragment extends Fragment {
+public class PoisonerFragment extends Fragment {
 
     private RecyclerView playerList;
     private PlayerAdapter playerAdapter;
@@ -39,7 +39,7 @@ public class MafiosiFragment extends Fragment {
     private String victim;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_mafioso, container, false);
+        return inflater.inflate(R.layout.fragment_poisoner, container, false);
     }
 
     @Override
@@ -48,17 +48,22 @@ public class MafiosiFragment extends Fragment {
         playerManager = new LinearLayoutManager(getContext());
         playerList.setLayoutManager(playerManager);
         dayResults = view.findViewById(R.id.dayResults);
-        if (Civilian.getDayResults() != null) {
-            playerAdapter = new PlayerAdapter(getActivity(), Civilian.getDayResults().getAlive());
+        if (Poisoner.getDayResults() != null) {
+            playerAdapter = new PlayerAdapter(getActivity(), Poisoner.getDayResults().getAlive());
             dayResults.setText(Utils.getVotingResults(getContext(), Civilian.getDayResults()));
+            voteList = view.findViewById(R.id.voteList);
+            voteManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+            voteList.setLayoutManager(voteManager);
+            voteAdapter = new VoteAdapter(getActivity(), Poisoner.getDayResults().getBallot().getCandidates());
+            voteList.setAdapter(voteAdapter);
 
         } else {
-            playerAdapter = new PlayerAdapter(getActivity(), Mafioso.getStartResults().getAlive());
-            dayResults.setText(getString(R.string.mafiosi_goal));
+            playerAdapter = new PlayerAdapter(getActivity(), Poisoner.getStartResults().getAlive());
+            dayResults.setText(getString(R.string.poisoner_goal));
         }
         playerList.setAdapter(playerAdapter);
         teamList = view.findViewById(R.id.teamList);
-        teamList.setText(Utils.getTeammates(getContext(), Mafioso.getStartResults().getTeammates()));
+        teamList.setText(Utils.getTeammates(getContext(), Poisoner.getStartResults().getTeammates()));
         submitButton = view.findViewById(R.id.submitButton);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,17 +71,19 @@ public class MafiosiFragment extends Fragment {
                 victim = playerAdapter.getSelected();
                 if (victim == null) {
                     Toast.makeText(getContext(), R.string.mafia_kill, Toast.LENGTH_SHORT).show();
+                } else if (Arrays.asList(Poisoner.getStartResults().getTeammates()).contains(victim)) {
+                    Toast.makeText(getContext(), R.string.kill_other_mafia, Toast.LENGTH_SHORT).show();
                 } else {
-                    MafiosiTask b = new MafiosiTask();
+                    PoisonerTask b = new PoisonerTask();
                     b.execute(victim);
                 }
             }
         });
     }
-    public class MafiosiTask extends AsyncTask<String, String, String> {
+    public class PoisonerTask extends AsyncTask<String, String, String> {
         @Override
         protected String doInBackground(String... r) {
-            ServerProxy.get().mafiaKill(r[0]);
+            ServerProxy.get().poisonerKill(r[0]);
             return null;
         }
 

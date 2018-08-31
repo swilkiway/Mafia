@@ -15,15 +15,18 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Arrays;
 
 import cussingfish.mafiaplayer.PlayerAdapter;
 import cussingfish.mafiaplayer.R;
-import cussingfish.mafiaplayer.Roles.Bodyguard;
+import cussingfish.mafiaplayer.Roles.Blackmailer;
+import cussingfish.mafiaplayer.Roles.Civilian;
 import cussingfish.mafiaplayer.ServerProxy;
 import cussingfish.mafiaplayer.Utils;
 import cussingfish.mafiaplayer.VoteAdapter;
 
-public class BodyguardFragment extends Fragment {
+public class BlackmailerFragment extends Fragment {
+
     private RecyclerView playerList;
     private PlayerAdapter playerAdapter;
     private RecyclerView.LayoutManager playerManager;
@@ -31,11 +34,12 @@ public class BodyguardFragment extends Fragment {
     private VoteAdapter voteAdapter;
     private RecyclerView.LayoutManager voteManager;
     private Button submitButton;
-    private String saved;
     private TextView dayResults;
+    private TextView teamList;
+    private String victim;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_bodyguard, container, false);
+        return inflater.inflate(R.layout.fragment_blackmailer, container, false);
     }
 
     @Override
@@ -44,48 +48,42 @@ public class BodyguardFragment extends Fragment {
         playerManager = new LinearLayoutManager(getContext());
         playerList.setLayoutManager(playerManager);
         dayResults = view.findViewById(R.id.dayResults);
-        if (Bodyguard.getDayResults() != null) {
-            playerAdapter = new PlayerAdapter(getActivity(), Bodyguard.getDayResults().getAlive());
-            dayResults.setText(Utils.getVotingResults(getContext(), Bodyguard.getDayResults()));
+        if (Blackmailer.getDayResults() != null) {
+            playerAdapter = new PlayerAdapter(getActivity(), Blackmailer.getDayResults().getAlive());
+            dayResults.setText(Utils.getVotingResults(getContext(), Blackmailer.getDayResults()));
             voteList = view.findViewById(R.id.voteList);
             voteManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
             voteList.setLayoutManager(voteManager);
-            voteAdapter = new VoteAdapter(getActivity(), Bodyguard.getDayResults().getBallot().getCandidates());
+            voteAdapter = new VoteAdapter(getActivity(), Blackmailer.getDayResults().getBallot().getCandidates());
             voteList.setAdapter(voteAdapter);
+
         } else {
-            playerAdapter = new PlayerAdapter(getActivity(), Bodyguard.getStartResults().getAlive());
-            dayResults.setText(getString(R.string.bodyguard_goal));
+            playerAdapter = new PlayerAdapter(getActivity(), Blackmailer.getStartResults().getAlive());
+            dayResults.setText(getString(R.string.blackmailer_goal));
         }
         playerList.setAdapter(playerAdapter);
+        teamList = view.findViewById(R.id.teamList);
+        teamList.setText(Utils.getTeammates(getContext(), Blackmailer.getStartResults().getTeammates()));
         submitButton = view.findViewById(R.id.submitButton);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saved = playerAdapter.getSelected();
-                if (saved == null) {
-                    Toast.makeText(getContext(), R.string.guard, Toast.LENGTH_SHORT).show();
-                } else if (saved.equals(Bodyguard.getUserName())) {
-                    if (!Bodyguard.checkSavedSelf()) {
-                        Bodyguard.saveSelf();
-                        submitButton.setEnabled(false);
-                        BodyguardTask b = new BodyguardTask();
-                        b.execute(saved);
-                    } else {
-                        Toast.makeText(getContext(), R.string.choose_other, Toast.LENGTH_SHORT).show();
-                    }
+                victim = playerAdapter.getSelected();
+                if (victim == null) {
+                    Toast.makeText(getContext(), R.string.mafia_kill, Toast.LENGTH_SHORT).show();
+                } else if (Arrays.asList(Blackmailer.getStartResults().getTeammates()).contains(victim)) {
+                    Toast.makeText(getContext(), R.string.kill_other_mafia, Toast.LENGTH_SHORT).show();
                 } else {
-                    submitButton.setEnabled(false);
-                    BodyguardTask b = new BodyguardTask();
-                    b.execute(saved);
+                    BlackmailerTask b = new BlackmailerTask();
+                    b.execute(victim);
                 }
             }
         });
     }
-
-    public class BodyguardTask extends AsyncTask<String, String, String> {
+    public class BlackmailerTask extends AsyncTask<String, String, String> {
         @Override
         protected String doInBackground(String... r) {
-            ServerProxy.get().bodyguardSave(r[0]);
+            ServerProxy.get().blackmailerSilence(r[0]);
             return null;
         }
 

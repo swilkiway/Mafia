@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import cussingfish.mafiaplayer.DayFragment;
@@ -28,6 +29,7 @@ public class SleepFragment extends Fragment {
     private RecyclerView voteList;
     private VoteAdapter voteAdapter;
     private RecyclerView.LayoutManager voteManager;
+    private Button leaveButton;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,6 +49,14 @@ public class SleepFragment extends Fragment {
         } else {
             dayResults.setText(getString(R.string.civilian_goal));
         }
+        leaveButton = view.findViewById(R.id.leave);
+        leaveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LeaveTask b = new LeaveTask();
+                b.execute(Civilian.getUserName());
+            }
+        });
         SleepTask s = new SleepTask();
         s.execute();
     }
@@ -69,6 +79,9 @@ public class SleepFragment extends Fragment {
         }
         @Override
         protected void onPostExecute(NightResults s) {
+            if (s.getSilenced().equals(Civilian.getUserName())) {
+                Civilian.setSilenced(true);
+            }
             if (s.checkDead(Civilian.getUserName())) {
                 Civilian.kill();
             }
@@ -85,6 +98,19 @@ public class SleepFragment extends Fragment {
             }
             ft.replace(R.id.fragmentContainer, fragment).addToBackStack(null);
             ft.commit();
+        }
+    }
+
+    public class LeaveTask extends AsyncTask<String, String, String> {
+        @Override
+        protected String doInBackground(String... s) {
+            ServerProxy.get().leaveGame(s[0]);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            getActivity().finishAndRemoveTask();
         }
     }
 }

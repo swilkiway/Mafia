@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
 
 import cussingfish.narrator.Handlers.AgentHandler;
+import cussingfish.narrator.Handlers.BlackmailerHandler;
 import cussingfish.narrator.Handlers.BodyguardSaveHandler;
 import cussingfish.narrator.Handlers.BomberKillHandler;
 import cussingfish.narrator.Handlers.DAKillHandler;
@@ -20,6 +21,7 @@ import cussingfish.narrator.Handlers.MafiaKillHandler;
 import cussingfish.narrator.Handlers.MatchmakerHandler;
 import cussingfish.narrator.Handlers.NightHandler;
 import cussingfish.narrator.Handlers.OfficialHandler;
+import cussingfish.narrator.Handlers.PoisonerHandler;
 import cussingfish.narrator.Handlers.RegisterHandler;
 import cussingfish.narrator.Handlers.RoleHandler;
 import cussingfish.narrator.Handlers.SetupHandler;
@@ -42,6 +44,8 @@ public class WebServer {
         server.createContext("/lawyerdefend", new LawyerHandler());
         server.createContext("/officialenfranchise", new OfficialHandler());
         server.createContext("/matchmake", new MatchmakerHandler());
+        server.createContext("/blackmailersilence", new BlackmailerHandler());
+        server.createContext("/poisonerkill", new PoisonerHandler());
         server.createContext("/vote", new VoteHandler());
         server.createContext("/dayresult", new DayHandler());
         server.createContext("/nightresult", new NightHandler());

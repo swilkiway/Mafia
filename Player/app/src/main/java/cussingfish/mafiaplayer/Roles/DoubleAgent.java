@@ -13,4 +13,8 @@ public class DoubleAgent extends Civilian {
     public static void savePlayer() {
         alreadySaved = true;
     }
+    public static void reset() {
+        alreadyKilled = false;
+        alreadySaved = false;
+    }
 }

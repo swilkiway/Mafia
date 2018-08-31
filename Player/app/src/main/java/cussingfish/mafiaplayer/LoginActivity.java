@@ -13,28 +13,34 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import cussingfish.mafiaplayer.Model.StartResults;
+import cussingfish.mafiaplayer.Roles.Blackmailer;
 import cussingfish.mafiaplayer.Roles.Bodyguard;
 import cussingfish.mafiaplayer.Roles.Bomber;
 import cussingfish.mafiaplayer.Roles.Civilian;
 import cussingfish.mafiaplayer.Roles.Detective;
 import cussingfish.mafiaplayer.Roles.DoubleAgent;
 import cussingfish.mafiaplayer.Roles.Lawyer;
-import cussingfish.mafiaplayer.Roles.Mafioso;
+import cussingfish.mafiaplayer.Roles.HitMan;
+import cussingfish.mafiaplayer.Roles.Matchmaker;
 import cussingfish.mafiaplayer.Roles.Official;
+import cussingfish.mafiaplayer.Roles.Poisoner;
 
 
 public class LoginActivity extends AppCompatActivity {
 
     private boolean setupPlayer = false;
-    private Button setup;
-    private Button wait;
+    private CheckBox setup;
+    private Button submit;
     private EditText enterUsername;
     private EditText enterHost;
     private TextView waitingText;
+    private LinearLayout setupView;
     private String username = "";
     private String hostIP = "";
 
@@ -46,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
         waitingText = findViewById(R.id.waitingText);
         enterUsername = findViewById(R.id.enterUsername);
-        enterUsername.setText(sharedPref.getString("storedUsername", ""));
+        String storedUsername = sharedPref.getString("storedUsername", "");
         enterUsername.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -57,11 +63,9 @@ public class LoginActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 username = s.toString();
                 if (username.equals("") || hostIP.equals("")) {
-                    setup.setEnabled(false);
-                    wait.setEnabled(false);
+                    submit.setEnabled(false);
                 } else {
-                    setup.setEnabled(true);
-                    wait.setEnabled(true);
+                    submit.setEnabled(true);
                 }
             }
 
@@ -71,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         enterHost = findViewById(R.id.enterHost);
-        enterHost.setText(sharedPref.getString("storedAddress", ""));
+        String storedHost = sharedPref.getString("storedHost", "");
         enterHost.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -82,11 +86,9 @@ public class LoginActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 hostIP = s.toString();
                 if (username.equals("") || hostIP.equals("")) {
-                    setup.setEnabled(false);
-                    wait.setEnabled(false);
+                    submit.setEnabled(false);
                 } else {
-                    setup.setEnabled(true);
-                    wait.setEnabled(true);
+                    submit.setEnabled(true);
                 }
             }
 
@@ -96,50 +98,45 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         setup = findViewById(R.id.setup);
-        setup.setOnClickListener(new View.OnClickListener() {
+        setupView = findViewById(R.id.setupView);
+        submit = findViewById(R.id.submit);
+        submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setup.setVisibility(View.GONE);
-                wait.setVisibility(View.GONE);
+                submit.setVisibility(View.GONE);
                 enterUsername.setVisibility(View.GONE);
                 enterHost.setVisibility(View.GONE);
-                setupPlayer = true;
-                //
+                setupView.setVisibility(View.GONE);
                 SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
+                editor.clear();
                 editor.putString("storedUsername", username);
-                editor.putString("storedAddress", hostIP);
-                editor.commit();
-                System.out.print("Why i be dumb");
-                System.out.print(sharedPref.getString("storedUsername", "Username not found"));
-                System.out.print(sharedPref.getString("storedAddress", "Address not found"));
-                //
+                editor.putString("storedHost", hostIP);
+                editor.apply();
+                if (!setup.isChecked()) {
+                    waitingText.setVisibility(View.VISIBLE);
+                }
                 RegisterTask r = new RegisterTask();
                 r.execute(username);
-                Bundle bundle = new Bundle();
-                bundle.putString("username",username);
-                bundle.putString("hostIP",hostIP);
-                FragmentManager fm = getSupportFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                SetupFragment fragment = new SetupFragment();
-                fragment.setArguments(bundle);
-                ft.replace(R.id.fragmentContainer, fragment).addToBackStack(null);
-                ft.commit();
+                if (setup.isChecked()) {
+                    setupPlayer = true;
+                    Bundle bundle = new Bundle();
+                    bundle.putString("username", username);
+                    bundle.putString("hostIP", hostIP);
+                    FragmentManager fm = getSupportFragmentManager();
+                    FragmentTransaction ft = fm.beginTransaction();
+                    SetupFragment fragment = new SetupFragment();
+                    fragment.setArguments(bundle);
+                    ft.replace(R.id.fragmentContainer, fragment).addToBackStack(null);
+                    ft.commit();
+                }
             }
         });
-        wait = findViewById(R.id.wait);
-        wait.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setup.setVisibility(View.GONE);
-                wait.setVisibility(View.GONE);
-                enterUsername.setVisibility(View.GONE);
-                enterHost.setVisibility(View.GONE);
-                waitingText.setVisibility(View.VISIBLE);
-                RegisterTask r = new RegisterTask();
-                r.execute(username);
-            }
-        });
+        if (!storedUsername.equals("") && !storedHost.equals("")) {
+            enterUsername.setText(storedUsername);
+            enterHost.setText(storedHost);
+            submit.setEnabled(true);
+        }
     }
     @Override
     public void onBackPressed() {
@@ -181,8 +178,9 @@ public class LoginActivity extends AppCompatActivity {
         }
         private void createCharacter(String name, StartResults s) {
             switch (s.getRole()) {
-                case "mafioso":
-                    Mafioso.instantiate(name, s); break;
+                case "godfather":
+                case "hit man":
+                    HitMan.instantiate(name, s); break;
                 case "detective":
                     Detective.instantiate(name, s); break;
                 case "double agent":
@@ -195,6 +193,12 @@ public class LoginActivity extends AppCompatActivity {
                     Lawyer.instantiate(name, s); break;
                 case "official":
                     Official.instantiate(name, s); break;
+                case "matchmaker":
+                    Matchmaker.instantiate(name, s); break;
+                case "blackmailer":
+                    Blackmailer.instantiate(name, s); break;
+                case "poisoner":
+                    Poisoner.instantiate(name, s); break;
                 default:
                     Civilian.instantiate(name, s); break;
             }

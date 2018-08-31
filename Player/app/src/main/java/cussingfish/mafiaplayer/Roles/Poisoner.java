@@ -1,4 +1,4 @@
 package cussingfish.mafiaplayer.Roles;
 
-public class Thug {
+public class Poisoner extends Civilian {
 }

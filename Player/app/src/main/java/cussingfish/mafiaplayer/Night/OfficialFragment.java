@@ -17,8 +17,6 @@ import android.widget.Toast;
 
 import cussingfish.mafiaplayer.PlayerAdapter;
 import cussingfish.mafiaplayer.R;
-import cussingfish.mafiaplayer.Roles.Civilian;
-import cussingfish.mafiaplayer.Roles.Mafioso;
 import cussingfish.mafiaplayer.Roles.Official;
 import cussingfish.mafiaplayer.ServerProxy;
 import cussingfish.mafiaplayer.Utils;

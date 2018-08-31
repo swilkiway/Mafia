@@ -67,6 +67,8 @@ public class BomberFragment extends Fragment {
                 target = playerAdapter.getSelected();
                 if (target == null) {
                     Toast.makeText(getContext(), R.string.bomb, Toast.LENGTH_SHORT).show();
+                } else if (target.equals(Bomber.getUserName())) {
+                    Toast.makeText(getContext(), R.string.kill_other, Toast.LENGTH_SHORT).show();
                 } else {
                     BomberTask b = new BomberTask();
                     b.execute(target);

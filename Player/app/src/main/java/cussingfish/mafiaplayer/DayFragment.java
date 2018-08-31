@@ -15,13 +15,15 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import cussingfish.mafiaplayer.Model.DayResults;
+import cussingfish.mafiaplayer.Night.BlackmailerFragment;
 import cussingfish.mafiaplayer.Night.BodyguardFragment;
 import cussingfish.mafiaplayer.Night.BomberFragment;
 import cussingfish.mafiaplayer.Night.DetectiveFragment;
 import cussingfish.mafiaplayer.Night.DoubleAgentFragment;
+import cussingfish.mafiaplayer.Night.HitManFragment;
 import cussingfish.mafiaplayer.Night.LawyerFragment;
-import cussingfish.mafiaplayer.Night.MafiosiFragment;
 import cussingfish.mafiaplayer.Night.OfficialFragment;
+import cussingfish.mafiaplayer.Night.PoisonerFragment;
 import cussingfish.mafiaplayer.Night.SleepFragment;
 import cussingfish.mafiaplayer.Roles.Civilian;
 import cussingfish.mafiaplayer.Roles.Detective;
@@ -49,7 +51,7 @@ public class DayFragment extends Fragment {
         nightResults = view.findViewById(R.id.nightResults);
         nightResults.setText(Utils.getNightResults(getContext(), Civilian.getNightResults()));
         submitButton = view.findViewById(R.id.submitButton);
-        if (!Civilian.getDead()) {
+        if (!Civilian.getDead() && !Civilian.getSilenced()) {
             submitButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -99,6 +101,7 @@ public class DayFragment extends Fragment {
 
         @Override
         protected void onPostExecute(DayResults s) {
+            Civilian.setSilenced(false);
             if (s.checkDead(Civilian.getUserName())) {
                 Civilian.kill();
             }
@@ -112,8 +115,9 @@ public class DayFragment extends Fragment {
                 fragment = new SleepFragment();
             } else {
                 switch (Civilian.getStartResults().getRole()) {
-                    case "mafioso":
-                        fragment = new MafiosiFragment(); break;
+                    case "godfather":
+                    case "hit man":
+                        fragment = new HitManFragment(); break;
                     case "detective":
                         if (Detective.checkFoundGossip()) fragment = new SleepFragment();
                         else fragment = new DetectiveFragment();
@@ -130,6 +134,10 @@ public class DayFragment extends Fragment {
                         fragment = new LawyerFragment(); break;
                     case "official":
                         fragment = new OfficialFragment(); break;
+                    case "blackmailer":
+                        fragment = new BlackmailerFragment(); break;
+                    case "poisoner":
+                        fragment = new PoisonerFragment(); break;
                     default:
                         fragment = new SleepFragment(); break;
                 }

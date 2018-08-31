@@ -15,13 +15,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
 import cussingfish.mafiaplayer.PlayerAdapter;
 import cussingfish.mafiaplayer.R;
-import cussingfish.mafiaplayer.Roles.Civilian;
 import cussingfish.mafiaplayer.Roles.Detective;
-import cussingfish.mafiaplayer.Roles.Mafioso;
 import cussingfish.mafiaplayer.ServerProxy;
 import cussingfish.mafiaplayer.Utils;
 import cussingfish.mafiaplayer.VoteAdapter;

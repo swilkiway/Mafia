@@ -38,6 +38,8 @@ public class Utils {
         String daSaved = n.getDaSaved();
         Player bomberKilled = n.getBomberKilled();
         Player lover = n.getLover();
+        Player poisoned = n.getPoisoned();
+        String silenced = n.getSilenced();
         StringBuilder results = new StringBuilder();
         if (mafiaKilled != null) {
             results.append(context.getString(R.string.mafia_killed, mafiaKilled.getName(), mafiaKilled.getRole()));
@@ -54,8 +56,14 @@ public class Utils {
         if (bomberKilled != null) {
             results.append(context.getString(R.string.bomber_killed, bomberKilled.getName(), bomberKilled.getRole()));
         }
+        if (poisoned != null) {
+            results.append(context.getString(R.string.poisoner_killed, poisoned.getName(), poisoned.getRole()));
+        }
         if (lover != null) {
             results.append(context.getString(R.string.lover_died, lover.getName(), lover.getRole()));
+        }
+        if (silenced != null) {
+            results.append(context.getString(R.string.silenced, silenced));
         }
         return results.toString();
     }

@@ -19,6 +19,9 @@ public class Civilian {
     public static void kill() {
         isDead = true;
     }
+    private static boolean isSilenced = false;
+    public static boolean getSilenced() { return isSilenced; }
+    public static void setSilenced(boolean s) { isSilenced = s; }
     private static NightResults nightResults;
     public static NightResults getNightResults() { return nightResults; }
     public static void setNightResults(NightResults n) { nightResults = n; }
@@ -28,4 +31,15 @@ public class Civilian {
     private static StartResults startResults;
     public static StartResults getStartResults() { return startResults; }
     public static void setStartResults(StartResults s) { startResults = s; }
+    public static void reset() {
+        isDead = false;
+        startResults = null;
+        nightResults = null;
+        dayResults = null;
+        Bodyguard.reset();
+        Detective.reset();
+        DoubleAgent.reset();
+        Lawyer.reset();
+        Official.reset();
+    }
 }

@@ -15,13 +15,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
 import cussingfish.mafiaplayer.PlayerAdapter;
 import cussingfish.mafiaplayer.R;
-import cussingfish.mafiaplayer.Roles.Civilian;
 import cussingfish.mafiaplayer.Roles.DoubleAgent;
-import cussingfish.mafiaplayer.Roles.Mafioso;
 import cussingfish.mafiaplayer.ServerProxy;
 import cussingfish.mafiaplayer.Utils;
 import cussingfish.mafiaplayer.VoteAdapter;
@@ -82,7 +78,11 @@ public class DoubleAgentFragment extends Fragment {
                     victim = playerAdapter.getSelected();
                     if (victim == null) {
                         Toast.makeText(getContext(), R.string.da_kill, Toast.LENGTH_SHORT).show();
+                    } else if (victim.equals(DoubleAgent.getUserName())) {
+                        Toast.makeText(getContext(), R.string.kill_other, Toast.LENGTH_SHORT).show();
                     } else {
+                        killButton.setEnabled(false);
+                        passButton.setEnabled(false);
                         DoubleAgent.killPlayer();
                         KillTask b = new KillTask();
                         b.execute(victim);
@@ -92,12 +92,16 @@ public class DoubleAgentFragment extends Fragment {
             passButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    killButton.setEnabled(false);
+                    passButton.setEnabled(false);
                     KillTask b = new KillTask();
                     b.execute("pass");
                 }
             });
         } else {
             daKill.setText(R.string.da_already_killed);
+            killButton.setVisibility(View.GONE);
+            passButton.setVisibility(View.GONE);
         }
         if (!DoubleAgent.hasAlreadySaved()) {
             daSave.setVisibility(View.VISIBLE);

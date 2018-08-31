@@ -1,6 +1,7 @@
 package cussingfish.mafiaplayer;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,18 +14,19 @@ import cussingfish.mafiaplayer.Model.Player;
 public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerHolder> {
     private Player players[];
     private int lastSelectedPosition = -1;
-    Context context;
+    private Context context;
     public PlayerAdapter(Context c, Player r[]) {
         context = c;
         players = r;
     }
     @Override
-    public PlayerAdapter.PlayerHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    @NonNull
+    public PlayerAdapter.PlayerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         return new PlayerHolder(inflater.inflate(R.layout.item_player, parent, false));
     }
     @Override
-    public void onBindViewHolder(PlayerAdapter.PlayerHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PlayerAdapter.PlayerHolder holder, int position) {
         String option = players[position].getName();
         holder.bind(option, position);
     }
@@ -40,11 +42,11 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerHold
     public int getItemCount() {
         return players.length;
     }
-    public class PlayerHolder extends RecyclerView.ViewHolder {
+    class PlayerHolder extends RecyclerView.ViewHolder {
         private String option;
         private TextView eTextView;
         private RadioButton eButton;
-        public PlayerHolder(View view) {
+        PlayerHolder(View view) {
             super(view);
             eTextView = view.findViewById(R.id.playerName);
             eButton = view.findViewById(R.id.playerSelect);
@@ -57,7 +59,7 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerHold
                 }
             });
         }
-        public void bind(String o, int position) {
+        void bind(String o, int position) {
             option = o;
             eTextView.setText(option);
             eButton.setChecked(lastSelectedPosition == position);

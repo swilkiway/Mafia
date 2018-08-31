@@ -101,6 +101,18 @@ public class ServerProxy {
         String urlString = baseUrl + "/matchmake";
         WebClient.getConnection(urlString, json);
     }
+    public void blackmailerSilence(String victim) {
+        Gson gson = new Gson();
+        String json = gson.toJson(victim);
+        String urlString = baseUrl + "/blackmailersilence";
+        WebClient.getConnection(urlString, json);
+    }
+    public void poisonerKill(String victim) {
+        Gson gson = new Gson();
+        String json = gson.toJson(victim);
+        String urlString = baseUrl + "/poisonerkill";
+        WebClient.getConnection(urlString, json);
+    }
     public void vote(String player) {
         Gson gson = new Gson();
         Vote vote = new Vote();

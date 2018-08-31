@@ -48,7 +48,7 @@ public class MatchmakerFragment extends Fragment {
         startResults = view.findViewById(R.id.startResults);
         playerOneAdapter = new PlayerAdapter(getActivity(), Civilian.getStartResults().getAlive());
         playerTwoAdapter = new PlayerAdapter(getActivity(), Civilian.getStartResults().getAlive());
-        startResults.setText(getString(R.string.detectives_goal));
+        startResults.setText(getString(R.string.matchmaker_goal));
         playerOneList.setAdapter(playerOneAdapter);
         playerTwoList.setAdapter(playerTwoAdapter);
         submitButton = view.findViewById(R.id.submitButton);
