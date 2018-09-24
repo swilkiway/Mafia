@@ -8,6 +8,7 @@ public class DayResults {
     private Ballot ballot;
     private Player bombed;
     private Player lover;
+    private String diplomat;
     private boolean isTied;
     private int status;
     private boolean isNull;
@@ -17,6 +18,7 @@ public class DayResults {
     public Ballot getBallot() { return ballot; }
     public Player getBombed() { return bombed; }
     public Player getLover() { return lover; }
+    public String getDiplomat() { return diplomat; }
     public boolean getTied() { return isTied; }
     public int getStatus() { return status; }
     public boolean getNull() { return isNull; }

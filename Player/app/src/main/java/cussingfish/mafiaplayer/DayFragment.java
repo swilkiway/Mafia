@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import cussingfish.mafiaplayer.Model.DayResults;
 import cussingfish.mafiaplayer.Night.BlackmailerFragment;
@@ -55,10 +56,14 @@ public class DayFragment extends Fragment {
             submitButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    submitButton.setEnabled(false);
                     vote = playerAdapter.getSelected();
-                    VoteTask b = new VoteTask();
-                    b.execute(vote);
+                    if (vote == null) {
+                        Toast.makeText(getContext(), R.string.choose_lynch, Toast.LENGTH_SHORT).show();
+                    } else {
+                        submitButton.setEnabled(false);
+                        VoteTask b = new VoteTask();
+                        b.execute(vote);
+                    }
                 }
             });
         } else {

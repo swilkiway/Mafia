@@ -41,13 +41,15 @@ public class SleepFragment extends Fragment {
         dayResults = view.findViewById(R.id.dayResults);
         if (Civilian.getDayResults() != null) {
             dayResults.setText(Utils.getVotingResults(getContext(), Civilian.getDayResults()));
-            voteList = view.findViewById(R.id.voteList);
-            voteManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-            voteList.setLayoutManager(voteManager);
-            voteAdapter = new VoteAdapter(getActivity(), Civilian.getDayResults().getBallot().getCandidates());
-            voteList.setAdapter(voteAdapter);
+            Utils.setUpVotesView(getContext(), view);
         } else {
-            dayResults.setText(getString(R.string.civilian_goal));
+            switch (Civilian.getStartResults().getRole()) {
+                case "diplomat": dayResults.setText(getString(R.string.diplomat_goal)); break;
+                case "hermit": dayResults.setText(getString(R.string.hermit_goal)); break;
+                case "town gossip":
+                case "civilian": dayResults.setText(getString(R.string.civilian_goal));
+                default: break;
+            }
         }
         leaveButton = view.findViewById(R.id.leave);
         leaveButton.setOnClickListener(new View.OnClickListener() {
@@ -79,7 +81,7 @@ public class SleepFragment extends Fragment {
         }
         @Override
         protected void onPostExecute(NightResults s) {
-            if (s.getSilenced().equals(Civilian.getUserName())) {
+            if (s.getSilenced() != null && s.getSilenced().equals(Civilian.getUserName())) {
                 Civilian.setSilenced(true);
             }
             if (s.checkDead(Civilian.getUserName())) {

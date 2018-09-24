@@ -44,24 +44,7 @@ public class PoisonerFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        playerList = view.findViewById(R.id.playerList);
-        playerManager = new LinearLayoutManager(getContext());
-        playerList.setLayoutManager(playerManager);
-        dayResults = view.findViewById(R.id.dayResults);
-        if (Poisoner.getDayResults() != null) {
-            playerAdapter = new PlayerAdapter(getActivity(), Poisoner.getDayResults().getAlive());
-            dayResults.setText(Utils.getVotingResults(getContext(), Civilian.getDayResults()));
-            voteList = view.findViewById(R.id.voteList);
-            voteManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-            voteList.setLayoutManager(voteManager);
-            voteAdapter = new VoteAdapter(getActivity(), Poisoner.getDayResults().getBallot().getCandidates());
-            voteList.setAdapter(voteAdapter);
-
-        } else {
-            playerAdapter = new PlayerAdapter(getActivity(), Poisoner.getStartResults().getAlive());
-            dayResults.setText(getString(R.string.poisoner_goal));
-        }
-        playerList.setAdapter(playerAdapter);
+        playerAdapter = Utils.setUpViews(getContext(), view, getString(R.string.official_goal));
         teamList = view.findViewById(R.id.teamList);
         teamList.setText(Utils.getTeammates(getContext(), Poisoner.getStartResults().getTeammates()));
         submitButton = view.findViewById(R.id.submitButton);

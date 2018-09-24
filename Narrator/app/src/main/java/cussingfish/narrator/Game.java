@@ -14,9 +14,9 @@ import cussingfish.narrator.Model.Vote;
 
 public class Game {
     /* journalist (if killed, roles are no longer announced when others die), apprentice (takes role
-     * of first person killed), blackmailer (disables voting for one person each day) */
+     * of first person killed) */
     enum ROLES { HIT_MAN, DETECTIVE, DOUBLE_AGENT, BODYGUARD, BOMBER, LAWYER, OFFICIAL, TOWN_GOSSIP,
-        BLACKMAILER, GODFATHER, POISONER, CIVILIAN, SUSPECT }
+        BLACKMAILER, GODFATHER, POISONER, DIPLOMAT, HERMIT, CIVILIAN, SUSPECT }
     enum STATUS { NO_WIN, CIVILIAN_WIN, MAFIA_WIN }
     enum JOURNALIST { DISABLED, ALIVE, DEAD }
     private final String W = "waiting";
@@ -81,9 +81,11 @@ public class Game {
     }
 
     public void addPlayer(String name) {
-        System.out.println("added " + name);
         Player p = new Player(name);
-        alive.add(p);
+        if (!alive.contains(p)) {
+            System.out.println("added " + name);
+            alive.add(p);
+        }
     }
 
     public void setupRoles(int[] rolesList) {
@@ -137,6 +139,14 @@ public class Game {
         if (rolesList[ROLES.POISONER.ordinal()] == 1) {
             roles.add("poisoner");
             poisoned = W;
+        }
+        if (rolesList[ROLES.DIPLOMAT.ordinal()] == 1) {
+            civilianSize++;
+            roles.add("diplomat");
+        }
+        if (rolesList[ROLES.HERMIT.ordinal()] == 1) {
+            civilianSize++;
+            roles.add("hermit");
         }
         civilianSize += rolesList[ROLES.CIVILIAN.ordinal()];
         for (int i = 0; i < rolesList[ROLES.CIVILIAN.ordinal()]; i++) {
@@ -269,17 +279,20 @@ public class Game {
     }
 
     private void resolveNight() {
+        clearVotes();
         dayReady = false;
-        if (!mafiaKilled.equals(bodyguardSaved) && !mafiaKilled.equals(doubleAgentSaved)) {
-            setMafiaKilled();
+        if (mafiaKilled.equals(doubleAgentSaved)) {
+            nightResults.setDaSaved(doubleAgentSaved);
+        } else if (mafiaKilled.equals(bodyguardSaved)) {
+            nightResults.setBodyguardSaved(bodyguardSaved);
         } else {
-            nightResults.setBodyguardSaved(mafiaKilled);
+            setMafiaKilled();
         }
         if (!doubleAgentKilled.equals("pass") && !doubleAgentKilled.equals(D)) {
             if (!doubleAgentKilled.equals(bodyguardSaved)) {
                 setDaKilled();
             } else {
-                nightResults.setDaSaved(doubleAgentKilled);
+                nightResults.setBodyguardSaved(doubleAgentKilled);
             }
         }
         if (enfranchised.equals(silenced)) {
@@ -299,18 +312,19 @@ public class Game {
         nightResults.setLover(lover);
         nightResults.setStatus(status.ordinal());
         nightResults.setAlive(alive);
-        resetForNextNight();
         nightReady = true;
     }
 
     private void setMafiaKilled() {
         Player p = findPlayer(mafiaKilled);
-        nightResults.setMafiaKilled(p);
-        removePlayer(p);
-        if (p.getRole().equals("bomber")) {
-            setBomberKilled();
+        if (p.getRole().equals("hermit")) {
+            nightResults.setHermit(p.getName());
         } else {
-            nightResults.setBombed(null);
+            nightResults.setMafiaKilled(p);
+            removePlayer(p);
+            if (p.getRole().equals("bomber")) {
+                setBomberKilled();
+            }
         }
     }
 
@@ -320,8 +334,6 @@ public class Game {
         removePlayer(p);
         if (p.getRole().equals("bomber")) {
             setBomberKilled();
-        } else {
-            nightResults.setBombed(null);
         }
     }
 
@@ -338,8 +350,6 @@ public class Game {
         removePlayer(p);
         if (p.getRole().equals("bomber")) {
             setBomberKilled();
-        } else {
-            nightResults.setBombed(null);
         }
     }
 
@@ -388,6 +398,7 @@ public class Game {
             hitMenSize--;
         } else if (victim.getRole().equals("blackmailer") || victim.getRole().equals("poisoner")) {
             mafia.remove(victim.getName());
+            disableRole(victim.getRole());
         } else {
             civilianSize--;
             disableRole(victim.getRole());
@@ -431,9 +442,9 @@ public class Game {
     }
 
     private void resetForNextNight() {
+        nightResults = new NightResults();
         mafiaKilled = W;
         mafiaVotes = 0;
-        calculateVotesNeeded();
         if (!doubleAgentKilled.equals(D)) {
             doubleAgentKilled = W;
         }
@@ -505,6 +516,7 @@ public class Game {
     }
 
     public void votePlayer(Vote vote) {
+        calculateVotesNeeded();
         ballot.addVote(vote.getNominated(), vote.getVoter());
         if (vote.getVoter().equals(enfranchised)) {
             ballot.addVote(vote.getNominated(), vote.getVoter());
@@ -517,6 +529,7 @@ public class Game {
     }
 
     private void resolveVoting() {
+        resetForNextNight();
         nightReady = false;
         dayResults.setBallot(ballot);
         dayResults.setTied(false);
@@ -534,28 +547,24 @@ public class Game {
         if (!dayResults.getTied()) {
             if (lynched.getNominated().equals(defended)) {
                 dayResults.setDefended(defended);
-                dayResults.setBombed(null);
             } else {
                 Player p = findPlayer(lynched.getNominated());
-                dayResults.setLynched(p);
-                removePlayer(p);
-                if (p.getRole().equals("bomber")) {
-                    Player dead = findPlayer(bomberKilled);
-                    removePlayer(dead);
-                    dayResults.setBombed(dead);
+                if (p.getRole().equals("diplomat")) {
+                    dayResults.setDiplomat(p.getName());
                 } else {
-                    dayResults.setBombed(null);
+                    dayResults.setLynched(p);
+                    removePlayer(p);
+                    if (p.getRole().equals("bomber")) {
+                        Player dead = findPlayer(bomberKilled);
+                        removePlayer(dead);
+                        dayResults.setBombed(dead);
+                    }
                 }
             }
-        } else {
-            dayResults.setLynched(null);
-            dayResults.setDefended(null);
-            dayResults.setBombed(null);
         }
         dayResults.setLover(lover);
         dayResults.setStatus(status.ordinal());
         dayResults.setAlive(alive);
-        clearVotes();
         dayReady = true;
     }
 
@@ -570,6 +579,7 @@ public class Game {
     }
 
     private void clearVotes() {
+        dayResults = new DayResults();
         ballot = new Ballot();
         if (!defended.equals(D)) {
             defended = W;

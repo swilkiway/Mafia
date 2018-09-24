@@ -30,9 +30,6 @@ public class BlackmailerFragment extends Fragment {
     private RecyclerView playerList;
     private PlayerAdapter playerAdapter;
     private RecyclerView.LayoutManager playerManager;
-    private RecyclerView voteList;
-    private VoteAdapter voteAdapter;
-    private RecyclerView.LayoutManager voteManager;
     private Button submitButton;
     private TextView dayResults;
     private TextView teamList;
@@ -44,24 +41,7 @@ public class BlackmailerFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        playerList = view.findViewById(R.id.playerList);
-        playerManager = new LinearLayoutManager(getContext());
-        playerList.setLayoutManager(playerManager);
-        dayResults = view.findViewById(R.id.dayResults);
-        if (Blackmailer.getDayResults() != null) {
-            playerAdapter = new PlayerAdapter(getActivity(), Blackmailer.getDayResults().getAlive());
-            dayResults.setText(Utils.getVotingResults(getContext(), Blackmailer.getDayResults()));
-            voteList = view.findViewById(R.id.voteList);
-            voteManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-            voteList.setLayoutManager(voteManager);
-            voteAdapter = new VoteAdapter(getActivity(), Blackmailer.getDayResults().getBallot().getCandidates());
-            voteList.setAdapter(voteAdapter);
-
-        } else {
-            playerAdapter = new PlayerAdapter(getActivity(), Blackmailer.getStartResults().getAlive());
-            dayResults.setText(getString(R.string.blackmailer_goal));
-        }
-        playerList.setAdapter(playerAdapter);
+        playerAdapter = Utils.setUpViews(getContext(), view, getString(R.string.blackmailer_goal));
         teamList = view.findViewById(R.id.teamList);
         teamList.setText(Utils.getTeammates(getContext(), Blackmailer.getStartResults().getTeammates()));
         submitButton = view.findViewById(R.id.submitButton);

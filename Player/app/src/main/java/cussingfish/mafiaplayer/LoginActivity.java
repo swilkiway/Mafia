@@ -171,36 +171,9 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(StartResults s) {
             if (!setupPlayer) {
-                createCharacter(username, s);
+                Utils.createCharacter(username, s);
                 Intent intent = new Intent(LoginActivity.this, GameActivity.class);
                 startActivity(intent);
-            }
-        }
-        private void createCharacter(String name, StartResults s) {
-            switch (s.getRole()) {
-                case "godfather":
-                case "hit man":
-                    HitMan.instantiate(name, s); break;
-                case "detective":
-                    Detective.instantiate(name, s); break;
-                case "double agent":
-                    DoubleAgent.instantiate(name, s); break;
-                case "bodyguard":
-                    Bodyguard.instantiate(name, s); break;
-                case "bomber":
-                    Bomber.instantiate(name, s); break;
-                case "lawyer":
-                    Lawyer.instantiate(name, s); break;
-                case "official":
-                    Official.instantiate(name, s); break;
-                case "matchmaker":
-                    Matchmaker.instantiate(name, s); break;
-                case "blackmailer":
-                    Blackmailer.instantiate(name, s); break;
-                case "poisoner":
-                    Poisoner.instantiate(name, s); break;
-                default:
-                    Civilian.instantiate(name, s); break;
             }
         }
     }

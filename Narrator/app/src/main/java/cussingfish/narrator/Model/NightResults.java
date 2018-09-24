@@ -11,6 +11,7 @@ public class NightResults {
     private String silenced;
     private Player poisoned;
     private Player lover;
+    private String hermit;
     private Player[] alive;
     private int status;
     private boolean isNull = false;
@@ -32,6 +33,7 @@ public class NightResults {
     }
     public void setPoisoned(Player p) { poisoned = p; }
     public void setLover(Player l) { lover = l; }
+    public void setHermit(String h) { hermit = h; }
     public void setAlive(ArrayList<Player> a) { alive = a.toArray(new Player[a.size()]); }
     public void setStatus(int s) { status = s; }
     public void setNull() { isNull = true; }

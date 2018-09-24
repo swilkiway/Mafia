@@ -29,7 +29,7 @@ import cussingfish.mafiaplayer.Roles.Poisoner;
 
 public class SetupFragment extends Fragment {
     enum ROLES { HIT_MAN, DETECTIVE, DOUBLE_AGENT, BODYGUARD, BOMBER, LAWYER, OFFICIAL, MATCHMAKER,
-        TOWN_GOSSIP, BLACKMAILER, GODFATHER, POISONER, CIVILIAN, SUSPECT }
+        TOWN_GOSSIP, BLACKMAILER, GODFATHER, POISONER, DIPLOMAT, HERMIT, CIVILIAN, SUSPECT }
     private EditText hitMen;
     private EditText detectives;
     private CheckBox doubleAgent;
@@ -42,6 +42,8 @@ public class SetupFragment extends Fragment {
     private CheckBox blackmailer;
     private CheckBox godfather;
     private CheckBox poisoner;
+    private CheckBox diplomat;
+    private CheckBox hermit;
     private EditText civilians;
     private EditText suspects;
     private TextView hitMenText;
@@ -58,6 +60,8 @@ public class SetupFragment extends Fragment {
     private TextView blackmailerText;
     private TextView godfatherText;
     private TextView poisonerText;
+    private TextView diplomatText;
+    private TextView hermitText;
     private TextView description;
     private Button submit;
     private int numHitMen;
@@ -133,6 +137,8 @@ public class SetupFragment extends Fragment {
         blackmailer = view.findViewById(R.id.blackmailer);
         godfather = view.findViewById(R.id.godfather);
         poisoner = view.findViewById(R.id.poisoner);
+        diplomat = view.findViewById(R.id.diplomat);
+        hermit = view.findViewById(R.id.hermit);
         civilians = view.findViewById(R.id.civilians);
         civilians.addTextChangedListener(new TextWatcher() {
             @Override
@@ -205,6 +211,8 @@ public class SetupFragment extends Fragment {
         blackmailerText = view.findViewById(R.id.blackmailerText);
         godfatherText = view.findViewById(R.id.godfatherText);
         poisonerText = view.findViewById(R.id.poisonerText);
+        diplomatText = view.findViewById(R.id.diplomatText);
+        hermitText = view.findViewById(R.id.hermitText);
         description = view.findViewById(R.id.description);
         hitMenText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -290,10 +298,22 @@ public class SetupFragment extends Fragment {
                 description.setText(R.string.poisoner_desc);
             }
         });
+        diplomatText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                description.setText(R.string.diplomat_desc);
+            }
+        });
+        hermitText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                description.setText(R.string.hermit_desc);
+            }
+        });
     }
 
     public int[] getNums() {
-        int nums[] = new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+        int nums[] = new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
         nums[ROLES.HIT_MAN.ordinal()] = numHitMen;
         nums[ROLES.DETECTIVE.ordinal()] = numDetectives;
         if (doubleAgent.isChecked()) {
@@ -326,6 +346,12 @@ public class SetupFragment extends Fragment {
         if (poisoner.isChecked()) {
             nums[ROLES.POISONER.ordinal()] = 1;
         }
+        if (diplomat.isChecked()) {
+            nums[ROLES.DIPLOMAT.ordinal()] = 1;
+        }
+        if (hermit.isChecked()) {
+            nums[ROLES.HERMIT.ordinal()] = 1;
+        }
         nums[ROLES.CIVILIAN.ordinal()] = numCivilians;
         nums[ROLES.SUSPECT.ordinal()] = numSuspects;
         return nums;
@@ -350,35 +376,8 @@ public class SetupFragment extends Fragment {
 
         @Override
         protected void onPostExecute(StartResults s) {
-            createCharacter(username, s);
+            Utils.createCharacter(username, s);
             getActivity().onBackPressed();
-        }
-        private void createCharacter(String name, StartResults s) {
-            switch (s.getRole()) {
-                case "godfather":
-                case "hit man":
-                    HitMan.instantiate(name, s); break;
-                case "detective":
-                    Detective.instantiate(name, s); break;
-                case "double agent":
-                    DoubleAgent.instantiate(name, s); break;
-                case "bodyguard":
-                    Bodyguard.instantiate(name, s); break;
-                case "bomber":
-                    Bomber.instantiate(name, s); break;
-                case "lawyer":
-                    Lawyer.instantiate(name, s); break;
-                case "official":
-                    Official.instantiate(name, s); break;
-                case "matchmaker":
-                    Matchmaker.instantiate(name, s); break;
-                case "blackmailer":
-                    Blackmailer.instantiate(name, s); break;
-                case "poisoner":
-                    Poisoner.instantiate(name, s); break;
-                default:
-                    Civilian.instantiate(name, s); break;
-            }
         }
     }
 }

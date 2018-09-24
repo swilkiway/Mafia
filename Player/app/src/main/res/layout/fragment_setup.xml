@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/rolesGuide"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent=".3"/>
+        app:layout_constraintGuide_percent=".27"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -100,19 +100,31 @@
                 android:layout_height="wrap_content"
                 android:text="@string/bodyguard" />
         </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <CheckBox
-                android:id="@+id/bomber"
+                android:id="@+id/diplomat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView
-                android:id="@+id/bomberText"
+                android:id="@+id/diplomatText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/bomber" />
+                android:text="@string/diplomat" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <CheckBox
+                android:id="@+id/hermit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/hermitText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hermit" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -192,6 +204,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/matchmaker" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <CheckBox
+                android:id="@+id/bomber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/bomberText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bomber" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"

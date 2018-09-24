@@ -45,24 +45,7 @@ public class HitManFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        playerList = view.findViewById(R.id.playerList);
-        playerManager = new LinearLayoutManager(getContext());
-        playerList.setLayoutManager(playerManager);
-        dayResults = view.findViewById(R.id.dayResults);
-        if (HitMan.getDayResults() != null) {
-            playerAdapter = new PlayerAdapter(getActivity(), HitMan.getDayResults().getAlive());
-            dayResults.setText(Utils.getVotingResults(getContext(), HitMan.getDayResults()));
-            voteList = view.findViewById(R.id.voteList);
-            voteManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-            voteList.setLayoutManager(voteManager);
-            voteAdapter = new VoteAdapter(getActivity(), HitMan.getDayResults().getBallot().getCandidates());
-            voteList.setAdapter(voteAdapter);
-
-        } else {
-            playerAdapter = new PlayerAdapter(getActivity(), HitMan.getStartResults().getAlive());
-            dayResults.setText(getString(R.string.hit_men_goal));
-        }
-        playerList.setAdapter(playerAdapter);
+        playerAdapter = Utils.setUpViews(getContext(), view, getString(R.string.hit_men_goal));
         teamList = view.findViewById(R.id.teamList);
         teamList.setText(Utils.getTeammates(getContext(), HitMan.getStartResults().getTeammates()));
         submitButton = view.findViewById(R.id.submitButton);

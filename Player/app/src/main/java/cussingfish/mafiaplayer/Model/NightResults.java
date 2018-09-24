@@ -11,6 +11,7 @@ public class NightResults {
     private Player[] alive;
     private Player lover;
     private Player poisoned;
+    private String hermit;
     private int status;
     private boolean isNull;
     public Player getMafiaKilled() {
@@ -23,6 +24,7 @@ public class NightResults {
     public String getSilenced() { return silenced; }
     public Player[] getAlive() { return alive; }
     public Player getPoisoned() { return poisoned; }
+    public String getHermit() { return hermit; }
     public Player getLover() { return lover; }
     public int getStatus() { return status; }
     public boolean getNull() { return isNull; }

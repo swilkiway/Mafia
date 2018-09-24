@@ -46,23 +46,7 @@ public class DoubleAgentFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        playerList = view.findViewById(R.id.killList);
-        playerManager = new LinearLayoutManager(getContext());
-        playerList.setLayoutManager(playerManager);
-        dayResults = view.findViewById(R.id.dayResults);
-        if (DoubleAgent.getDayResults() != null) {
-            playerAdapter = new PlayerAdapter(getActivity(), DoubleAgent.getDayResults().getAlive());
-            dayResults.setText(Utils.getVotingResults(getContext(), DoubleAgent.getDayResults()));
-            voteList = view.findViewById(R.id.voteList);
-            voteManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-            voteList.setLayoutManager(voteManager);
-            voteAdapter = new VoteAdapter(getActivity(), DoubleAgent.getDayResults().getBallot().getCandidates());
-            voteList.setAdapter(voteAdapter);
-        } else {
-            playerAdapter = new PlayerAdapter(getActivity(), DoubleAgent.getStartResults().getAlive());
-            dayResults.setText(getString(R.string.double_agent_goal));
-        }
-        playerList.setAdapter(playerAdapter);
+        playerAdapter = Utils.setUpViews(getContext(), view, getString(R.string.double_agent_goal));
         daSave = view.findViewById(R.id.daSave);
         daKill = view.findViewById(R.id.daKill);
         yesButton = view.findViewById(R.id.yesButton);

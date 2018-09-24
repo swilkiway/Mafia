@@ -9,6 +9,7 @@ public class DayResults {
     private Ballot ballot;
     private Player bombed;
     private Player lover;
+    private String diplomat;
     private boolean isTied;
     private int status;
     private boolean isNull = false;
@@ -18,6 +19,7 @@ public class DayResults {
     public void setBallot(Ballot b) { ballot = b; }
     public void setBombed(Player p) { bombed = p; }
     public void setLover(Player l) { lover = l; }
+    public void setDiplomat(String d) { diplomat = d; }
     public void setTied(boolean t) { isTied = t; }
     public boolean getTied() { return isTied; }
     public void setStatus(int s) { status = s; }

@@ -42,9 +42,8 @@
         you if the mafia kills you.</string>
     <string name="civilians">Civilians</string>
     <string name="civilian_desc">Civilians don\'t do anything at night.</string>
-    <string name="civilian_goal">You are a civilian (in addition to any other roles you got)! Your goal
-        is to vote for the mafiosi during the day so they get lynched (or just to pretend to vote for
-        the mafiosi if you are one).</string>
+    <string name="civilian_goal">You are a civilian! Your goal is to vote for the mafiosi during the day
+        so they get lynched.</string>
     <string name="matchmaker">Matchmaker</string>
     <string name="matchmaker_desc">At the beginning of the game, the matchmaker chooses two people to
         be in love. If one of them dies, the other will also.</string>
@@ -68,7 +67,8 @@
         lynched.</string>
     <string name="gossip">Town Gossip</string>
     <string name="gossip_desc">The town gossip is a normal civilian; however, if a detective visits
-        him/her, that detective will not be able to investigate anyone else that game.</string>
+        him/her, that detective will not be able to investigate anyone else that game. The town gossip
+        will not be informed of his/her role.</string>
     <string name="blackmailer">Blackmailer</string>
     <string name="blackmailer_desc">The blackmailer is part of the mafia. He/she chooses a person every
         night who will not be able to vote the next day.</string>
@@ -82,10 +82,20 @@
         every night; that person will die unless visited by someone else that night.</string>
     <string name="poisoner_goal">You are the poisoner! Your goal is to poison civilians until there
         are fewer civilians than mafiosi.</string>
+    <string name="diplomat">Diplomat</string>
+    <string name="diplomat_desc">The diplomat is a regular civilian, except he/she cannot be lynched.</string>
+    <string name="diplomat_goal">You are the diplomat! Your goal is to vote for the mafiosi during the
+        day so they get lynched.</string>
+    <string name="hermit">Hermit</string>
+    <string name="hermit_desc">The hermit is a regular civilian, except he/she cannot be killed by the
+        hit men.</string>
+    <string name="hermit_goal">You are the hermit! Your goal is to vote for the mafiosi during the day
+        so they get lynched.</string>
 
     <!--Game Strings-->
     <string name="choose_lynch">Please select the player you\'d like to lynch.</string>
     <string name="mafia_killed">%1$s, the %2$s, was killed by the mafia!\n</string>
+    <string name="hermit_targeted">%1$s, the hermit, was targeted by the mafia, but hid from them successfully!</string>
     <string name="bodyguard_saved">%1$s was saved by the bodyguard!\n</string>
     <string name="da_killed">%1$s, the %2$s, was killed by a mysterious stranger!\n</string>
     <string name="da_saved">%1$s was saved by a mysterious stranger!\n</string>
@@ -94,7 +104,10 @@
     <string name="poisoner_killed">%1$s, the %2$s, was poisoned last night!\n</string>
     <string name="silenced">%1$s was blackmailed last night and refuses to vote!</string>
     <string name="lynched">%1$s, the %2$s, was nominated to be lynched!\n</string>
-    <string name="lawyer_defended">%1$s was nominated to be lynched, but was successfully defended in court by the lawyer!</string>
+    <string name="lawyer_defended">%1$s was nominated to be lynched, but was successfully defended in
+        court by the lawyer!</string>
+    <string name="diplomat_lynched">%1$s, the diplomat, was nominated to be lynched, but claimed diplomatic
+        immunity!</string>
     <string name="tied">No one could agree on who to lynch, so no one got lynched today.</string>
     <string name="voted">%1$s voted for %2$s.\n</string>
     <string name="civilian_win">The civilians cleared all the mafiosi from the town!</string>
